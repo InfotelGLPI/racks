@@ -101,7 +101,7 @@ function plugin_version_racks() {
                   'oldname'        => 'rack',
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
-                  'homepage'       => 'https://forge.indepnet.net/projects/racks',
+                  'homepage'       => 'https://github.com/InfotelGLPI/racks',
                   'minGlpiVersion' => '0.90');
 }
 
