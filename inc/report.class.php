@@ -477,19 +477,13 @@ class PluginRacksReport extends CommonDBTM {
                   }
                }
 
-               // modèle //TODO = model du rack => model des objets
+               // modèle
                if (array_key_exists("model", $listFields)) {
-                   
-                  if ($itemtype != 'PluginRacksOtherModel') {
-                      
+
                      $model_table = getTableForItemType($itemtype);
                      $modelfield = getForeignKeyFieldForTable(getTableForItemType($itemtype));
                      echo self::showItem($output_type, Dropdown::getDropdownName($model_table, $device[$modelfield]), $num, $cptRow, null, $params);
                       
-                  } else {
-
-                     echo self::showItem($output_type, Dropdown::EMPTY_VALUE, $num, $cptRow, null, $params);
-                  }
                }
 
                // numéro de série
