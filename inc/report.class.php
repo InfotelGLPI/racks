@@ -182,10 +182,10 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("Bay name", "racks"), 'name', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, __("Position", "racks"), 'location', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num, __("Position", "racks"), 'roomlocation', false, $params);
+            $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'roomlocation', false, $params);
             $cptField++;
 
             $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
@@ -210,7 +210,7 @@ class PluginRacksReport extends CommonDBTM {
             // Groupe
             if (isset($_REQUEST['cb_group']) && $_REQUEST['cb_group'] == "on") {
                $listFields['group'] = $_REQUEST['cb_group'];
-               $this->showTitle($output_type, $num, __("Group"), 'roomlocation', false, $params);
+               $this->showTitle($output_type, $num, __("Group"), 'group', false, $params);
                $cptField++;
             }
 
@@ -238,10 +238,10 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("Bay name", "racks"), 'rack_name', false, $params);
             $listFields['rack_name'] = true;
 
-            $this->showTitle($output_type, $num, __("Place", "racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, __("Position", "racks"), 'location', false, $params);
             $listFields['location'] = true;
 
-            $this->showTitle($output_type, $num, __("Position", "racks"), 'roomlocation', false, $params);
+            $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'roomlocation', false, $params);
             $listFields['roomlocation'] = true;
 
             $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
@@ -256,7 +256,7 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("Object location", "racks"), 'object_location', false, $params);
             $listFields['object_location'] = true;
 
-            $this->showTitle($output_type, $num, __("Group"), 'roomlocation', false, $params);
+            $this->showTitle($output_type, $num, __("Group"), 'group', false, $params);
             $listFields['group'] = true;
 
             $this->showTitle($output_type, $num, __("Type"), 'type', false, $params);
