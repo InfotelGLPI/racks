@@ -135,7 +135,7 @@ class PluginRacksRack extends CommonDBTM {
 
       $tab[15]['table']          = 'glpi_plugin_racks_rackstates';
       $tab[15]['field']          = 'name';
-      $tab[15]['name']           = __('State');
+      $tab[15]['name']           = __('Status');
       $tab[15]['datatype']       = 'dropdown';
       
       $tab[16]['table']           = $this->getTable();
