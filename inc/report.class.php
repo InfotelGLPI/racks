@@ -1,30 +1,31 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
- -------------------------------------------------------------------------
- Racks plugin for GLPI
- Copyright (C) 2003-2011 by the Racks Development Team.
+  -------------------------------------------------------------------------
+  Racks plugin for GLPI
+  Copyright (C) 2003-2011 by the Racks Development Team.
 
- https://forge.indepnet.net/projects/racks
- -------------------------------------------------------------------------
+  https://forge.indepnet.net/projects/racks
+  -------------------------------------------------------------------------
 
- LICENSE
+  LICENSE
 
- This file is part of Racks.
+  This file is part of Racks.
 
- Racks is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+  Racks is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
 
- Racks is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+  Racks is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with Racks. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+  You should have received a copy of the GNU General Public License
+  along with Racks. If not, see <http://www.gnu.org/licenses/>.
+  --------------------------------------------------------------------------
  */
 
 
@@ -33,51 +34,47 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginRacksReport extends CommonDBTM {
-   
+
    const UTF8_ENCODING = 0;
    const ANSI_ENCODING = 1;
-   
    const WINDOWS_END_OF_LINE = 0;
    const UNIX_END_OF_LINE    = 1;
-   
-   public function execQueryGetOnlyRacks(){
+
+   public function execQueryGetOnlyRacks() {
       global $DB;
 
       $pRack = new PluginRacksRack();
 
       $query = "SELECT DISTINCT `".$pRack->getTable()."`.*
               FROM `".$pRack->getTable()."`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC" ;
+              ORDER BY `".$pRack->getTable()."`.`name` ASC";
 
       $ret = array(
-         "query" => $query,
+         "query"        => $query,
          "query_result" => $DB->query($query)
       );
       return $ret;
    }
 
-
-   public function execQuery($post){
+   public function execQuery($post) {
       global $DB;
 
       $pRackItem = new PluginRacksRack_Item();
-      $pRack = new PluginRacksRack();
-      $query = "";
+      $pRack     = new PluginRacksRack();
+      $query     = "";
 
       $face = -1;
-      if (isset($post['select_front_rear']) && $post['select_front_rear'] != 0){
+      if (isset($post['select_front_rear']) && $post['select_front_rear'] != 0) {
          $face = $post['select_front_rear'];
       }
 
-      if (isset($post['plugin_racks_racks_id']) && $post['plugin_racks_racks_id'] != 0){
+      if (isset($post['plugin_racks_racks_id']) && $post['plugin_racks_racks_id'] != 0) {
          $restrictRackId = "   AND `".$pRack->getTable()."`.`id` = '".$post['plugin_racks_racks_id']."'";
          $restrictRackId .= "   AND `".$pRack->getTable()."`.`id` = `".$pRackItem->getTable()."`.`plugin_racks_racks_id`";
-         $leftjoin=", `glpi_plugin_racks_racks_items` WHERE (1) ".$restrictRackId;
-
-
-      }else{
-         $restrictRackId="";
-         $leftjoin = "LEFT JOIN `glpi_plugin_racks_racks_items` ON (`glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`)";
+         $leftjoin       = ", `glpi_plugin_racks_racks_items` WHERE (1) ".$restrictRackId;
+      } else {
+         $restrictRackId = "";
+         $leftjoin       = "LEFT JOIN `glpi_plugin_racks_racks_items` ON (`glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`)";
 
          $restrictRackId = "AND `glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`";
       }
@@ -89,7 +86,7 @@ class PluginRacksReport extends CommonDBTM {
               FROM `".$pRackItem->getTable()."`,`glpi_plugin_racks_itemspecifications` , `".$pRack->getTable()."`
               WHERE `".$pRackItem->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` ".$restrictRackId." 
               AND (`".$pRackItem->getTable()."`.`faces_id` = '".PluginRacksRack::FRONT_FACE."' ) AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC" ;
+              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
             break;
 
          case PluginRacksRack::BACK_FACE:
@@ -97,38 +94,37 @@ class PluginRacksReport extends CommonDBTM {
               FROM `".$pRackItem->getTable()."`,`glpi_plugin_racks_itemspecifications` , `".$pRack->getTable()."`
               WHERE `".$pRackItem->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` ".$restrictRackId." 
               AND (`".$pRackItem->getTable()."`.`faces_id` = '".PluginRacksRack::BACK_FACE."' ) AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC" ;
+              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
             break;
          default:
             $query = "SELECT `".$pRackItem->getTable()."`.* , `".$pRack->getTable()."`.*
               FROM  `".$pRack->getTable()."`
               $leftjoin
               AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC" ;
+              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
 
-              break;
+            break;
       }
 
       $ret = array(
-         "query" => $query,
+         "query"        => $query,
          "query_result" => $DB->query($query)
       );
       return $ret;
    }
 
-
-   public function showResult($output_type, $limit=0, $params=array()){
+   public function showResult($output_type, $limit = 0, $params = array()) {
       global $DB;
 
-      $arrayRet = $this->execQuery($_POST);
+      $arrayRet = $this->execQuery($_REQUEST);
 
       $result = $arrayRet['query_result'];
-      $query = $arrayRet['query'];
+      $query  = $arrayRet['query'];
 
       $nbtot = ($result ? $DB->numrows($result) : 0);
 
       if ($limit) {
-         $start = (isset($_GET["start"]) ? $_GET["start"] : 0);
+         $start = (isset($_REQUEST["start"]) ? $_REQUEST["start"] : 0);
          if ($start >= $nbtot) {
             $start = 0;
          }
@@ -142,9 +138,8 @@ class PluginRacksReport extends CommonDBTM {
       $nbCols = $DB->num_fields($result);
       $nbrows = $DB->numrows($result);
 
-
       $groupByRackName = true;
-      if (isset($_POST['groupByRackName']) && $_POST['groupByRackName'] == "on"){
+      if (isset($_REQUEST['groupByRackName']) && $_REQUEST['groupByRackName'] == "on") {
          $groupByRackName = false;
       }
 
@@ -152,183 +147,116 @@ class PluginRacksReport extends CommonDBTM {
       if ($nbtot == 0) {
          echo "<div class='center'><font class='red b'>".__("No item found")."</font></div>";
          Html::footer();
-      } else if ($output_type == Search::PDF_OUTPUT_LANDSCAPE || $output_type == Search::PDF_OUTPUT_PORTRAIT) {
-         include (GLPI_ROOT."/lib/ezpdf/class.ezpdf.php");
       } else if ($output_type == Search::HTML_OUTPUT) {
-
          echo "<div class='center'><table class='tab_cadre_fixe'>";
          echo "<tr  class='tab_bg_1'><th>$title</th></tr>\n";
          echo "<tr class='tab_bg_2 center'><td class='center'>";
-         echo "<form method='POST' action='".$_SERVER["PHP_SELF"]."?start=$start' target='_blank'>\n";
 
-         $param = "";
-         foreach ($_POST as $key => $val) {
-            if (is_array($val)) {
-               foreach ($val as $k => $v) {
-                  echo "<input type='hidden' name='".$key."[$k]' value='$v' >";
-                  if (!empty($param)) {
-                     $param .= "&";
-                  }
-                  $param .= $key."[".$k."]=".urlencode($v);
-               }
-            } else {
-               echo "<input type='hidden' name='$key' value='$val' >";
-               if (!empty($param)) {
-                  $param .= "&";
-               }
-               $param .= "$key=".urlencode($val);
-            }
-         }
+         $parameters = null;
+         $parameters .= Toolbox::append_params($_REQUEST, '&amp;');
 
-         echo "<input type='hidden' name='result_search_reports' value='searchdone' >";
-         $param .= "&result_search_reports=searchdone&target=_blank";
-
-         Dropdown::showOutputFormat();
-          
-         echo "<div id='display_csv_preferences' style='display:none'><br>";
-         // Encoding
-         echo __('Encoding', 'racks')."&nbsp;:&nbsp;";
-         Dropdown::showFromArray("encoding", array('UTF-8 unicode', 'ANSI'), array('width' => '150px'));
-         echo "&nbsp;";
-         
-         // Quotes
-         echo "&nbsp;";
-         echo __('Quotes', 'racks')."&nbsp;:&nbsp;";
-         Dropdown::showYesNo("quotes", 0, -1, array('width' => '100px'));
-         echo "&nbsp;";
-         
-         // End of line
-         echo "&nbsp;";
-         echo __('End of line', 'racks')."&nbsp;:&nbsp;";
-         Dropdown::showFromArray("end_of_line", array('Windows', 'Unix'), array('width' => '100px'));
-         echo "&nbsp;";
-         echo "</div>";
-         
-         echo "<script type='text/javascript'>";
-         echo "$('select[name=display_type]').change(function() {
-                  switch($(this).val()){
-                     case '3' :case '-3' :
-                        $('#display_csv_preferences').css('display', 'block');
-                        break;
-                     default : 
-                        $('#display_csv_preferences').css('display', 'none');
-                        break;
-                  }
-               });";
-         echo "</script>";
-         
-         Html::closeForm();
-         echo "</td></tr>";
-         echo "</table></div>";
-
-         Html::printPager($start, $nbtot, $_SERVER['PHP_SELF'], $param);
+         $this->printPager($start, $nbtot, $_SERVER["PHP_SELF"], $parameters, 'PluginRacksRack');
       }
 
       if ($nbtot > 0) {
-
          if ($output_type == Search::HTML_OUTPUT)
-         echo "<form method='POST' action='".$_SERVER["PHP_SELF"]."?start=$start'>\n";
+            echo "<form method='POST' action='".$_SERVER["PHP_SELF"]."?start=$start'>\n";
 
          echo Search::showHeader($output_type, $nbrows, $nbCols, true);
-
+         echo Search::showNewLine($output_type);
          $showAllFieds = true;
-         $listFields = array();
-         $cptField = 0;
+         $listFields   = array();
+         $cptField     = 0;
 
-         $showAllFieds =
-            (!isset($_POST['cb_object_name'])      || $_POST['cb_object_name'] != "on")
-         && (!isset($_POST['cb_object_location'])  || $_POST['cb_object_location'] != "on")
-         && (!isset($_POST['cb_group'])            || $_POST['cb_group'] != "on")
-         && (!isset($_POST['cb_manufacturer'])     || $_POST['cb_manufacturer'] != "on")
-         && (!isset($_POST['cb_model'])            || $_POST['cb_model'] != "on")
-         && (!isset($_POST['cb_serial_number'])    || $_POST['cb_serial_number'] != "on");
+         $showAllFieds = (!isset($_REQUEST['cb_object_name']) || $_REQUEST['cb_object_name'] != "on") 
+               && (!isset($_REQUEST['cb_object_location']) || $_REQUEST['cb_object_location'] != "on") 
+               && (!isset($_REQUEST['cb_group']) || $_REQUEST['cb_group'] != "on") 
+               && (!isset($_REQUEST['cb_manufacturer']) || $_REQUEST['cb_manufacturer'] != "on") 
+               && (!isset($_REQUEST['cb_model']) || $_REQUEST['cb_model'] != "on") 
+               && (!isset($_REQUEST['cb_serial_number']) || $_REQUEST['cb_serial_number'] != "on");
 
-
-         $num = 1;
+         $num    = 1;
          $cptRow = 1;
 
-         if  (!$showAllFieds){
-
-            $this->showTitle($output_type, $num, __("Bay name","racks"), 'name', false, $params);
+         if (!$showAllFieds) {
+            $this->showTitle($output_type, $num, __("Bay name", "racks"), 'name', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num, _n("Place","Places",1,"racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'location', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num,  __("Position","racks"), 'roomlocation', false, $params);
-            $cptField++;
-            
-            $this->showTitle($output_type, $num,__("U","racks"), 'u', false, $params);
-            $cptField++;
-            
-            $this->showTitle($output_type, $num,__("Front","racks")." / "._x('Rack enclosure' , 'Back', 'racks'), 'front_rear', false, $params);
+            $this->showTitle($output_type, $num, __("Position", "racks"), 'roomlocation', false, $params);
             $cptField++;
 
+            $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
+            $cptField++;
 
-            if (isset($_POST['cb_object_name']) && $_POST['cb_object_name'] == "on") {
-               $listFields['object_name'] = $_POST['cb_object_name'];
-               $this->showTitle($output_type, $num,__("Object name","racks"), 'object_name', false, $params);
+            $this->showTitle($output_type, $num, __("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
+            $cptField++;
+
+            if (isset($_REQUEST['cb_object_name']) && $_REQUEST['cb_object_name'] == "on") {
+               $listFields['object_name'] = $_REQUEST['cb_object_name'];
+               $this->showTitle($output_type, $num, __("Object name", "racks"), 'object_name', false, $params);
                $cptField++;
             }
 
             // Lieu
-            if (isset($_POST['cb_object_location']) && $_POST['cb_object_location'] == "on") {
-               $listFields['object_location'] = $_POST['cb_object_location'];
-               $this->showTitle($output_type, $num, __("Object location","racks"), 'object_location', false, $params);
+            if (isset($_REQUEST['cb_object_location']) && $_REQUEST['cb_object_location'] == "on") {
+               $listFields['object_location'] = $_REQUEST['cb_object_location'];
+               $this->showTitle($output_type, $num, __("Object location", "racks"), 'object_location', false, $params);
                $cptField++;
             }
 
             // Groupe
-            if (isset($_POST['cb_group']) && $_POST['cb_group'] == "on") {
-               $listFields['group'] = $_POST['cb_group'];
+            if (isset($_REQUEST['cb_group']) && $_REQUEST['cb_group'] == "on") {
+               $listFields['group'] = $_REQUEST['cb_group'];
                $this->showTitle($output_type, $num, __("Group"), 'roomlocation', false, $params);
                $cptField++;
             }
 
             // Fabricant
-            if (isset($_POST['cb_manufacturer']) && $_POST['cb_manufacturer'] == "on") {
-               $listFields['manufacturer'] = $_POST['cb_manufacturer'];
+            if (isset($_REQUEST['cb_manufacturer']) && $_REQUEST['cb_manufacturer'] == "on") {
+               $listFields['manufacturer'] = $_REQUEST['cb_manufacturer'];
                $this->showTitle($output_type, $num, __("Manufacturer"), 'manufacturer', false, $params);
                $cptField++;
             }
 
-
             // Modèle
-            if (isset($_POST['cb_model']) && $_POST['cb_model'] == "on") {
-               $listFields['model'] = $_POST['cb_model'];
+            if (isset($_REQUEST['cb_model']) && $_REQUEST['cb_model'] == "on") {
+               $listFields['model'] = $_REQUEST['cb_model'];
                $this->showTitle($output_type, $num, __("Model"), 'model', false, $params);
                $cptField++;
             }
 
             // Numéro de série
-            if (isset($_POST['cb_serial_number']) && $_POST['cb_serial_number'] == "on") {
-               $listFields['serial_number'] = $_POST['cb_serial_number'];
+            if (isset($_REQUEST['cb_serial_number']) && $_REQUEST['cb_serial_number'] == "on") {
+               $listFields['serial_number'] = $_REQUEST['cb_serial_number'];
                $this->showTitle($output_type, $num, __("Serial number"), 'group', false, $params);
                $cptField++;
             }
          } else {
-            $this->showTitle($output_type, $num, __("Bay name","racks"), 'rack_name', false, $params);
+            $this->showTitle($output_type, $num, __("Bay name", "racks"), 'rack_name', false, $params);
             $listFields['rack_name'] = true;
 
-            $this->showTitle($output_type, $num, __("Place","racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, __("Place", "racks"), 'location', false, $params);
             $listFields['location'] = true;
 
-            $this->showTitle($output_type, $num, __("Position","racks"), 'roomlocation', false, $params);
+            $this->showTitle($output_type, $num, __("Position", "racks"), 'roomlocation', false, $params);
             $listFields['roomlocation'] = true;
 
-            $this->showTitle($output_type, $num, __("U","racks"), 'u', false, $params);
+            $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
             $listFields['u'] = true;
 
-            $this->showTitle($output_type, $num, __("Front","racks")." / "._x('Rack enclosure' , 'Back', 'racks'), 'front_rear', false, $params);
+            $this->showTitle($output_type, $num, __("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
             $listFields['front_rear'] = true;
 
-            $this->showTitle($output_type, $num, __("Object name","racks"), 'object_name', false, $params);
+            $this->showTitle($output_type, $num, __("Object name", "racks"), 'object_name', false, $params);
             $listFields['object_name'] = true;
 
-            $this->showTitle($output_type, $num, __("Object location","racks"), 'object_location', false, $params);
+            $this->showTitle($output_type, $num, __("Object location", "racks"), 'object_location', false, $params);
             $listFields['object_location'] = true;
 
-            $this->showTitle($output_type, $num, __("Group"), false, $params);
+            $this->showTitle($output_type, $num, __("Group"), 'roomlocation', false, $params);
             $listFields['group'] = true;
 
             $this->showTitle($output_type, $num, __("Type"), 'type', false, $params);
@@ -351,13 +279,11 @@ class PluginRacksReport extends CommonDBTM {
 
          echo self::showEndLine($output_type, $params);
 
-         $num=1;
-
+         $num = 1;
+         $cptRow = 1;
          $currentRack = -1;
 
-
          while ($row = $DB->fetch_array($result)) {
-
             // itemtype
             $itemtype = $row['itemtype'];
 
@@ -365,20 +291,20 @@ class PluginRacksReport extends CommonDBTM {
             $cptRow++;
             echo Search::showNewLine($output_type);
 
-            if (isset($row['itemtype']) && $row['itemtype'] != "" ){
-               $class = substr($itemtype, 0, -5);
-               $item = new $class();
-               $table = getTableForItemType($class);
-               $r = $DB->query("SELECT * FROM `".$table."` WHERE `id` = '".$row["items_id"]."' ");
+            if (isset($row['itemtype']) && $row['itemtype'] != "") {
+               $class  = substr($itemtype, 0, -5);
+               $item   = new $class();
+               $table  = getTableForItemType($class);
+               $r      = $DB->query("SELECT * FROM `".$table."` WHERE `id` = '".$row["items_id"]."' ");
                $device = $DB->fetch_array($r);
             }
 
             // nom
             $link = Toolbox::getItemTypeFormURL("PluginRacksRack");
             if ($groupByRackName || $currentRack != $row['id']) {
-               if($output_type == Search::HTML_OUTPUT){
+               if ($output_type == Search::HTML_OUTPUT) {
                   echo self::showItem($output_type, "<a href=\"".$link."?id=".$row["id"]."\">".$row["name"]."</a>", $num, $cptRow, null, $params);
-               }else{
+               } else {
                   echo self::showItem($output_type, $row["name"], $num, $cptRow, null, $params);
                }
             } else {
@@ -387,7 +313,7 @@ class PluginRacksReport extends CommonDBTM {
 
             // lieu
             if ($groupByRackName || $currentRack != $row['id']) {
-               $tmpId = $row['locations_id'];
+               $tmpId  = $row['locations_id'];
                $tmpObj = new Location();
                $tmpObj->getFromDB($tmpId);
                if (isset($tmpObj->fields['name'])) {
@@ -401,7 +327,7 @@ class PluginRacksReport extends CommonDBTM {
 
             // Emplacement
             if ($groupByRackName || $currentRack != $row['id']) {
-               $tmpId = $row['plugin_racks_roomlocations_id'];
+               $tmpId  = $row['plugin_racks_roomlocations_id'];
                $tmpObj = new PluginRacksRoomLocation();
                $tmpObj->getFromDB($tmpId);
                if (isset($tmpObj->fields['name'])) {
@@ -413,35 +339,35 @@ class PluginRacksReport extends CommonDBTM {
                echo self::showItem($output_type, "&nbsp;", $num, $cptRow, null, $params);
             }
 
-            if (isset($row['itemtype']) && $row['itemtype'] != "" ){
+            if (isset($row['itemtype']) && $row['itemtype'] != "") {
                // U
                if (isset($row['position']) && $row['position'] != "") {
                   echo self::showItem($output_type, $row['position'], $num, $cptRow, null, $params);
-               }else{
+               } else {
                   echo self::showItem($output_type, "&nbsp;", $num, $cptRow, null, $params);
                }
 
                // avant / arrière
                if ($row['faces_id'] == 1) {
-                  echo self::showItem($output_type, __("Front","racks"), $num, $cptRow, null, $params);
+                  echo self::showItem($output_type, __("Front", "racks"), $num, $cptRow, null, $params);
                } else {
-                  echo self::showItem($output_type, _x('Rack enclosure' , 'Back', 'racks'), $num, $cptRow, null, $params);
+                  echo self::showItem($output_type, _x('Rack enclosure', 'Back', 'racks'), $num, $cptRow, null, $params);
                }
 
                // Nom de l'objet
                if (array_key_exists("object_name", $listFields)) {
                   $link = Toolbox::getItemTypeFormURL(substr($itemtype, 0, -5));
                   if ($itemtype != 'PluginRacksOtherModel') {
-                     if($output_type == Search::HTML_OUTPUT){
+                     if ($output_type == Search::HTML_OUTPUT) {
                         echo self::showItem($output_type, "<a href=\"".$link."?id=".$row["items_id"]."\">".$device["name"]."</a>", $num, $cptRow, null, $params);
-                     }else{
+                     } else {
                         echo self::showItem($output_type, $device["name"], $num, $cptRow, null, $params);
                      }
                   } else {
                      echo self::showItem($output_type, $device["name"], $num, $cptRow, null, $params);
                   }
                }
-                
+
                // Lieu de l'objet
                if (array_key_exists("object_location", $listFields)) {
                   if ($itemtype != 'PluginRacksOtherModel') {
@@ -450,7 +376,7 @@ class PluginRacksReport extends CommonDBTM {
                      echo self::showItem($output_type, Dropdown::EMPTY_VALUE, $num, $cptRow, null, $params);
                   }
                }
-                
+
                // Groupe
                if (array_key_exists("group", $listFields)) {
                   // Groupe
@@ -464,12 +390,10 @@ class PluginRacksReport extends CommonDBTM {
                // type
                if (array_key_exists("type", $listFields)) {
                   echo self::showItem($output_type, $item->getTypeName(), $num, $cptRow, null, $params);
-
                }
 
                // fabricant
                if (array_key_exists("manufacturer", $listFields)) {
-
                   if ($itemtype != 'PluginRacksOtherModel') {
                      echo self::showItem($output_type, Dropdown::getDropdownName("glpi_manufacturers", $device["manufacturers_id"]), $num, $cptRow, null, $params);
                   } else {
@@ -479,11 +403,9 @@ class PluginRacksReport extends CommonDBTM {
 
                // modèle
                if (array_key_exists("model", $listFields)) {
-
-                     $model_table = getTableForItemType($itemtype);
-                     $modelfield = getForeignKeyFieldForTable(getTableForItemType($itemtype));
-                     echo self::showItem($output_type, Dropdown::getDropdownName($model_table, $device[$modelfield]), $num, $cptRow, null, $params);
-                      
+                  $model_table = getTableForItemType($itemtype);
+                  $modelfield  = getForeignKeyFieldForTable(getTableForItemType($itemtype));
+                  echo self::showItem($output_type, Dropdown::getDropdownName($model_table, $device[$modelfield]), $num, $cptRow, null, $params);
                }
 
                // numéro de série
@@ -505,72 +427,72 @@ class PluginRacksReport extends CommonDBTM {
                }
 
                $currentRack = $row['id'];
-            }else{
-               for ($k=0;$k<$cptField-3;$k++){
+            } else {
+               for ($k = 0; $k < $cptField - 3; $k++) {
                   echo self::showItem($output_type, "&nbsp;", $num, $cptRow, null, $params);
                }
             }
             echo self::showEndLine($output_type, $params);
          }
 
+         echo self::showFooter($output_type, $title, $params);
+         
          if ($output_type == Search::HTML_OUTPUT) {
             Html::closeForm();
          }
-
-         echo self::showFooter($output_type, $title, $params);
       }
    }
 
-   public function showForm($post){
+   public function showForm($post) {
 
       echo "<form name='form' method='post' action='../front/report.php'>";
 
       echo "<table class='tab_cadre_fixe' >";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".__("Search criteria","racks") ."</th>";
+      echo "<th colspan='4'>".__("Search criteria", "racks")."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Bay name","racks")." :</td>";
+      echo "<td>".__("Bay name", "racks")." :</td>";
       echo "<td>";
 
       $arrayValue = array();
-      if (isset($post['plugin_racks_racks_id'])){
+      if (isset($post['plugin_racks_racks_id'])) {
          $arrayValue = array("value" => $post['plugin_racks_racks_id']);
       }
-      $idSelectRankName = Dropdown::show( 'PluginRacksRack', $arrayValue );
+      $idSelectRankName = Dropdown::show('PluginRacksRack', $arrayValue);
       echo "<input type='hidden' name='id_select_rank_name' id='id_select_rank_name' val  ue='".$idSelectRankName."' />";
       echo "</td>";
-      echo "<td>".__("Front","racks")." / " . _x('Rack enclosure' , 'Back', 'racks');
+      echo "<td>".__("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks');
       echo "<input type='hidden' name='id_select_front_rear' id='id_select_front_rear' value='".$idSelectRankName."' />";
       echo "</td>";
 
       echo "<td>";
 
       $arrayValue = array();
-      if (isset($post['select_front_rear'])){
+      if (isset($post['select_front_rear'])) {
          $arrayValue = array("value" => $post['select_front_rear']);
       }
-      $idSelectFrontRear = Dropdown::showFromArray("select_front_rear", array("0" => Dropdown::EMPTY_VALUE,"1" => __("Front","racks"),"2" => _x('Rack enclosure' , 'Back', 'racks')),$arrayValue);
+      $idSelectFrontRear = Dropdown::showFromArray("select_front_rear", array("0" => Dropdown::EMPTY_VALUE, "1" => __("Front", "racks"), "2" => _x('Rack enclosure', 'Back', 'racks')), $arrayValue);
       echo "</td>";
       echo "</tr>";
       echo "<tr  class='tab_bg_1'>";
-      echo "<td class='top'>".__("Field to export","racks")."</td>";
+      echo "<td class='top'>".__("Field to export", "racks")."</td>";
       echo "<td>";
 
       echo "<label for='cb_object_name'>   <input type='checkbox' name='cb_object_name' id='cb_object_name' ";
-      if (isset($post['cb_object_name'])){
+      if (isset($post['cb_object_name'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Object name","racks")."<br/></label>";
+      echo "/>&nbsp;".__("Object name", "racks")."<br/></label>";
 
       echo "<label for='cb_object_location'>      <input type='checkbox' name='cb_object_location' id='cb_object_location' ";
-      if (isset($post['cb_object_location'])){
+      if (isset($post['cb_object_location'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Object location","racks")."<br/></label>";
+      echo "/>&nbsp;".__("Object location", "racks")."<br/></label>";
 
       echo "<label for='cb_group'>      <input type='checkbox' name='cb_group' id='cb_group' ";
-      if (isset($post['cb_group'])){
+      if (isset($post['cb_group'])) {
          echo " checked ";
       }
       echo "/>&nbsp;".__("Group")."<br/></label>";
@@ -578,19 +500,19 @@ class PluginRacksReport extends CommonDBTM {
       echo "</td>";
       echo "<td colspan='2'>";
       echo "<label for='cb_manufacturer'>   <input type='checkbox' name='cb_manufacturer' id='cb_manufacturer' ";
-      if (isset($post['cb_manufacturer'])){
+      if (isset($post['cb_manufacturer'])) {
          echo " checked ";
       }
       echo "/>&nbsp;".__("Manufacturer")."<br/></label>";
 
       echo "<label for='cb_model'>      <input type='checkbox' name='cb_model' id='cb_model' ";
-      if (isset($post['cb_model'])){
+      if (isset($post['cb_model'])) {
          echo " checked ";
       }
       echo "/>&nbsp;".__("Model")."<br/></label>";
 
       echo "<label for='cb_serial_number'><input type='checkbox' name='cb_serial_number' id='cb_serial_number' ";
-      if (isset($post['cb_serial_number'])){
+      if (isset($post['cb_serial_number'])) {
          echo " checked ";
       }
       echo "/>&nbsp;".__("Serial number")."<br/></label>";
@@ -603,15 +525,15 @@ class PluginRacksReport extends CommonDBTM {
       echo "<input type='submit' value='"._sx("button", "Search")."' class='submit' />";
       echo "</td></tr>";
 
-      echo "<tr class='tab_bg_1'><td>".__("Display options","racks")."</td>\n";
+      echo "<tr class='tab_bg_1'><td>".__("Display options", "racks")."</td>\n";
       echo "<td colspan='3'><label for='groupByRackName'><input type='checkbox' name='groupByRackName' id='groupByRackName' ";
 
-      if (!isset($_POST['result_search_reports']) ){
+      if (!isset($_REQUEST['result_search_reports'])) {
          echo " checked ";
-      }else if (isset($post['groupByRackName'])){
+      } else if (isset($post['groupByRackName'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Group by bay name","racks")."</label></td>";
+      echo "/>&nbsp;".__("Group by bay name", "racks")."</label></td>";
       echo "</tr>";
       echo "</table>";
 
@@ -628,34 +550,34 @@ class PluginRacksReport extends CommonDBTM {
     * @param bool $sort
     * @return mixed
     */
-   function showTitle($output_type, &$num, $title, $columnname, $sort=false, $params=array()) {
-      if ($output_type != Search::HTML_OUTPUT ||$sort==false) {
+   function showTitle($output_type, &$num, $title, $columnname, $sort = false, $params = array()) {
+      if ($output_type != Search::HTML_OUTPUT || $sort == false) {
          echo self::showHeaderItem($output_type, $title, $num, null, 0, null, null, $params);
          return;
       }
-      $order = 'ASC';
+      $order  = 'ASC';
       $issort = false;
-      if (isset($_REQUEST['sort']) && $_REQUEST['sort']==$columnname) {
+      if (isset($_REQUEST['sort']) && $_REQUEST['sort'] == $columnname) {
          $issort = true;
-         if (isset($_REQUEST['order']) && $_REQUEST['order']=='ASC') {
+         if (isset($_REQUEST['order']) && $_REQUEST['order'] == 'ASC') {
             $order = 'DESC';
          }
       }
       $link  = $_SERVER['PHP_SELF'];
       $first = true;
       foreach ($_REQUEST as $name => $value) {
-         if (!in_array($name,array('sort','order','PHPSESSID'))) {
+         if (!in_array($name, array('sort', 'order', 'PHPSESSID'))) {
             $link .= ($first ? '?' : '&amp;');
-            $link .= $name .'='.urlencode($value);
+            $link .= $name.'='.urlencode($value);
             $first = false;
          }
       }
       $link .= ($first ? '?' : '&amp;').'sort='.urlencode($columnname);
       $link .= '&amp;order='.$order;
-      echo self::showHeaderItem($output_type, $title, $num,
-      $link, $issort, ($order=='ASC'?'DESC':'ASC'), null, $params);
+      echo self::showHeaderItem($output_type, $title, $num, $link, $issort, ($order == 'ASC' ? 'DESC' : 'ASC'), null, $params);
+
    }
-   
+
    /**
     * Print generic Header Column
     *
@@ -668,9 +590,8 @@ class PluginRacksReport extends CommonDBTM {
     * @param $options  string options to add (default '')
     *
     * @return string to display
-   **/
-   static function showHeaderItem($type, $value, &$num, $linkto="", $issort=0, $order="",
-                                  $options="", $params=array()) {
+    * */
+   static function showHeaderItem($type, $value, &$num, $linkto = "", $issort = 0, $order = "", $options = "", $params = array()) {
       global $CFG_GLPI;
 
       $out = "";
@@ -685,7 +606,7 @@ class PluginRacksReport extends CommonDBTM {
             break;
 
          case Search::SYLK_OUTPUT : //sylk
-            global $SYLK_HEADER,$SYLK_SIZE;
+            global $SYLK_HEADER, $SYLK_SIZE;
             $SYLK_HEADER[$num] = Search::sylk_clean($value);
             $SYLK_SIZE[$num]   = Toolbox::strlen($SYLK_HEADER[$num]);
             break;
@@ -695,7 +616,7 @@ class PluginRacksReport extends CommonDBTM {
             if ($params['quotes']) {
                $quotes = "\"";
             }
-            
+
             switch ($params['encoding']) {
                case self::ANSI_ENCODING :
                   $out = "$quotes".Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252')."$quotes".$_SESSION["glpicsv_delimiter"];
@@ -709,7 +630,7 @@ class PluginRacksReport extends CommonDBTM {
          default :
             $out = "<th $options>";
             if ($issort) {
-               if ($order=="DESC") {
+               if ($order == "DESC") {
                   $out .= "<img src=\"".$CFG_GLPI["root_doc"]."/pics/puce-down.png\" alt='' title=''>";
                } else {
                   $out .= "<img src=\"".$CFG_GLPI["root_doc"]."/pics/puce-up.png\" alt='' title=''>";
@@ -728,15 +649,14 @@ class PluginRacksReport extends CommonDBTM {
       return $out;
    }
 
-   
    /**
     * Print generic end line
     *
     * @param $type display type (0=HTML, 1=Sylk,2=PDF,3=CSV)
     *
     * @return string to display
-   **/
-   static function showEndLine($type, $params=array()) {
+    * */
+   static function showEndLine($type, $params = array()) {
 
       $out = "";
       switch ($type) {
@@ -765,7 +685,7 @@ class PluginRacksReport extends CommonDBTM {
       }
       return $out;
    }
-   
+
    /**
     * Print generic footer
     *
@@ -773,8 +693,8 @@ class PluginRacksReport extends CommonDBTM {
     * @param $title  title of file : used for PDF (default '')
     *
     * @return string to display
-   **/
-   static function showFooter($type, $title="", $params=array()) {
+    * */
+   static function showFooter($type, $title = "", $params = array()) {
 
       $out = "";
       switch ($type) {
@@ -790,11 +710,11 @@ class PluginRacksReport extends CommonDBTM {
             $pdf->SetAuthor('GLPI');
             $pdf->SetTitle($title);
             $pdf->SetHeaderData('', '', $title, '');
-            $font       = 'helvetica';
+            $font    = 'helvetica';
             //$subsetting = true;
-            $fonsize    = 8;
+            $fonsize = 8;
             if (isset($_SESSION['glpipdffont']) && $_SESSION['glpipdffont']) {
-               $font       = $_SESSION['glpipdffont'];
+               $font = $_SESSION['glpipdffont'];
                //$subsetting = false;
             }
             $pdf->setHeaderFont(Array($font, 'B', 8));
@@ -808,7 +728,6 @@ class PluginRacksReport extends CommonDBTM {
             //set auto page breaks
             $pdf->SetAutoPageBreak(TRUE, 15);
 
-
             // For standard language
             //$pdf->setFontSubsetting($subsetting);
             // set font
@@ -820,10 +739,10 @@ class PluginRacksReport extends CommonDBTM {
             break;
 
          case Search::SYLK_OUTPUT : //sylk
-            global $SYLK_HEADER,$SYLK_ARRAY,$SYLK_SIZE;
+            global $SYLK_HEADER, $SYLK_ARRAY, $SYLK_SIZE;
             // largeurs des colonnes
             foreach ($SYLK_SIZE as $num => $val) {
-               $out .= "F;W".$num." ".$num." ".min(50,$val)."\n";
+               $out .= "F;W".$num." ".$num." ".min(50, $val)."\n";
             }
             $out .= "\n";
             // Header
@@ -850,7 +769,7 @@ class PluginRacksReport extends CommonDBTM {
       }
       return $out;
    }
-   
+
    /**
     * Print generic normal Item Cell
     *
@@ -860,17 +779,17 @@ class PluginRacksReport extends CommonDBTM {
     * @param $row          row number
     * @param $extraparam   extra parameters for display (default '')
     *
-    *@return string to display
-   **/
-   static function showItem($type, $value, &$num, $row, $extraparam='', $params=array()) {
+    * @return string to display
+    * */
+   static function showItem($type, $value, &$num, $row, $extraparam = '', $params = array()) {
 
       $out = "";
       switch ($type) {
          case Search::PDF_OUTPUT_LANDSCAPE : //pdf
          case Search::PDF_OUTPUT_PORTRAIT :
             global $PDF_TABLE;
-            $value = preg_replace('/'.Search::LBBR.'/','<br>',$value);
-            $value = preg_replace('/'.Search::LBHR.'/','<hr>',$value);
+            $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
+            $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
             $PDF_TABLE .= "<td $extraparam valign='top'>";
             $PDF_TABLE .= Html::weblink_extract(Html::clean($value));
             $PDF_TABLE .= "</td>\n";
@@ -878,25 +797,24 @@ class PluginRacksReport extends CommonDBTM {
             break;
 
          case Search::SYLK_OUTPUT : //sylk
-            global $SYLK_ARRAY,$SYLK_HEADER,$SYLK_SIZE;
+            global $SYLK_ARRAY, $SYLK_HEADER, $SYLK_SIZE;
             $value                  = Html::weblink_extract($value);
-            $value = preg_replace('/'.Search::LBBR.'/','<br>',$value);
-            $value = preg_replace('/'.Search::LBHR.'/','<hr>',$value);
+            $value                  = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
+            $value                  = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
             $SYLK_ARRAY[$row][$num] = Search::sylk_clean($value);
-            $SYLK_SIZE[$num]        = max($SYLK_SIZE[$num],
-                                          Toolbox::strlen($SYLK_ARRAY[$row][$num]));
+            $SYLK_SIZE[$num]        = max($SYLK_SIZE[$num], Toolbox::strlen($SYLK_ARRAY[$row][$num]));
             break;
 
          case Search::CSV_OUTPUT : //csv
-            $value = preg_replace('/'.Search::LBBR.'/','<br>',$value);
-            $value = preg_replace('/'.Search::LBHR.'/','<hr>',$value);
+            $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
+            $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
             $value = Html::weblink_extract($value);
-            
+
             $quotes = "";
             if ($params['quotes']) {
                $quotes = "\"";
             }
-           
+
             switch ($params['encoding']) {
                case self::ANSI_ENCODING :
                   $out = "$quotes".Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252')."$quotes".$_SESSION["glpicsv_delimiter"];
@@ -910,28 +828,27 @@ class PluginRacksReport extends CommonDBTM {
          default :
             $out = "<td $extraparam valign='top'>";
 
-            if (!preg_match('/'.Search::LBHR.'/',$value)) {
-               $values = preg_split('/'.Search::LBBR.'/i',$value);
+            if (!preg_match('/'.Search::LBHR.'/', $value)) {
+               $values         = preg_split('/'.Search::LBBR.'/i', $value);
                $line_delimiter = '<br>';
             } else {
-               $values = preg_split('/'.Search::LBHR.'/i',$value);
+               $values         = preg_split('/'.Search::LBHR.'/i', $value);
                $line_delimiter = '<hr>';
             }
             $limitto = 20;
             if (count($values) > $limitto) {
-               for ( $i=0 ; $i<$limitto ; $i++) {
+               for ($i = 0; $i < $limitto; $i++) {
                   $out .= $values[$i].$line_delimiter;
                }
 //                $rand=mt_rand();
                $out .= "...&nbsp;";
-               $value = preg_replace('/'.Search::LBBR.'/','<br>',$value);
-               $value = preg_replace('/'.Search::LBHR.'/','<hr>',$value);
-               $out .= Html::showToolTip($value,array('display'   => false,
-                                                      'autoclose' => false));
-
+               $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
+               $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+               $out .= Html::showToolTip($value, array('display'   => false,
+                        'autoclose' => false));
             } else {
-               $value = preg_replace('/'.Search::LBBR.'/','<br>',$value);
-               $value = preg_replace('/'.Search::LBHR.'/','<hr>',$value);
+               $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
+               $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
                $out .= $value;
             }
             $out .= "</td>\n";
@@ -939,4 +856,171 @@ class PluginRacksReport extends CommonDBTM {
       $num++;
       return $out;
    }
+
+   /**
+    * Print pager for search option (first/previous/next/last)
+    *
+    * @param $start                       from witch item we start
+    * @param $numrows                     total items
+    * @param $target                      page would be open when click on the option (last,previous etc)
+    * @param $parameters                  parameters would be passed on the URL.
+    * @param $item_type_output            item type display - if >0 display export PDF et Sylk form
+    *                                     (default 0)
+    * @param $item_type_output_param      item type parameter for export (default 0)
+    * @param $additional_info             Additional information to display (default '')
+    *
+    * @return nothing (print a pager)
+    *
+    * */
+   function printPager($start, $numrows, $target, $parameters, $item_type_output = 0, $item_type_output_param = 0, $additional_info = '') {
+      global $CFG_GLPI;
+
+      $list_limit = $_SESSION['glpilist_limit'];
+      // Forward is the next step forward
+      $forward    = $start + $list_limit;
+
+      // This is the end, my friend
+      $end = $numrows - $list_limit;
+
+      // Human readable count starts here
+
+      $current_start = $start + 1;
+
+      // And the human is viewing from start to end
+      $current_end = $current_start + $list_limit - 1;
+      if ($current_end > $numrows) {
+         $current_end = $numrows;
+      }
+
+      // Empty case
+      if ($current_end == 0) {
+         $current_start = 0;
+      }
+
+      // Backward browsing
+      if ($current_start - $list_limit <= 0) {
+         $back = 0;
+      } else {
+         $back = $start - $list_limit;
+      }
+
+      // Print it
+      echo "<div><table class='tab_cadre_pager'>";
+      echo "<tr>";
+
+      // Back and fast backward button
+      if (!$start == 0) {
+         echo "<th class='left'>";
+         echo "<a href='$target?$parameters&amp;start=0'>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/first.png' alt=\"".__s('Start').
+         "\" title=\"".__s('Start')."\">";
+         echo "</a></th>";
+         echo "<th class='left'>";
+         echo "<a href='$target?$parameters&amp;start=$back'>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/left.png' alt=\"".__s('Previous').
+         "\" title=\"".__s('Previous')."\">";
+         echo "</a></th>";
+      }
+
+      // Print the "where am I?"
+      echo "<td width='50%' class='tab_bg_2'>";
+      Html::printPagerForm("$target?$parameters&amp;start=$start");
+      echo "</td>";
+
+      if (!empty($additional_info)) {
+         echo "<td class='tab_bg_2'>";
+         echo $additional_info;
+         echo "</td>";
+      }
+
+      if (!empty($item_type_output) && isset($_SESSION["glpiactiveprofile"]) && ($_SESSION["glpiactiveprofile"]["interface"] == "central")) {
+         echo "<td class='tab_bg_2' width='30%'>";
+         echo "<form method='GET' action='".$target."' target='_blank'>";
+         
+         echo Html::hidden('item_type', array('value' => $item_type_output));
+
+         if ($item_type_output_param != 0) {
+            echo Html::hidden('item_type_param', array('value' => Toolbox::prepareArrayForInput($item_type_output_param)));
+         }
+         $split = explode("&amp;", $parameters);
+
+         for ($i = 0; $i < count($split); $i++) {
+            $pos    = Toolbox::strpos($split[$i], '=');
+            $length = Toolbox::strlen($split[$i]);
+            echo Html::hidden(Toolbox::substr($split[$i], 0, $pos), array('value' => urldecode(Toolbox::substr($split[$i], $pos + 1))));
+         }
+         
+         Dropdown::showOutputFormat();
+         $this->showCSVOptions();
+         
+         echo "<script type='text/javascript'>";
+         echo "$('select[name=display_type]').change(function() {
+                  switch($(this).val()){
+                     case '3' :case '-3' :
+                        $('#display_csv_preferences').css('display', 'block');
+                        break;
+                     default : 
+                        $('#display_csv_preferences').css('display', 'none');
+                        break;
+                  }
+               });";
+         echo "</script>";
+         
+         Html::closeForm();
+         echo "</td>";
+      }
+
+      echo "<td width='50%' class='tab_bg_2 b'>";
+      //TRANS: %1$d, %2$d, %3$d are page numbers
+      printf(__('From %1$d to %2$d on %3$d'), $current_start, $current_end, $numrows);
+      echo "</td>\n";
+
+      // Forward and fast forward button
+      if ($forward < $numrows) {
+         echo "<th class='right'>";
+         echo "<a href='$target?$parameters&amp;start=$forward'>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/right.png' alt=\"".__s('Next').
+         "\" title=\"".__s('Next')."\">";
+         echo "</a></th>\n";
+
+         echo "<th class='right'>";
+         echo "<a href='$target?$parameters&amp;start=$end'>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/last.png' alt=\"".__s('End').
+         "\" title=\"".__s('End')."\">";
+         echo "</a></th>\n";
+      }
+      // End pager
+      echo "</tr></table></div>";
+   }
+   
+   function showCSVOptions() {
+      echo "<div id='display_csv_preferences' style='display:none'>";
+      echo "<table class='tab_cadre_fixe'>";
+      // Encoding
+      echo "<tr>";
+      echo "<td>".__('Encoding', 'racks')."</td>";
+      echo "<td>";
+      Dropdown::showFromArray("encoding", array('UTF-8 unicode', 'ANSI'), array('width' => '150px'));
+      echo "</td>";
+      echo "</tr>";
+
+      // Quotes
+      echo "<tr>";
+      echo "<td>".__('Quotes', 'racks')."</td>";
+      echo "<td>";
+      Dropdown::showYesNo("quotes", 0, -1, array('width' => '100px'));
+      echo "</td>";
+      echo "</tr>";
+
+      // End of line
+      echo "<tr>";
+      echo "<td>".__('End of line', 'racks')."</td>";
+      echo "<td>";
+      Dropdown::showFromArray("end_of_line", array('Windows', 'Unix'), array('width' => '100px'));
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "</div>";
+   }
+
 }

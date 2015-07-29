@@ -37,22 +37,22 @@ include ('../../../inc/includes.php');
 
 $output_type = Search::HTML_OUTPUT;
 
-if (isset($_POST['list_limit'])) {
-   $_SESSION['glpilist_limit'] = $_POST['list_limit'];
-   unset($_POST['list_limit']);
+if (isset($_REQUEST['list_limit'])) {
+   $_SESSION['glpilist_limit'] = $_REQUEST['list_limit'];
+   unset($_REQUEST['list_limit']);
 }
 if (!isset($_REQUEST['sort'])) {
-   $_REQUEST['sort'] = "entity";
+   $_REQUEST['sort']  = "entity";
    $_REQUEST['order'] = "ASC";
 }
 
 $limit = $_SESSION['glpilist_limit'];
 
-if (isset($_POST["display_type"])) {
-   $output_type = $_POST["display_type"];
+if (isset($_REQUEST["display_type"])) {
+   $output_type = $_REQUEST["display_type"];
    if ($output_type < 0) {
       $output_type = - $output_type;
-      $limit = 0;
+      $limit       = 0;
    }
 }
 
@@ -61,12 +61,13 @@ $pReport = new PluginRacksReport();
 if ($output_type == Search::HTML_OUTPUT) {
    Html::header(__("Report - Bays management","racks"), $_SERVER['PHP_SELF'], "utils", "report");
    Report::title();
-   $pReport->showForm($_POST);
+   $pReport->showForm($_REQUEST);
 }
 
-if (isset($_POST['result_search_reports']) || isset($_GET['result_search_reports'])){
-   $pReport->showResult($output_type, $limit, $_POST);
+if (isset($_REQUEST['result_search_reports'])){
+   $pReport->showResult($output_type, $limit, $_REQUEST);
 }
+
 if ($output_type == Search::HTML_OUTPUT) {
    Html::footer();
 }
