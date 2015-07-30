@@ -323,19 +323,24 @@ class PluginRacksRack_Item extends CommonDBTM {
          $PluginRacksItemSpecification = new PluginRacksItemSpecification;
          $PluginRacksItemSpecification->GetfromDB($spec);
          $length=$PluginRacksItemSpecification->fields["length"];
-
+         
+         
          if(isset($length_table[$position]) 
             && $length_table[$position] == 0 
                && $length == 1) {
             $space_left = -1;
          }
-
+         
          foreach ($position_table as $key => $val) {
             foreach ($server_size as $cle => $value) {
                if ($val==$value)
                   $space_left = -1;
             }
          }
+         
+         if ($device_size > $position)
+            $space_left = -1;
+            
          //reste a gerer les inclusions en 1 avec size > 1
          if ($device_size>1 && ($position==1 || $position==01))
             $space_left = -1;
