@@ -182,7 +182,7 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("Bay name", "racks"), 'name', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num, __("Position", "racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, __("Location"), 'location', false, $params);
             $cptField++;
 
             $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'roomlocation', false, $params);
@@ -238,7 +238,7 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("Bay name", "racks"), 'rack_name', false, $params);
             $listFields['rack_name'] = true;
 
-            $this->showTitle($output_type, $num, __("Position", "racks"), 'location', false, $params);
+            $this->showTitle($output_type, $num, __("Location"), 'location', false, $params);
             $listFields['location'] = true;
 
             $this->showTitle($output_type, $num, _n("Place", "Places", 1, "racks"), 'roomlocation', false, $params);
