@@ -780,7 +780,10 @@ class PluginRacksRack_Item extends CommonDBTM {
                      echo "<td class='center'>".$item::getTypeName(2)."</td>";
 
                      $linkmodel=Toolbox::getItemTypeFormURL($modelclass);
-                     echo "<td class='center'><a href=\"".$linkmodel."?id=".$device_spec["modelid"]."\">" . $device_spec["model"] . " (" . $device_spec["size"] . "U)</a></td>";
+                     $trans = DropdownTranslation::getTranslatedValue($device_spec["modelid"], $modelclass,'name',
+                                         $_SESSION['glpilanguage']);
+                                         
+                     echo "<td class='center'><a href=\"".$linkmodel."?id=".$device_spec["modelid"]."\">" . $trans . " (" . $device_spec["size"] . "U)</a></td>";
 
                      echo "<td class='center'>";
                      echo Dropdown::getDropdownName("glpi_plugin_racks_connections",$data["first_powersupply"]);

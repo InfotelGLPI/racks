@@ -35,6 +35,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksRoomLocation extends CommonTreeDropdown {
 
    static $rightname = "plugin_racks";
+   var $can_be_translated  = true;
    
    static function getTypeName($nb = 0) {
       return _n('Place', 'Places', $nb, 'racks');

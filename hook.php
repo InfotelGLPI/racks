@@ -175,7 +175,7 @@ function plugin_racks_uninstall() {
                "glpi_bookmarks",
                "glpi_logs",
                "glpi_items_tickets",
-               "glpi_contracts_items");
+               "glpi_dropdowntranslations");
 
    foreach($tables_glpi as $table_glpi)
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks';");

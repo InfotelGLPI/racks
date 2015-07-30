@@ -34,7 +34,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksConnection extends CommonDropdown {
 
    static $rightname = "plugin_racks";
-
+   var $can_be_translated  = true;
+   
    static function getTypeName($nb=0) {
       return _n('Power supply connection', 'Power supply connections', $nb, 'racks');
    }
