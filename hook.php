@@ -132,6 +132,7 @@ function plugin_racks_install() {
 }
 
 function plugin_racks_uninstall() {
+   global $DB;
    
    include_once (GLPI_ROOT."/plugins/racks/inc/profile.class.php");
    include_once (GLPI_ROOT."/plugins/racks/inc/menu.class.php");
