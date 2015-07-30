@@ -313,11 +313,9 @@ class PluginRacksReport extends CommonDBTM {
 
             // lieu
             if ($groupByRackName || $currentRack != $row['id']) {
-               $tmpId  = $row['locations_id'];
-               $tmpObj = new Location();
-               $tmpObj->getFromDB($tmpId);
-               if (isset($tmpObj->fields['name'])) {
-                  echo self::showItem($output_type, $tmpObj->fields['name'], $num, $cptRow, null, $params);
+
+               if (isset($row['locations_id'])) {
+                  echo self::showItem($output_type, Dropdown::getDropdownName("glpi_locations", $row['locations_id']), $num, $cptRow, null, $params);
                } else {
                   echo self::showItem($output_type, "&nbsp;", $num, $cptRow, null, $params);
                }
@@ -328,10 +326,21 @@ class PluginRacksReport extends CommonDBTM {
             // Emplacement
             if ($groupByRackName || $currentRack != $row['id']) {
                $tmpId  = $row['plugin_racks_roomlocations_id'];
+               
+               $tmpId  = $row['plugin_racks_roomlocations_id'];
                $tmpObj = new PluginRacksRoomLocation();
                $tmpObj->getFromDB($tmpId);
-               if (isset($tmpObj->fields['name'])) {
-                  echo self::showItem($output_type, $tmpObj->fields['name'], $num, $cptRow, null, $params);
+               
+               
+               $trans = DropdownTranslation::getTranslatedValue($tmpId, "PluginRacksRoomLocation",'name',
+                                         $_SESSION['glpilanguage']);
+               $trans_name = $tmpObj->fields['name'];
+               if (!empty($trans)) {
+                  $trans_name = $trans;
+               }  
+                                         
+               if (isset($tmpId)) {
+                  echo self::showItem($output_type, $trans_name, $num, $cptRow, null, $params);
                } else {
                   echo self::showItem($output_type, '&nbsp;', $num, $cptRow, null, $params);
                }
