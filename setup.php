@@ -44,6 +44,7 @@ function plugin_init_racks() {
       $PLUGIN_HOOKS['assign_to_ticket']['racks'] = true;
       Plugin::registerClass('PluginRacksRack', 
                             array('document_types'       => true,
+                                  'location_types'       => true,
                                   'unicity_types'        => true,
                                   'linkgroup_tech_types' => true,
                                   'linkuser_tech_types'  => true,
