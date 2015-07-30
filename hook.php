@@ -170,12 +170,15 @@ function plugin_racks_uninstall() {
       $migration->dropTable($table);
    }
 
-   $itemtypes = array("DisplayPreference", "Document_Item",
-                      "Bookmark", "Log", "Item_Ticket");
-   foreach($itemtypes as $itemtype) {
-      $item = new $itemtype();
-      $item->deleteByCriteria(array('itemtype' => 'PluginRacksRack'));
-   }
+   $tables_glpi = array("glpi_displaypreferences",
+               "glpi_documents_items",
+               "glpi_bookmarks",
+               "glpi_logs",
+               "glpi_items_tickets",
+               "glpi_contracts_items");
+
+   foreach($tables_glpi as $table_glpi)
+      $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks';");
    
    //Delete rights associated with the plugin
    $profileRight = new ProfileRight();
