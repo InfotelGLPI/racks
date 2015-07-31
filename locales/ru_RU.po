@@ -3,21 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2012-2013
-# Xavier CAILLAUD <tsmr@thetsmr.fr>, 2013
+# Kirill <consolko@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - racks plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-29 12:17+0100\n"
-"PO-Revision-Date: 2014-11-17 15:56+0000\n"
-"Last-Translator: Xavier CAILLAUD <tsmr@thetsmr.fr>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/GLPI_racks/language/pt_BR/)\n"
+"PO-Revision-Date: 2015-03-16 13:21+0000\n"
+"Last-Translator: Kirill <consolko@gmail.com>\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/GLPI_racks/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: hook.php:249 inc/rack.class.php:75 inc/rack.class.php:252
 #: inc/rack_item.class.php:1125 inc/rack_item.class.php:1214
@@ -25,62 +24,70 @@ msgstr ""
 #: inc/roomlocation.class.php:40
 msgid "Place"
 msgid_plural "Places"
-msgstr[0] "Lugar"
-msgstr[1] "Lugares"
+msgstr[0] "Размещение"
+msgstr[1] "Размещение"
+msgstr[2] "Размещение"
+msgstr[3] "Размещение"
 
 #: hook.php:251 inc/connection.class.php:39
 msgid "Power supply connection"
 msgid_plural "Power supply connections"
-msgstr[0] "Conexão de fonte de alimentação"
-msgstr[1] "Conexões de fontes de alimentação"
+msgstr[0] "Тип подключения питания"
+msgstr[1] "Тип подключения питания"
+msgstr[2] "Тип подключения питания"
+msgstr[3] "Тип подключения питания"
 
 #: hook.php:252 inc/other.class.php:39 inc/othermodel.class.php:39
 msgid "Others equipments"
-msgstr "Outros equipamentos"
+msgstr "Другое оборудование"
 
 #: hook.php:267 inc/menu.class.php:35 inc/profile.class.php:115
 msgid "Rack enclosure"
 msgid_plural "Rack enclosures"
-msgstr[0] "Rack"
-msgstr[1] "Racks"
+msgstr[0] "Стойка"
+msgstr[1] "Стойки"
+msgstr[2] "Стоек"
+msgstr[3] "Стоек"
 
 #: setup.php:86 front/report.php:62
 msgid "Report - Bays management"
-msgstr ""
+msgstr "Отчет - Учет по стойкам"
 
 #: setup.php:93 inc/rack.class.php:48
 msgid "Rack enclosure management"
 msgid_plural "Rack enclosures management"
-msgstr[0] "Gerenciamento de rack"
-msgstr[1] "Gerenciamento de racks"
+msgstr[0] "Конфигурация стойки"
+msgstr[1] "Конфигурация стойки"
+msgstr[2] "Конфигурация стойки"
+msgstr[3] "Конфигурация стойки"
 
 #: setup.php:108
 msgid "This plugin requires GLPI >= 0.85"
-msgstr ""
+msgstr "Этому расширению необходима версия GLPI >= 0.85"
 
 #: front/config.form.php:49
 msgid "Please activate the plugin"
-msgstr "Por favor, ative o plug-in"
+msgstr "Пожалуйста активируйте расширение"
 
 #: front/rack.form.php:90 front/rack.form.php:134
 msgid "No more place for insertion"
-msgstr "Não há mais espaço para inserir"
+msgstr "Больше нет места для добавления"
 
 #: inc/config.class.php:45
 msgid "Configuration of units"
-msgstr "Configuração de unidades"
+msgstr "Конфигурация узлов"
 
 #: inc/config.class.php:60
 msgid "metric"
-msgstr "métrica"
+msgstr "метрическая"
 
 #: inc/config.class.php:65
 msgid "English"
-msgstr "Inglês"
+msgstr "Английская"
 
 #: inc/config.class.php:84
 msgid "kg"
-msgstr "kg"
+msgstr "кг"
 
 #: inc/config.class.php:85
 msgid "btu/h"
@@ -92,7 +99,7 @@ msgstr "m3/h"
 
 #: inc/config.class.php:87
 msgid "mm"
-msgstr "mm"
+msgstr "мм"
 
 #: inc/config.class.php:89
 msgid "lbs"
@@ -100,7 +107,7 @@ msgstr "lbs"
 
 #: inc/config.class.php:90
 msgid "watts"
-msgstr "watts"
+msgstr "Ватт"
 
 #: inc/config.class.php:91
 msgid "CFM"
@@ -108,81 +115,87 @@ msgstr "CFM"
 
 #: inc/config.class.php:92
 msgid "pouces"
-msgstr "polegadas"
+msgstr ""
 
 #: inc/itemspecificationcentral.class.php:39
 #: inc/itemspecification.class.php:39 inc/menu.class.php:65
 #: inc/menu.class.php:66 inc/profile.class.php:119
 msgid "Equipments models specifications"
-msgstr "Especificação de modelos do equipamentos"
+msgstr "Спецификация оборудования"
 
 #: inc/itemspecificationcentral.class.php:51
 msgid "Servers"
-msgstr "Servidores"
+msgstr "Сервера"
 
 #: inc/itemspecificationcentral.class.php:52
 msgid "Network equipment"
 msgid_plural "Network equipments"
-msgstr[0] "Equipamento de rede"
-msgstr[1] "Equipamentos de rede"
+msgstr[0] "Сетевые устройства"
+msgstr[1] "Сетевые устройства"
+msgstr[2] "Сетевые устройства"
+msgstr[3] "Сетевые устройства"
 
 #: inc/itemspecificationcentral.class.php:53
 msgid "Peripheral"
 msgid_plural "Peripherals"
-msgstr[0] "Periférico"
-msgstr[1] "Periféricos"
+msgstr[0] "Периферийные устройства"
+msgstr[1] "Периферийные устройства"
+msgstr[2] "Периферийные устройства"
+msgstr[3] "Периферийные устройства"
 
 #: inc/itemspecificationcentral.class.php:54
 msgid "Other equipment"
 msgid_plural "Others equipments"
-msgstr[0] "Outro equipamento"
-msgstr[1] "Outros equipamentos"
+msgstr[0] "Другое оборудование"
+msgstr[1] "Другое оборудование"
+msgstr[2] "Другое оборудование"
+msgstr[3] "Другое оборудование"
 
 #: inc/itemspecification.class.php:52 inc/menu.class.php:54
 #: inc/rack_item.class.php:170
 msgid "Specifications"
-msgstr "Especificações"
+msgstr "Спецификация"
 
 #: inc/itemspecification.class.php:249 inc/itemspecification.class.php:337
 msgid "Full-depth item"
-msgstr "Profundidade completa do item"
+msgstr "Полная глубина устройства"
 
 #: inc/itemspecification.class.php:258 inc/itemspecification.class.php:326
 #: inc/rack.class.php:405
 msgid "Power supplies number"
-msgstr "Quantidade de fontes de alimentação"
+msgstr "Кол-во источников питания"
 
 #: inc/itemspecification.class.php:263 inc/itemspecification.class.php:325
 #: inc/rack_item.class.php:615
 msgid "Total Current"
-msgstr "Consumo da corrente"
+msgstr "Общий ток"
 
 #: inc/itemspecification.class.php:271 inc/itemspecification.class.php:327
 #: inc/rack.class.php:407 inc/rack_item.class.php:199
 #: inc/rack_item.class.php:616
 msgid "Calorific waste"
-msgstr "Dissipação de calor"
+msgstr "Выделение тепла"
 
 #: inc/itemspecification.class.php:278 inc/itemspecification.class.php:330
 #: inc/rack_item.class.php:620
 msgid "Flow Rate"
-msgstr "Fluxo de ar"
+msgstr ""
 
 #: inc/itemspecification.class.php:288 inc/itemspecification.class.php:334
 #: inc/rack.class.php:304 inc/rack.class.php:409 inc/rack_item.class.php:219
 #: inc/rack_item.class.php:624
 msgid "Weight"
-msgstr "Peso"
+msgstr "Вес"
 
 #: inc/itemspecification.class.php:324 inc/rack_item.class.php:479
 msgid "Equipment"
-msgstr "Equipamento"
+msgstr "Оборудование"
 
 #: inc/itemspecification.class.php:325 inc/rack.class.php:426
 #: inc/rack_item.class.php:191 inc/rack_item.class.php:615
 #: inc/rack_item.class.php:874 inc/rack_item.class.php:875
 msgid "amps"
-msgstr "amps"
+msgstr "ампер"
 
 #: inc/itemspecification.class.php:333 inc/rack.class.php:226
 #: inc/rack_item.class.php:844 inc/rack_item.class.php:856
@@ -194,34 +207,34 @@ msgstr "U"
 
 #: inc/itemspecification.class.php:371
 msgid "Add specifications for servers models"
-msgstr "Adicionar especificações de modelos de servidores"
+msgstr "Добавить спецификацию модели"
 
 #: inc/rack.class.php:104 inc/rack.class.php:288
 msgid "Height"
-msgstr "Altura"
+msgstr "Высота"
 
 #: inc/rack.class.php:109 inc/rack.class.php:271
 msgid "Width"
-msgstr "Largura"
+msgstr "Ширина"
 
 #: inc/rack.class.php:114 inc/rack.class.php:322
 msgid "Depth"
-msgstr "Profundidade"
+msgstr "Глубина"
 
 #: inc/rack.class.php:406 inc/rack_item.class.php:191
 msgid "Total current"
-msgstr "Total atual"
+msgstr "Общий ток"
 
 #: inc/rack.class.php:408 inc/rack_item.class.php:209
 msgid "Flow rate"
-msgstr "Fluxo de ar"
+msgstr ""
 
 #: inc/rack_item.class.php:64 inc/rack_item.class.php:68
 #: inc/rack_item.class.php:1164 inc/rack_item.class.php:1226
 #: inc/report.class.php:264 inc/report.class.php:322 inc/report.class.php:426
 #: inc/report.class.php:549 inc/report.class.php:559
 msgid "Front"
-msgstr "Frente"
+msgstr "Лицевая часть"
 
 #: inc/rack_item.class.php:71 inc/rack_item.class.php:75
 #: inc/rack_item.class.php:1166 inc/rack_item.class.php:1228
@@ -229,96 +242,98 @@ msgstr "Frente"
 #: inc/report.class.php:549 inc/report.class.php:559
 msgctxt "Rack enclosure"
 msgid "Back"
-msgstr "Voltar"
+msgstr "Задняя часть"
 
 #: inc/rack_item.class.php:173 inc/rack_item.class.php:612
 msgid "Power supply 1"
-msgstr "Fonte de alimentação 1"
+msgstr "Источник питания 1"
 
 #: inc/rack_item.class.php:183 inc/rack_item.class.php:613
 msgid "Power supply 2"
-msgstr "Fonte de alimentação 2"
+msgstr "Источник питания 2"
 
 #: inc/rack_item.class.php:478
 msgid "Add equipment"
-msgstr "Adicionar equipamento"
+msgstr "Добавление оборудования"
 
 #: inc/rack_item.class.php:480
 msgid ""
 "Thanks to setup equipments models specifications prior to associate them"
-msgstr "Obrigado por configurar as especificações dos modelos de equipamentos antes de associá-los"
+msgstr ""
 
 #: inc/rack_item.class.php:483 inc/rack_item.class.php:608
 #: inc/rack_item.class.php:1123 inc/rack_item.class.php:1212
 #: inc/report.class.php:258 inc/report.class.php:316
 msgid "Position"
-msgstr "Posição"
+msgstr "Позиция"
 
 #: inc/rack_item.class.php:564
 msgid "Rack enclosure arrangement"
-msgstr "Organização do rack"
+msgstr "Размещенное в стойке оборудование"
 
 #: inc/rack_item.class.php:614
 msgid "C13 Power Cord Quantity"
-msgstr "Quantidade de cabo de força C13"
+msgstr "Кол-во шнуров питания"
 
 #: inc/rack_item.class.php:856
 msgid "Total Servers"
-msgstr "Total de servidores"
+msgstr "Всего серверов"
 
 #: inc/rack_item.class.php:858
 msgid "Total Network equipements"
-msgstr "Total de equipamentos de rede"
+msgstr "Всего сетевых устройств"
 
 #: inc/rack_item.class.php:860
 msgid "Total Peripherals"
-msgstr "Total de periféricos"
+msgstr "Всего периферийных устройств"
 
 #: inc/rack_item.class.php:862
 msgid "Total Others"
-msgstr "Total de outros"
+msgstr "Всего других устройств"
 
 #: inc/rack_item.class.php:868 inc/rack_item.class.php:870
 msgid "U availables"
-msgstr "U disponíveis"
+msgstr "U свободно"
 
 #: inc/rack_item.class.php:873
 msgid "Total power Cords"
-msgstr "Total de cabos de força"
+msgstr "Общее кол-во кабелей электропитания"
 
 #: inc/rack_item.class.php:874
 msgid "Amperage on power Cords"
-msgstr "Amperagem dos cabos de força"
+msgstr "Общая сила тока в кабелях электропитания"
 
 #: inc/rack_item.class.php:948
 msgid "Left rack enclosure"
-msgstr "Rack da esquerda"
+msgstr ""
 
 #: inc/rack_item.class.php:950
 msgid "No rack enclosure on the left"
-msgstr "Nenhum rack na esquerda"
+msgstr ""
 
 #: inc/rack_item.class.php:971
 msgid "Right rack enclosure"
-msgstr "Rack da direita"
+msgstr ""
 
 #: inc/rack_item.class.php:973
 msgid "No rack enclosure on the right"
-msgstr "Nenhum rack na direita"
+msgstr ""
 
 #: inc/rack_item.class.php:1122 inc/rack_item.class.php:1211
 msgid "Disposition"
-msgstr "Disposição"
+msgstr ""
 
 #: inc/rack_item.class.php:1209
 msgid "Associated rack enclosure"
 msgid_plural "Associated rack enclosures"
-msgstr[0] "Rack associado"
-msgstr[1] "Racks associados"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: inc/report.class.php:190
 msgid "Encoding"
-msgstr ""
+msgstr "Кодировка"
 
 #: inc/report.class.php:196
 msgid "Quotes"
@@ -330,28 +345,28 @@ msgstr ""
 
 #: inc/report.class.php:252 inc/report.class.php:310 inc/report.class.php:539
 msgid "Bay name"
-msgstr ""
+msgstr "Наименование"
 
 #: inc/report.class.php:270 inc/report.class.php:325 inc/report.class.php:570
 msgid "Object name"
-msgstr ""
+msgstr "Наименование объекта"
 
 #: inc/report.class.php:277 inc/report.class.php:328 inc/report.class.php:576
 msgid "Object location"
-msgstr ""
+msgstr "Расположение объекта"
 
 #: inc/report.class.php:536
 msgid "Search criteria"
-msgstr ""
+msgstr "Критерии поиска"
 
 #: inc/report.class.php:563
 msgid "Field to export"
-msgstr ""
+msgstr "Поля для экспорта"
 
 #: inc/report.class.php:612
 msgid "Display options"
-msgstr ""
+msgstr "Опции отображения"
 
 #: inc/report.class.php:620
 msgid "Group by bay name"
-msgstr ""
+msgstr "Группировка по наименованию стойки"

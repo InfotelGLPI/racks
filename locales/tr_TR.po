@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Kaya Zeren <kayazeren@gmail.com>, 2013-2014
+# Kaya Zeren <kayazeren@gmail.com>, 2013-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - racks plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-29 12:17+0100\n"
-"PO-Revision-Date: 2014-11-18 05:59+0000\n"
+"PO-Revision-Date: 2015-07-31 07:42+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/GLPI_racks/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
@@ -51,11 +51,11 @@ msgstr[0] "Rack kabin yönetimi"
 
 #: setup.php:108
 msgid "This plugin requires GLPI >= 0.85"
-msgstr "Bu uyumlu ek GLPI 0.85 sürümü ve üzerinde çalışır"
+msgstr "Bu uygulama eki GLPI 0.85 sürümü ve üzerinde çalışır"
 
 #: front/config.form.php:49
 msgid "Please activate the plugin"
-msgstr "Lütfen uyumlu eki etkinleştirin"
+msgstr "Lütfen uygulama ekini etkinleştirin"
 
 #: front/rack.form.php:90 front/rack.form.php:134
 msgid "No more place for insertion"
