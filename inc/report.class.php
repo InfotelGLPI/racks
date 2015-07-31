@@ -329,16 +329,17 @@ class PluginRacksReport extends CommonDBTM {
                
                $tmpId  = $row['plugin_racks_roomlocations_id'];
                $tmpObj = new PluginRacksRoomLocation();
-               $tmpObj->getFromDB($tmpId);
-               
-               
+               $trans_name = "";
+               if ($tmpObj->getFromDB($tmpId)) {
+                  $trans_name = $tmpObj->fields['name'];
+               }
                $trans = DropdownTranslation::getTranslatedValue($tmpId, "PluginRacksRoomLocation",'name',
                                          $_SESSION['glpilanguage']);
-               $trans_name = $tmpObj->fields['name'];
+
                if (!empty($trans)) {
                   $trans_name = $trans;
                }  
-                                         
+
                if (isset($tmpId)) {
                   echo self::showItem($output_type, $trans_name, $num, $cptRow, null, $params);
                } else {
