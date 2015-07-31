@@ -179,7 +179,7 @@ function plugin_racks_uninstall() {
                "glpi_dropdowntranslations");
 
    foreach($tables_glpi as $table_glpi)
-      $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks';");
+      $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks%';");
    
    //Delete rights associated with the plugin
    $profileRight = new ProfileRight();
