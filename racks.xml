@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Racks / Bays Management</name>
+   <key>racks</key>
+   <state>stable</state>
+   <logo></logo>
+   <description>
+      <short>
+         <fr><![CDATA[Gestion de vos baies. Ce plugin vous permet de créer des baies. Gérer l’emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.]]></fr>
+         <en><![CDATA[Bay (racks) management. This plugin allows you to create bays. Manage the placement of your materials in your bays. And so know the space and its power consumption and heat dissipation.]]></en>
+      </short>
+      <long>
+         <fr><![CDATA[Ce plugin vous permet de créer des baies. Gérer l’emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.<br />-Détail d'une baie : hauteur - largeur - profondeur - poids - nombre de U.<br />-Gestion de l'avant et de l'arrière.<br />-Définition de modèles de matériel utilisable et spécifications (Courant consommé, nombre d'alimentations, dissipation calorifique, Débit d'air frais, taille (U), poids, longueur)]]></fr>
+         <en><![CDATA[This plugin allows you to create bays. Manage the placement of your materials in your bays. And so know the space and its power consumption and heat dissipation.<br />-Bay detail : height - width - depth - weight - number of U.<br />-Front and back management.<br />-Definition of model specifications and materials used (power consumption, numbre of power supply, calorific waste, flow Rate, size (U), weight, depth)]]></en>
+      </long>
+   </description>
+   <homepage>https://github.com/InfotelGLPI/racks</homepage>
+   <download>https://github.com/InfotelGLPI/racks/releases</download>
+   <authors>
+      <author>Xavier Caillaud / Infotel</author>
+   </authors>
+   <versions>
+      <version>
+          <num>1.6.0</num>
+          <compatibility>0.90</compatibility>
+      </version>
+      <version>
+          <num>1.5.0</num>
+          <compatibility>0.85</compatibility>
+      </version>
+      <version>
+          <num>1.4.1</num>
+          <compatibility>0.84</compatibility>
+      </version>
+      <version>
+          <num>1.4.0</num>
+          <compatibility>0.84</compatibility>
+      </version>
+      <version>
+          <num>1.3.2</num>
+          <compatibility>0.83.3</compatibility>
+      </version>
+      <version>
+          <num>1.3.1</num>
+          <compatibility>0.83</compatibility>
+      </version>
+      <version>
+          <num>1.3.0</num>
+          <compatibility>0.83</compatibility>
+      </version>
+      <version>
+          <num>1.2.0</num>
+          <compatibility>0.80</compatibility>
+      </version>
+      <version>
+          <num>1.1.0</num>
+          <compatibility>0.78</compatibility>
+      </version>
+      <version>
+          <num>1.0.3</num>
+          <compatibility>0.72.1</compatibility>
+      </version>
+      <version>
+          <num>1.0.2</num>
+          <compatibility>0.72.1</compatibility>
+      </version>
+      <version>
+          <num>1.0.1</num>
+          <compatibility>0.72.1</compatibility>
+      </version>
+      <version>
+          <num>1.0.0</num>
+          <compatibility>0.72</compatibility>
+      </version>
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+      <lang>de_DE</lang>
+      <lang>es_ES</lang>
+      <lang>es_AR</lang>
+      <lang>cs_CZ</lang>
+      <lang>fi_FI</lang>
+      <lang>pl_PL</lang>
+      <lang>pt_BR</lang>
+      <lang>ro_RO</lang>
+      <lang>ru_RU</lang>
+      <lang>tr_TR</lang>
+   </langs>
+   <license><![CDATA[GPL v2+]]></license>
+   <tags>
+         <fr>
+            <tag>Rack</tag>
+            <tag>Baie</tag>
+            <tag>Inventaire</tag>
+            <tag>Gestion</tag>
+         </fr>
+         <en>
+            <tag>Rack</tag>
+            <tag>Bay</tag>
+            <tag>Inventory</tag>
+            <tag>Management</tag>
+         </en>
+   </tags>
+</root>
