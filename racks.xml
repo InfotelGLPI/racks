@@ -10,14 +10,15 @@
          <en><![CDATA[Bay (racks) management. This plugin allows you to create bays. Manage the placement of your materials in your bays. And so know the space and its power consumption and heat dissipation.]]></en>
       </short>
       <long>
-         <fr><![CDATA[Ce plugin vous permet de créer des baies. Gérer l’emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.<br />-Détail d'une baie : hauteur - largeur - profondeur - poids - nombre de U.<br />-Gestion de l'avant et de l'arrière.<br />-Définition de modèles de matériel utilisable et spécifications (Courant consommé, nombre d'alimentations, dissipation calorifique, Débit d'air frais, taille (U), poids, longueur)]]></fr>
-         <en><![CDATA[This plugin allows you to create bays. Manage the placement of your materials in your bays. And so know the space and its power consumption and heat dissipation.<br />-Bay detail : height - width - depth - weight - number of U.<br />-Front and back management.<br />-Definition of model specifications and materials used (power consumption, numbre of power supply, calorific waste, flow Rate, size (U), weight, depth)]]></en>
+         <fr><![CDATA[Ce plugin vous permet de créer des baies. Gérer l’emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.<br />- Détail d'une baie : hauteur - largeur - profondeur - poids - nombre de U.<br />- Gestion de l'avant et de l'arrière.<br />- Définition de modèles de matériel utilisable et spécifications (Courant consommé, nombre d'alimentations, dissipation calorifique, Débit d'air frais, taille (U), poids, longueur)]]></fr>
+         <en><![CDATA[This plugin allows you to create bays. Manage the placement of your materials in your bays. And so know the space and its power consumption and heat dissipation.<br />- Bay detail : height - width - depth - weight - number of U.<br />- Front and back management.<br />- Definition of model specifications and materials used (power consumption, numbre of power supply, calorific waste, flow Rate, size (U), weight, depth)]]></en>
       </long>
    </description>
    <homepage>https://github.com/InfotelGLPI/racks</homepage>
    <download>https://github.com/InfotelGLPI/racks/releases</download>
    <authors>
-      <author>Xavier Caillaud / Infotel</author>
+     <author>Xavier Caillaud</author>
+      <author>Infotel</author>
    </authors>
    <versions>
       <version>
