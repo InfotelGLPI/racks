@@ -8,64 +8,65 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - racks plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-29 12:17+0100\n"
-"PO-Revision-Date: 2015-01-08 08:27+0000\n"
-"Last-Translator: Ilkka Yläkoski <iylakoski@learn-it2.fi>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/projects/p/GLPI_racks/language/fi_FI/)\n"
+"POT-Creation-Date: 2015-09-17 11:19+0200\n"
+"PO-Revision-Date: 2015-09-17 09:20+0000\n"
+"Last-Translator: Xavier CAILLAUD <tsmr@thetsmr.fr>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/tsmr/GLPI_racks/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hook.php:249 inc/rack.class.php:75 inc/rack.class.php:252
-#: inc/rack_item.class.php:1125 inc/rack_item.class.php:1214
-#: inc/report.class.php:255 inc/report.class.php:313
-#: inc/roomlocation.class.php:40
+#: hook.php:262 inc/rack.class.php:75 inc/rack.class.php:282
+#: inc/rack_item.class.php:1150 inc/rack_item.class.php:1239
+#: inc/report.class.php:188 inc/report.class.php:244
+#: inc/roomlocation.class.php:41
 msgid "Place"
 msgid_plural "Places"
 msgstr[0] "Paikka"
 msgstr[1] "Paikat"
 
-#: hook.php:251 inc/connection.class.php:39
+#: hook.php:264 inc/connection.class.php:40
 msgid "Power supply connection"
 msgid_plural "Power supply connections"
 msgstr[0] "Virransyötön liitäntä"
 msgstr[1] "Virransyötön liitännät"
 
-#: hook.php:252 inc/other.class.php:39 inc/othermodel.class.php:39
+#: hook.php:265 inc/other.class.php:39 inc/othermodel.class.php:40
 msgid "Others equipments"
 msgstr "Muut laitteet"
 
-#: hook.php:267 inc/menu.class.php:35 inc/profile.class.php:115
+#: hook.php:280 inc/menu.class.php:35 inc/profile.class.php:116
+#: inc/rack.class.php:48
 msgid "Rack enclosure"
 msgid_plural "Rack enclosures"
 msgstr[0] "Räkkikaappi"
 msgstr[1] "Räkkikaapit"
 
-#: setup.php:86 front/report.php:62
+#: setup.php:91 front/report.php:62
 msgid "Report - Bays management"
 msgstr "Raportti -  Räkkikaappien hallinta"
 
-#: setup.php:93 inc/rack.class.php:48
+#: setup.php:98
 msgid "Rack enclosure management"
 msgid_plural "Rack enclosures management"
 msgstr[0] "Räkkikaapin hallinta"
 msgstr[1] "Räkkikaappien hallinta"
 
-#: setup.php:108
-msgid "This plugin requires GLPI >= 0.85"
-msgstr "Tämä liitännäinen tarvitsee GLPI-version >= 0.85"
+#: setup.php:113
+msgid "This plugin requires GLPI >= 0.90"
+msgstr ""
 
 #: front/config.form.php:49
 msgid "Please activate the plugin"
 msgstr "Ota liitännäinen käyttöön"
 
-#: front/rack.form.php:90 front/rack.form.php:134
+#: front/rack.form.php:106 front/rack.form.php:159
 msgid "No more place for insertion"
 msgstr "Ei tilaa lisäykselle"
 
-#: inc/config.class.php:45
+#: inc/config.class.php:54
 msgid "Configuration of units"
 msgstr "Mittayksikö"
 
@@ -77,41 +78,49 @@ msgstr "SI-järjestelmä"
 msgid "English"
 msgstr "brittiläinen"
 
-#: inc/config.class.php:84
+#: inc/config.class.php:72
+msgid "Copy rack's location when adding a new asset in the rack"
+msgstr ""
+
+#: inc/config.class.php:81
+msgid "Forward rack's location to linked assets on change"
+msgstr ""
+
+#: inc/config.class.php:113
 msgid "kg"
 msgstr "kg"
 
-#: inc/config.class.php:85
+#: inc/config.class.php:114
 msgid "btu/h"
 msgstr "btu/t"
 
-#: inc/config.class.php:86
+#: inc/config.class.php:115
 msgid "m3/h"
 msgstr "m3/t"
 
-#: inc/config.class.php:87
+#: inc/config.class.php:116
 msgid "mm"
 msgstr "mm"
 
-#: inc/config.class.php:89
+#: inc/config.class.php:118
 msgid "lbs"
 msgstr "paunaa"
 
-#: inc/config.class.php:90
+#: inc/config.class.php:119
 msgid "watts"
 msgstr "wattia"
 
-#: inc/config.class.php:91
+#: inc/config.class.php:120
 msgid "CFM"
 msgstr "CFM"
 
-#: inc/config.class.php:92
+#: inc/config.class.php:121
 msgid "pouces"
 msgstr "tuumaa"
 
 #: inc/itemspecificationcentral.class.php:39
 #: inc/itemspecification.class.php:39 inc/menu.class.php:65
-#: inc/menu.class.php:66 inc/profile.class.php:119
+#: inc/menu.class.php:66 inc/profile.class.php:120
 msgid "Equipments models specifications"
 msgstr "Laitemallien arvot"
 
@@ -147,47 +156,47 @@ msgid "Full-depth item"
 msgstr "Täyssyvä"
 
 #: inc/itemspecification.class.php:258 inc/itemspecification.class.php:326
-#: inc/rack.class.php:405
+#: inc/rack.class.php:435
 msgid "Power supplies number"
 msgstr "Virransyöttöjen määrä"
 
 #: inc/itemspecification.class.php:263 inc/itemspecification.class.php:325
-#: inc/rack_item.class.php:615
+#: inc/rack_item.class.php:634
 msgid "Total Current"
 msgstr "Kokonaisvirta"
 
 #: inc/itemspecification.class.php:271 inc/itemspecification.class.php:327
-#: inc/rack.class.php:407 inc/rack_item.class.php:199
-#: inc/rack_item.class.php:616
+#: inc/rack.class.php:437 inc/rack_item.class.php:199
+#: inc/rack_item.class.php:635
 msgid "Calorific waste"
 msgstr "Lämmöntuotto"
 
 #: inc/itemspecification.class.php:278 inc/itemspecification.class.php:330
-#: inc/rack_item.class.php:620
+#: inc/rack_item.class.php:639
 msgid "Flow Rate"
 msgstr "Ilmanvirtaus"
 
 #: inc/itemspecification.class.php:288 inc/itemspecification.class.php:334
-#: inc/rack.class.php:304 inc/rack.class.php:409 inc/rack_item.class.php:219
-#: inc/rack_item.class.php:624
+#: inc/rack.class.php:143 inc/rack.class.php:334 inc/rack.class.php:439
+#: inc/rack_item.class.php:219 inc/rack_item.class.php:643
 msgid "Weight"
 msgstr "Paino"
 
-#: inc/itemspecification.class.php:324 inc/rack_item.class.php:479
+#: inc/itemspecification.class.php:324 inc/rack_item.class.php:498
 msgid "Equipment"
 msgstr "Laite"
 
-#: inc/itemspecification.class.php:325 inc/rack.class.php:426
-#: inc/rack_item.class.php:191 inc/rack_item.class.php:615
-#: inc/rack_item.class.php:874 inc/rack_item.class.php:875
+#: inc/itemspecification.class.php:325 inc/rack.class.php:456
+#: inc/rack_item.class.php:191 inc/rack_item.class.php:634
+#: inc/rack_item.class.php:899 inc/rack_item.class.php:900
 msgid "amps"
 msgstr "ampeeria"
 
-#: inc/itemspecification.class.php:333 inc/rack.class.php:226
-#: inc/rack_item.class.php:844 inc/rack_item.class.php:856
-#: inc/rack_item.class.php:858 inc/rack_item.class.php:860
-#: inc/rack_item.class.php:862 inc/report.class.php:261
-#: inc/report.class.php:319
+#: inc/itemspecification.class.php:333 inc/rack.class.php:256
+#: inc/rack_item.class.php:869 inc/rack_item.class.php:881
+#: inc/rack_item.class.php:883 inc/rack_item.class.php:885
+#: inc/rack_item.class.php:887 inc/report.class.php:191
+#: inc/report.class.php:247
 msgid "U"
 msgstr "U"
 
@@ -195,162 +204,161 @@ msgstr "U"
 msgid "Add specifications for servers models"
 msgstr "Lisää uusien mallien tiedot"
 
-#: inc/rack.class.php:104 inc/rack.class.php:288
+#: inc/rack.class.php:104 inc/rack.class.php:318
 msgid "Height"
 msgstr "Korkeus"
 
-#: inc/rack.class.php:109 inc/rack.class.php:271
+#: inc/rack.class.php:109 inc/rack.class.php:301
 msgid "Width"
 msgstr "Leveys"
 
-#: inc/rack.class.php:114 inc/rack.class.php:322
+#: inc/rack.class.php:114 inc/rack.class.php:352
 msgid "Depth"
 msgstr "Syvyys"
 
-#: inc/rack.class.php:406 inc/rack_item.class.php:191
+#: inc/rack.class.php:436 inc/rack_item.class.php:191
 msgid "Total current"
 msgstr "Kokonaisvirta"
 
-#: inc/rack.class.php:408 inc/rack_item.class.php:209
+#: inc/rack.class.php:438 inc/rack_item.class.php:209
 msgid "Flow rate"
 msgstr "Ilmanvirtaus"
 
 #: inc/rack_item.class.php:64 inc/rack_item.class.php:68
-#: inc/rack_item.class.php:1164 inc/rack_item.class.php:1226
-#: inc/report.class.php:264 inc/report.class.php:322 inc/report.class.php:426
-#: inc/report.class.php:549 inc/report.class.php:559
+#: inc/rack_item.class.php:1189 inc/rack_item.class.php:1251
+#: inc/report.class.php:194 inc/report.class.php:250 inc/report.class.php:362
+#: inc/report.class.php:475 inc/report.class.php:485
 msgid "Front"
 msgstr "Edessä"
 
 #: inc/rack_item.class.php:71 inc/rack_item.class.php:75
-#: inc/rack_item.class.php:1166 inc/rack_item.class.php:1228
-#: inc/report.class.php:264 inc/report.class.php:322 inc/report.class.php:428
-#: inc/report.class.php:549 inc/report.class.php:559
+#: inc/rack_item.class.php:1191 inc/rack_item.class.php:1253
+#: inc/report.class.php:194 inc/report.class.php:250 inc/report.class.php:364
+#: inc/report.class.php:475 inc/report.class.php:485
 msgctxt "Rack enclosure"
 msgid "Back"
 msgstr "Takana"
 
-#: inc/rack_item.class.php:173 inc/rack_item.class.php:612
+#: inc/rack_item.class.php:173 inc/rack_item.class.php:631
 msgid "Power supply 1"
 msgstr "Virransyöttö 1"
 
-#: inc/rack_item.class.php:183 inc/rack_item.class.php:613
+#: inc/rack_item.class.php:183 inc/rack_item.class.php:632
 msgid "Power supply 2"
 msgstr "Virransyöttö 2"
 
-#: inc/rack_item.class.php:478
+#: inc/rack_item.class.php:497
 msgid "Add equipment"
 msgstr "Laitteen lisäys"
 
-#: inc/rack_item.class.php:480
+#: inc/rack_item.class.php:499
 msgid ""
 "Thanks to setup equipments models specifications prior to associate them"
 msgstr "Aseta laitemallien arvot ennen kuin yhdistät niitä. "
 
-#: inc/rack_item.class.php:483 inc/rack_item.class.php:608
-#: inc/rack_item.class.php:1123 inc/rack_item.class.php:1212
-#: inc/report.class.php:258 inc/report.class.php:316
+#: inc/rack_item.class.php:502 inc/rack_item.class.php:627
+#: inc/rack_item.class.php:1148 inc/rack_item.class.php:1237
 msgid "Position"
 msgstr "Paikka"
 
-#: inc/rack_item.class.php:564
+#: inc/rack_item.class.php:583
 msgid "Rack enclosure arrangement"
 msgstr "Räkkikaapin järjestely"
 
-#: inc/rack_item.class.php:614
+#: inc/rack_item.class.php:633
 msgid "C13 Power Cord Quantity"
 msgstr "Tarvittavien C13-virtajohtojen määrä"
 
-#: inc/rack_item.class.php:856
+#: inc/rack_item.class.php:881
 msgid "Total Servers"
 msgstr "Palvelimia yhteensä"
 
-#: inc/rack_item.class.php:858
+#: inc/rack_item.class.php:883
 msgid "Total Network equipements"
 msgstr "Verkkolaitteita yhteensä"
 
-#: inc/rack_item.class.php:860
+#: inc/rack_item.class.php:885
 msgid "Total Peripherals"
 msgstr "Oheislaitteita yhteensä"
 
-#: inc/rack_item.class.php:862
+#: inc/rack_item.class.php:887
 msgid "Total Others"
 msgstr "Muita yhteensä"
 
-#: inc/rack_item.class.php:868 inc/rack_item.class.php:870
+#: inc/rack_item.class.php:893 inc/rack_item.class.php:895
 msgid "U availables"
 msgstr "U-yksikköä käytettävissä"
 
-#: inc/rack_item.class.php:873
+#: inc/rack_item.class.php:898
 msgid "Total power Cords"
 msgstr "Virtajohtoja yhteensä"
 
-#: inc/rack_item.class.php:874
+#: inc/rack_item.class.php:899
 msgid "Amperage on power Cords"
 msgstr "Virranvoimakkuus virtajohdoissa"
 
-#: inc/rack_item.class.php:948
+#: inc/rack_item.class.php:973
 msgid "Left rack enclosure"
 msgstr "Vasen räkkikaappi"
 
-#: inc/rack_item.class.php:950
+#: inc/rack_item.class.php:975
 msgid "No rack enclosure on the left"
 msgstr "Ei räkkikaappia vasemmalla"
 
-#: inc/rack_item.class.php:971
+#: inc/rack_item.class.php:996
 msgid "Right rack enclosure"
 msgstr "Oikea räkkikaappi"
 
-#: inc/rack_item.class.php:973
+#: inc/rack_item.class.php:998
 msgid "No rack enclosure on the right"
 msgstr "Ei räkkikaappia oikealla"
 
-#: inc/rack_item.class.php:1122 inc/rack_item.class.php:1211
+#: inc/rack_item.class.php:1147 inc/rack_item.class.php:1236
 msgid "Disposition"
 msgstr "Järjestely"
 
-#: inc/rack_item.class.php:1209
+#: inc/rack_item.class.php:1234
 msgid "Associated rack enclosure"
 msgid_plural "Associated rack enclosures"
 msgstr[0] "Yhdistetty räkkikaappiin"
 msgstr[1] "Yhdistetty räkkikaappeihin"
 
-#: inc/report.class.php:190
-msgid "Encoding"
-msgstr "Koodaus"
-
-#: inc/report.class.php:196
-msgid "Quotes"
-msgstr "Heittomerkit"
-
-#: inc/report.class.php:202
-msgid "End of line"
-msgstr "Rivin loppu"
-
-#: inc/report.class.php:252 inc/report.class.php:310 inc/report.class.php:539
+#: inc/report.class.php:182 inc/report.class.php:238 inc/report.class.php:465
 msgid "Bay name"
 msgstr "Räkkikaapin nimi"
 
-#: inc/report.class.php:270 inc/report.class.php:325 inc/report.class.php:570
+#: inc/report.class.php:199 inc/report.class.php:253 inc/report.class.php:496
 msgid "Object name"
 msgstr "Kohteen nimi"
 
-#: inc/report.class.php:277 inc/report.class.php:328 inc/report.class.php:576
+#: inc/report.class.php:206 inc/report.class.php:256 inc/report.class.php:502
 msgid "Object location"
 msgstr "Kohteen sijainti"
 
-#: inc/report.class.php:536
+#: inc/report.class.php:462
 msgid "Search criteria"
 msgstr "Hakuehto"
 
-#: inc/report.class.php:563
+#: inc/report.class.php:489
 msgid "Field to export"
 msgstr "Tulostettavat kentät"
 
-#: inc/report.class.php:612
+#: inc/report.class.php:538
 msgid "Display options"
 msgstr "Näytön asetukset"
 
-#: inc/report.class.php:620
+#: inc/report.class.php:546
 msgid "Group by bay name"
 msgstr "Ryhmittele räkkikaapin nimen mukaan"
+
+#: inc/report.class.php:1011
+msgid "Encoding"
+msgstr "Koodaus"
+
+#: inc/report.class.php:1019
+msgid "Quotes"
+msgstr "Heittomerkit"
+
+#: inc/report.class.php:1027
+msgid "End of line"
+msgstr "Rivin loppu"
