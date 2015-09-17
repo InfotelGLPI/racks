@@ -1,6 +1,12 @@
 # racks
 Plugin racks pour GLPI
 
+Ce plugin est sur Transifex - Aidez-nous à le traduire :
+https://www.transifex.com/tsmr/GLPI_racks/
+
+This plugin is on Transifex - Help us to translate :
+https://www.transifex.com/tsmr/GLPI_racks/
+
 Ce plugin vous permet de créer des baies. Gérer l'emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.
 > * Détail d'une baie : hauteur - largeur - profondeur - poids - nombre de U.
 > * Gestion de l'avant et de l'arrière.
