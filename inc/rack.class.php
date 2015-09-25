@@ -39,7 +39,7 @@ class PluginRacksRack extends CommonDBTM {
                              'NetworkEquipment',
                              'Peripheral');
    public $dohistory = true;
-   protected $usenotepadrights         = true;
+   protected $usenotepad         = true;
 
    const FRONT_FACE = 1;
    const BACK_FACE  = 2;
