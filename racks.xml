@@ -3,7 +3,7 @@
    <name>Racks / Bays Management</name>
    <key>racks</key>
    <state>stable</state>
-   <logo></logo>
+   <logo>https://raw.githubusercontent.com/InfotelGLPI/racks/master/racks.png</logo>
    <description>
       <short>
          <fr><![CDATA[Gestion de vos baies. Ce plugin vous permet de créer des baies. Gérer l’emplacement de vos matériels dans vos baies. Et ainsi connaitre l'espace disponible, ainsi que sa consommation électrique et sa dissipation calorifique.]]></fr>
