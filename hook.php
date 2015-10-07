@@ -31,12 +31,12 @@ function plugin_racks_install() {
    global $DB;
 
    include_once (GLPI_ROOT."/plugins/racks/inc/profile.class.php");
-   $migration = new Migration("1.5.0");
+   $migration = new Migration("1.6.0");
    $update    = false;
 
    if (!TableExists("glpi_plugin_racks_racks") 
-        && !TableExists("glpi_plugin_racks_profiles")) {
-      $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/empty-1.5.0.sql");
+        && !FieldExists("glpi_plugin_racks_configs","add_location_on_new_item")) {
+      $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/empty-1.5.2.sql");
       
    } elseif (TableExists("glpi_plugin_rack_content") 
       && !FieldExists("glpi_plugin_rack_content","first_powersupply")) {
@@ -137,7 +137,7 @@ function plugin_racks_uninstall() {
    include_once (GLPI_ROOT."/plugins/racks/inc/profile.class.php");
    include_once (GLPI_ROOT."/plugins/racks/inc/menu.class.php");
    
-   $migration = new Migration("1.5.0");
+   $migration = new Migration("1.6.0");
 
    $tables = array ("glpi_plugin_racks_racks",
                     "glpi_plugin_racks_racks_items",

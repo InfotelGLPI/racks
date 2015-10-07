@@ -112,11 +112,11 @@ CREATE TABLE `glpi_plugin_racks_itemspecifications` (
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_configs`;
 CREATE TABLE `glpi_plugin_racks_configs` (
-	`id` int(11) NOT NULL auto_increment,
-	`unit` int(11) NOT NULL default '0',
+   `id` int(11) NOT NULL auto_increment,
+   `unit` int(11) NOT NULL default '0',
    `add_location_on_new_item` tinyint(1) NOT NULL DEFAULT '0',
    `forward_location_on_change` tinyint(1) NOT NULL DEFAULT '0',   
-	PRIMARY KEY  (`id`),
+   PRIMARY KEY  (`id`),
    KEY `add_location_on_new_item` (`add_location_on_new_item`),
    KEY `forward_location_on_change` (`forward_location_on_change`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -191,25 +191,25 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_othermodels` (
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_racktypes`;
 CREATE TABLE `glpi_plugin_racks_racktypes` (
-	`id` int(11) NOT NULL auto_increment,
-	`entities_id` int(11) NOT NULL default '0',
-	`is_recursive` tinyint(1) NOT NULL default '0',
-	`name` varchar(255) collate utf8_unicode_ci default NULL,
-	`comment` text collate utf8_unicode_ci,
-	PRIMARY KEY  (`id`),
-	KEY `name` (`name`)
+   `id` int(11) NOT NULL auto_increment,
+   `entities_id` int(11) NOT NULL default '0',
+   `is_recursive` tinyint(1) NOT NULL default '0',
+   `name` varchar(255) collate utf8_unicode_ci default NULL,
+   `comment` text collate utf8_unicode_ci,
+   PRIMARY KEY  (`id`),
+   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_rackstates`;
 CREATE TABLE `glpi_plugin_racks_rackstates` (
-	`id` int(11) NOT NULL auto_increment,
-	`entities_id` int(11) NOT NULL default '0',
-	`is_recursive` tinyint(1) NOT NULL default '0',
-	`name` varchar(255) collate utf8_unicode_ci default NULL,
-	`comment` text collate utf8_unicode_ci,
-	PRIMARY KEY  (`id`),
-	KEY `name` (`name`)
+   `id` int(11) NOT NULL auto_increment,
+   `entities_id` int(11) NOT NULL default '0',
+   `is_recursive` tinyint(1) NOT NULL default '0',
+   `name` varchar(255) collate utf8_unicode_ci default NULL,
+   `comment` text collate utf8_unicode_ci,
+   PRIMARY KEY  (`id`),
+   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
