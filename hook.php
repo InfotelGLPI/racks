@@ -31,7 +31,7 @@ function plugin_racks_install() {
    global $DB;
 
    include_once (GLPI_ROOT."/plugins/racks/inc/profile.class.php");
-   $migration = new Migration("1.6.0");
+   $migration = new Migration("1.6.1");
    $update    = false;
 
    if (!TableExists("glpi_plugin_racks_racks") 
@@ -137,7 +137,7 @@ function plugin_racks_uninstall() {
    include_once (GLPI_ROOT."/plugins/racks/inc/profile.class.php");
    include_once (GLPI_ROOT."/plugins/racks/inc/menu.class.php");
    
-   $migration = new Migration("1.6.0");
+   $migration = new Migration("1.6.1");
 
    $tables = array ("glpi_plugin_racks_racks",
                     "glpi_plugin_racks_racks_items",
