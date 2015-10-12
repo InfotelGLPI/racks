@@ -70,11 +70,11 @@ class PluginRacksMenu extends CommonGLPI {
    }
 
    static function removeRightsFromSession() {
-      if (isset($_SESSION['glpimenu']['tools']['types']['PluginRacksMenu'])) {
-         unset($_SESSION['glpimenu']['tools']['types']['PluginRacksMenu']); 
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginRacksMenu'])) {
+         unset($_SESSION['glpimenu']['assets']['types']['PluginRacksMenu']); 
       }
-      if (isset($_SESSION['glpimenu']['tools']['content']['pluginracksmenu'])) {
-         unset($_SESSION['glpimenu']['tools']['content']['pluginracksmenu']); 
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginracksmenu'])) {
+         unset($_SESSION['glpimenu']['assets']['content']['pluginracksmenu']); 
       }
    }
 }
