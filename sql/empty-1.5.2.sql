@@ -121,7 +121,7 @@ CREATE TABLE `glpi_plugin_racks_configs` (
    KEY `forward_location_on_change` (`forward_location_on_change`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `glpi_plugin_racks_configs` VALUES ('1', '1');
+INSERT INTO `glpi_plugin_racks_configs` VALUES ('1', '1','0', '0');
 
 -- --------------------------------------------------------
 -- 

@@ -35,7 +35,7 @@ function plugin_racks_install() {
    $update    = false;
 
    if (!TableExists("glpi_plugin_racks_racks") 
-        && !FieldExists("glpi_plugin_racks_configs","add_location_on_new_item")) {
+        && !TableExists("glpi_plugin_racks_configs")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/empty-1.5.2.sql");
       
    } elseif (TableExists("glpi_plugin_rack_content") 
