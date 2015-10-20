@@ -139,8 +139,8 @@ if ($count = $DB->numrows($result)) {
                                                    $data['id'].";".
                                                    $data['spec'],
                                         'level' => 1,
-                                        'text'  => substr($data["name"], 0, 
-                                                         $CFG_GLPI["dropdown_chars_limit"]));
+                                        'text'  => Toolbox::substr($data["name"], 0, 
+                                                          $_SESSION["glpidropdown_chars_limit"]));
    }
 
    foreach ($tmp_results as $tmp_result) {
