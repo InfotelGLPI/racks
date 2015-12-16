@@ -46,10 +46,6 @@ if (!TableExists($table)) {
    exit();
 }
 
-// Make a select box with preselected values
-if (!isset ($_REQUEST["limit"])){
-   $_REQUEST["limit"] = $_SESSION["glpidropdown_chars_limit"];
-}
 $where = "WHERE 1=1";
 
 if ($item->maybeDeleted()) {
@@ -140,7 +136,7 @@ if ($count = $DB->numrows($result)) {
                                                    $data['spec'],
                                         'level' => 1,
                                         'text'  => Toolbox::substr($data["name"], 0, 
-                                                          $_SESSION["glpidropdown_chars_limit"]));
+                                                          50));
    }
 
    foreach ($tmp_results as $tmp_result) {
