@@ -49,7 +49,7 @@ class PluginRacksMenu extends CommonGLPI {
       $menu['options']['racks']['links']['config'] = PluginRacksConfig::getFormURL(false);
       
       $menu['options']['config']['title'] = __('Setup');
-      $menu['options']['config']['page']  = PluginRacksConfig::getSearchURL(false);
+      $menu['options']['config']['page']  = PluginRacksConfig::getFormURL(false);
 
       $menu['options']['specifications']['title']           = __('Specifications', 'racks');
       $menu['options']['specifications']['page']            = PluginRacksItemSpecification::getSearchURL(false);
