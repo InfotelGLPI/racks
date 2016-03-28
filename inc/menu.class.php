@@ -56,7 +56,7 @@ class PluginRacksMenu extends CommonGLPI {
       $menu['options']['specifications']['links']['search'] = PluginRacksItemSpecification::getSearchURL(false);
 
       if (PluginRacksRack::canCreate()) {
-         $menu['options']['racks']['links']['add'] = PluginRacksRack::getFormURL(false);
+         $menu['options']['racks']['links']['add'] = '/plugins/racks/front/setup.templates.php?add=1';
       }
       
       if (PluginRacksRackModel::canView()) {
