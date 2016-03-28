@@ -55,7 +55,7 @@ CREATE TABLE `glpi_plugin_racks_rackmodels` (
   `entities_id` int(11) NOT NULL default '0',
   `is_recursive` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `name` (`name`)
+  KEY `name` (`name`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
