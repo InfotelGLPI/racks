@@ -34,15 +34,15 @@ function plugin_init_racks() {
    //load changeprofile function
    $PLUGIN_HOOKS['change_profile']['racks']   = array('PluginRacksProfile',
                                                                 'initProfile');
-                                                                
+
    $plugin = new Plugin();
    if ($plugin->isInstalled('racks') && $plugin->isActivated('racks')) {
-   
+
       //Ability to add a rack to a project
       $CFG_GLPI["project_asset_types"][] = 'PluginRacksRack';
 
       $PLUGIN_HOOKS['assign_to_ticket']['racks'] = true;
-      Plugin::registerClass('PluginRacksRack', 
+      Plugin::registerClass('PluginRacksRack',
                             array('document_types'       => true,
                                   'location_types'       => true,
                                   'unicity_types'        => true,
@@ -53,52 +53,52 @@ function plugin_init_racks() {
       Plugin::registerClass('PluginRacksProfile',
                             array('addtabon' => 'Profile'));
 
-      $types = array('PluginAppliancesAppliance', 
-                     'PluginManufacturersimportsConfig', 
-                     'PluginTreeviewConfig', 
+      $types = array('PluginAppliancesAppliance',
+                     'PluginManufacturersimportsConfig',
+                     'PluginTreeviewConfig',
                      'PluginPositionsPosition');
       foreach ($types as $itemtype) {
          if (class_exists($itemtype)) {
             $itemtype::registerType('PluginRacksRack');
          }
       }
-      
-      //If treeview plugin is installed, add rack as a type of item 
+
+      //If treeview plugin is installed, add rack as a type of item
       //that can be shown in the tree
       if (class_exists('PluginTreeviewConfig')) {
          $PLUGIN_HOOKS['treeview']['PluginRacksRack'] = '../racks/pics/racks.png';
       }
-      
+
       if (Session::getLoginUserID()) {
-      
+
          include_once (GLPI_ROOT."/plugins/racks/inc/rack.class.php");
-         
+
          if (PluginRacksRack::canView()) {
             //Display menu entry only if user has right to see it !
             $PLUGIN_HOOKS["menu_toadd"]['racks'] = array('assets'  => 'PluginRacksMenu');
             $PLUGIN_HOOKS['use_massive_action']['racks'] = 1;
          }
 
-         if (PluginRacksRack::canCreate() 
+         if (PluginRacksRack::canCreate()
             || Config::canUpdate()) {
             $PLUGIN_HOOKS['config_page']['racks'] = 'front/config.form.php';
          }
 
          $PLUGIN_HOOKS['add_css']['racks']   = "racks.css";
          $PLUGIN_HOOKS['post_init']['racks'] = 'plugin_racks_postinit';
- 
-         $PLUGIN_HOOKS['reports']['racks']   = 
+
+         $PLUGIN_HOOKS['reports']['racks']   =
             array('front/report.php' => __("Report - Bays management","racks"));
       }
-   
+
    }
 }
 
 function plugin_version_racks() {
-   return array ('name'           => _n('Rack enclosure management', 
-                                        'Rack enclosures management', 
+   return array ('name'           => _n('Rack enclosure management',
+                                        'Rack enclosures management',
                                         2, 'racks'),
-                  'version'        => '1.6.1',
+                  'version'        => '1.6.2',
                   'oldname'        => 'rack',
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
@@ -108,7 +108,7 @@ function plugin_version_racks() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_racks_check_prerequisites() {
-   if (version_compare(GLPI_VERSION,'0.90', 'lt') 
+   if (version_compare(GLPI_VERSION,'0.90', 'lt')
       || version_compare(GLPI_VERSION,'0.91', 'ge')) {
       _e('This plugin requires GLPI >= 0.90', 'racks');
       return false;

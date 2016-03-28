@@ -1,6 +1,6 @@
--- 
+--
 -- Structure de la table `glpi_plugin_racks_racks`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_racks`;
 CREATE TABLE `glpi_plugin_racks_racks` (
@@ -43,23 +43,27 @@ CREATE TABLE `glpi_plugin_racks_racks` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_rackmodels`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_rackmodels`;
 CREATE TABLE `glpi_plugin_racks_rackmodels` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) collate utf8_unicode_ci default NULL,
   `comment` text collate utf8_unicode_ci,
+  `entities_id` int(11) NOT NULL default '0',
+  `is_recursive` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
+  KEY `entities_id` (`entities_id`),
+  KEY `is_recursive` (`is_recursive`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_racks_items`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_racks_items`;
 CREATE TABLE `glpi_plugin_racks_racks_items` (
@@ -86,9 +90,9 @@ CREATE TABLE `glpi_plugin_racks_racks_items` (
 
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_itemspecifications`
--- 
+--
 DROP TABLE IF EXISTS `glpi_plugin_racks_itemspecifications`;
 CREATE TABLE `glpi_plugin_racks_itemspecifications` (
    `id` int(11) NOT NULL auto_increment,
@@ -106,16 +110,16 @@ CREATE TABLE `glpi_plugin_racks_itemspecifications` (
 
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_configs`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_configs`;
 CREATE TABLE `glpi_plugin_racks_configs` (
    `id` int(11) NOT NULL auto_increment,
    `unit` int(11) NOT NULL default '0',
    `add_location_on_new_item` tinyint(1) NOT NULL DEFAULT '0',
-   `forward_location_on_change` tinyint(1) NOT NULL DEFAULT '0',   
+   `forward_location_on_change` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY  (`id`),
    KEY `add_location_on_new_item` (`add_location_on_new_item`),
    KEY `forward_location_on_change` (`forward_location_on_change`)
@@ -124,9 +128,9 @@ CREATE TABLE `glpi_plugin_racks_configs` (
 INSERT INTO `glpi_plugin_racks_configs` VALUES ('1', '1','0', '0');
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_roomlocations`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_roomlocations`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_roomlocations` (
@@ -144,9 +148,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_roomlocations` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_connections`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_connections`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_connections` (
@@ -158,9 +162,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_connections` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_rack_others`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_others`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_others` (
@@ -175,9 +179,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_others` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
--- 
+--
 -- Structure de la table `glpi_plugin_racks_othermodels`
--- 
+--
 
 DROP TABLE IF EXISTS `glpi_plugin_racks_othermodels`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_racks_othermodels` (
