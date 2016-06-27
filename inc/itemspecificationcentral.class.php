@@ -47,7 +47,8 @@ class PluginRacksItemSpecificationCentral extends CommonGLPI {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($item->getType() == __CLASS__) {
+      if ($item->getType() == __CLASS__
+            && Session::haveRight('plugin_racks_model', READ)) {
          $tabs[1] = __('Servers', 'racks');
          $tabs[2] = _n('Network equipment' , 'Network equipments', 2, 'racks');
          $tabs[3] = _n('Peripheral' , 'Peripherals', 2, 'racks');
