@@ -300,18 +300,21 @@ class PluginRacksItemSpecification extends CommonDBTM {
       $this->showFormButtons($options);
    }
 
-   function showList($target,$id,$itemtype,$withtemplate='') {
+   function showList($itemtype,$withtemplate='') {
       $rand = mt_rand();
       echo "<div align='center'>";
+      
+      $target = Toolbox::getItemTypeFormURL('PluginRacksItemSpecification');
       echo "<form method='post' 
                   name='massiveaction_form$rand' 
                   id='massiveaction_form$rand'  
                   action=\"$target\">";
-      $this->showModels($itemtype,$id,$rand);
+      
+      $this->showModels($itemtype,$rand);
    }
 
-        function showModels($itemtype,$id,$rand) {
-                global $DB;
+   function showModels($itemtype,$rand) {
+      global $DB;
 
       $PluginRacksConfig = new PluginRacksConfig();
 

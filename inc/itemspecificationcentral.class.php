@@ -65,19 +65,19 @@ class PluginRacksItemSpecificationCentral extends CommonGLPI {
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {
             case 1 :
-               $itemspecification->showList('', -1 , 'ComputerModel');
+               $itemspecification->showList('ComputerModel');
                break;
 
             case 2 :
-               $itemspecification->showList('', -1 , 'NetworkEquipmentModel');
+               $itemspecification->showList('NetworkEquipmentModel');
                break;
 
             case 3 :
-               $itemspecification->showList('', -1 , 'PeripheralModel');
+               $itemspecification->showList('PeripheralModel');
                break;
 
             case 4 :
-               $itemspecification->showList('', -1 , 'PluginRacksOtherModel');
+               $itemspecification->showList('PluginRacksOtherModel');
                break;
          }
       }
