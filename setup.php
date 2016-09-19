@@ -98,7 +98,7 @@ function plugin_version_racks() {
    return array ('name'           => _n('Rack enclosure management',
                                         'Rack enclosures management',
                                         2, 'racks'),
-                  'version'        => '1.6.2',
+                  'version'        => '1.6.3',
                   'oldname'        => 'rack',
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
@@ -109,7 +109,7 @@ function plugin_version_racks() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_racks_check_prerequisites() {
    if (version_compare(GLPI_VERSION,'0.90', 'lt')
-      || version_compare(GLPI_VERSION,'0.91', 'ge')) {
+      || version_compare(GLPI_VERSION,'9.2', 'ge')) {
       _e('This plugin requires GLPI >= 0.90', 'racks');
       return false;
    }
