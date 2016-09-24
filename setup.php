@@ -2,28 +2,28 @@
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
- Racks plugin for GLPI
- Copyright (C) 2003-2011 by the Racks Development Team.
+ racks plugin for GLPI
+ Copyright (C) 2014-2016 by the racks Development Team.
 
- https://forge.indepnet.net/projects/racks
+ https://github.com/InfotelGLPI/racks
  -------------------------------------------------------------------------
 
  LICENSE
+      
+ This file is part of racks.
 
- This file is part of Racks.
-
- Racks is free software; you can redistribute it and/or modify
+ racks is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- Racks is distributed in the hope that it will be useful,
+ racks is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with Racks. If not, see <http://www.gnu.org/licenses/>.
+ along with racks. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
 
@@ -98,7 +98,7 @@ function plugin_version_racks() {
    return array ('name'           => _n('Rack enclosure management',
                                         'Rack enclosures management',
                                         2, 'racks'),
-                  'version'        => '1.6.3',
+                  'version'        => '1.7.0',
                   'oldname'        => 'rack',
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
@@ -120,4 +120,5 @@ function plugin_racks_check_prerequisites() {
 function plugin_racks_check_config() {
    return true;
 }
+
 ?>
