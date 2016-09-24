@@ -388,9 +388,6 @@ class PluginRacksRack extends CommonDBTM {
       if (isset($options['withtemplate']) && $options['withtemplate']) {
          //TRANS: %s is the datetime of insertion
          printf(__('Created on %s'), Html::convDateTime($_SESSION["glpi_currenttime"]));
-      } else {
-         //TRANS: %s is the datetime of update
-         printf(__('Last update on %s'), Html::convDateTime($this->fields["date_mod"]));
       }
       echo "</td></tr>\n";
 
