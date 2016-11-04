@@ -98,7 +98,7 @@ function plugin_version_racks() {
    return array ('name'           => _n('Rack enclosure management',
                                         'Rack enclosures management',
                                         2, 'racks'),
-                  'version'        => '1.7.0',
+                  'version'        => '1.7.1',
                   'oldname'        => 'rack',
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
