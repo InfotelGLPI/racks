@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -205,7 +205,7 @@ function plugin_racks_uninstall() {
 }
 
 function plugin_racks_postinit() {
-   global $PLUGIN_HOOKS;
+   global $PLUGIN_HOOKS, $ORDER_TYPES;
 
    $PLUGIN_HOOKS['item_purge']['racks'] = array();
 
@@ -217,6 +217,11 @@ function plugin_racks_postinit() {
    foreach (PluginRacksItemSpecification::getModelClasses() as $model) {
       CommonGLPI::registerStandardTab($model, 'PluginRacksItemSpecification');
    }
+   $plugin = new Plugin();
+   if ($plugin->isInstalled('order') && $plugin->isActivated('order')) {
+      array_push($ORDER_TYPES, 'PluginRacksRack');
+   }
+
 }
 
 function plugin_racks_AssignToTicket($types) {

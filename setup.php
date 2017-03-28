@@ -28,7 +28,7 @@
  */
 
 function plugin_init_racks() {
-   global $PLUGIN_HOOKS, $CFG_GLPI, $ORDER_TYPES;
+   global $PLUGIN_HOOKS, $CFG_GLPI;
 
    $PLUGIN_HOOKS['csrf_compliant']['racks']   = true;
    //load changeprofile function
@@ -89,10 +89,6 @@ function plugin_init_racks() {
 
          $PLUGIN_HOOKS['reports']['racks']   =
             array('front/report.php' => __("Report - Bays management","racks"));
-      }
-
-      if ($plugin->isInstalled('order') && $plugin->isActivated('order')) {
-         array_push($ORDER_TYPES, 'PluginRacksRack');
       }
    }
 }
