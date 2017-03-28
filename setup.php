@@ -28,7 +28,7 @@
  */
 
 function plugin_init_racks() {
-   global $PLUGIN_HOOKS, $CFG_GLPI;
+   global $PLUGIN_HOOKS, $CFG_GLPI, $ORDER_TYPES;
 
    $PLUGIN_HOOKS['csrf_compliant']['racks']   = true;
    //load changeprofile function
