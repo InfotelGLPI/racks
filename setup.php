@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -91,6 +91,9 @@ function plugin_init_racks() {
             array('front/report.php' => __("Report - Bays management","racks"));
       }
 
+      if ($plugin->isInstalled('order') && $plugin->isActivated('order')) {
+         array_push($ORDER_TYPES, 'PluginRacksRack');
+      }
    }
 }
 
