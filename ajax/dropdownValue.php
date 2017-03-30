@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -73,49 +73,56 @@ if (in_array(get_class($item), PluginRacksRack::getTypes())) {
       $field     = "entities_id";
       $add_order = " entities_id, ";
       if (isset($_REQUEST["entity_restrict"]) && !($_REQUEST["entity_restrict"]<0)) {
-         $where .= getEntitiesRestrictRequest(" AND ", $table, $field, 
+         $where .= getEntitiesRestrictRequest(" AND ", $table, $field,
                                               $_REQUEST["entity_restrict"]);
-         if (is_array($_REQUEST["entity_restrict"]) 
+         if (is_array($_REQUEST["entity_restrict"])
             && count($_REQUEST["entity_restrict"])>1) {
-            $multi = true;    
+            $multi = true;
          }
       } else {
          $where .= getEntitiesRestrictRequest(" AND ", $table, $field);
          if (count($_SESSION['glpiactiveentities']) > 1) {
-            $multi=true;    
+            $multi=true;
          }
       }
    }
 
-   $field = "name";
-   if ($_REQUEST['searchText'] != $CFG_GLPI["ajax_wildcard"])
-      $where .= " AND $field " .
-      Search::makeTextSearch($_REQUEST['searchText']);
+   if ((strlen($_REQUEST['searchText']) > 0)
+       && ($_REQUEST['searchText'] != $CFG_GLPI["ajax_wildcard"])) {
+      $search = Search::makeTextSearch($_REQUEST['searchText']);
+
+      $where .= " AND ($table.`name` ".$search."
+                       OR $table.`id` = '".$_REQUEST['searchText']."'
+                       OR $table.`serial` ".$search."
+                       OR $table.`otherserial` ".$search.")";
+   }
 
       $where .= " AND `" . $table . "`.`id` NOT IN (0";
       $where .= $PluginRacksRack_Item->findItems($DB, $_REQUEST['modeltable']);
       $where .= ") ";
       $query = "SELECT `" . $table . "`.`name` AS name,
+                       `" . $table . "`.`serial` AS serial,
+                       `" . $table . "`.`otherserial` AS otherserial,
                        `" . $table . "`.`entities_id` AS entities_id,
-                       `" . $table . "`.`id`, 
-                       `glpi_plugin_racks_itemspecifications`.`id` AS spec 
-               FROM `glpi_plugin_racks_itemspecifications`,`" . $table . "` 
-                  $where 
-                  AND `glpi_plugin_racks_itemspecifications`.`model_id` = `" . $table . "`.`".$_REQUEST['modelfield']."` 
-                  AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '" . $_REQUEST['modeltable'] . "' 
-               ORDER BY $add_order  `" . $table . "`.`name` 
+                       `" . $table . "`.`id`,
+                       `glpi_plugin_racks_itemspecifications`.`id` AS spec
+               FROM `glpi_plugin_racks_itemspecifications`,`" . $table . "`
+                  $where
+                  AND `glpi_plugin_racks_itemspecifications`.`model_id` = `" . $table . "`.`".$_REQUEST['modelfield']."`
+                  AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '" . $_REQUEST['modeltable'] . "'
+               ORDER BY $add_order  `" . $table . "`.`name`
                $LIMIT";
       $result = $DB->query($query);
 } else {
    $multi = false;
    $query = "SELECT `glpi_plugin_racks_othermodels`.`id`,
                     `glpi_plugin_racks_othermodels`.`name`,
-                    `glpi_plugin_racks_othermodels`.`comment`, 
+                    `glpi_plugin_racks_othermodels`.`comment`,
                     `glpi_plugin_racks_itemspecifications`.`id` AS spec
-             FROM `glpi_plugin_racks_othermodels`, 
-                  `glpi_plugin_racks_itemspecifications` 
-             WHERE `glpi_plugin_racks_itemspecifications`.`model_id` = `glpi_plugin_racks_othermodels`.`id` 
-                AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '".$_REQUEST['modeltable']."' 
+             FROM `glpi_plugin_racks_othermodels`,
+                  `glpi_plugin_racks_itemspecifications`
+             WHERE `glpi_plugin_racks_itemspecifications`.`model_id` = `glpi_plugin_racks_othermodels`.`id`
+                AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '".$_REQUEST['modeltable']."'
              ORDER BY `glpi_plugin_racks_othermodels`.`name` $LIMIT";
    $result = $DB->query($query);
 }
@@ -130,12 +137,20 @@ if ($count = $DB->numrows($result)) {
       if (isset($data["entities_id"])) {
          $entities_id = $data["entities_id"];
       }
+      $name = $data["name"];
+      if (isset($data['serial'])) {
+         $name.= ' '.$data["serial"];
+      }
+      if (isset($data['otherserial'])) {
+         $name.= ' '.$data['otherserial'];
+      }
+
       $tmp_results[$entities_id]['text']= Dropdown::getDropdownName("glpi_entities", $entities_id);
       $tmp_results[$entities_id]['children'][] = array('id'    => $_REQUEST["modeltable"].";".
                                                    $data['id'].";".
                                                    $data['spec'],
                                         'level' => 1,
-                                        'text'  => Toolbox::substr($data["name"], 0, 
+                                        'text'  => Toolbox::substr($name, 0,
                                                           50));
    }
 
