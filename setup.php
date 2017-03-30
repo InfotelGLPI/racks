@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -90,7 +90,6 @@ function plugin_init_racks() {
          $PLUGIN_HOOKS['reports']['racks']   =
             array('front/report.php' => __("Report - Bays management","racks"));
       }
-
    }
 }
 
