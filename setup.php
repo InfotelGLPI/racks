@@ -109,7 +109,7 @@ function plugin_version_racks() {
 function plugin_racks_check_prerequisites() {
    if (version_compare(GLPI_VERSION,'0.90', 'lt')
       || version_compare(GLPI_VERSION,'9.2', 'ge')) {
-      _e('This plugin requires GLPI >= 0.90', 'racks');
+      echo __('This plugin requires GLPI >= 0.90', 'racks');
       return false;
    }
    return true;

@@ -497,7 +497,7 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "<tr><th colspan='5'>".__('Add equipment', 'racks')."</th></tr>";
       echo "<th>".__('Equipment', 'racks')."<br>";
       echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/racks/front/itemspecification.php'>";
-      _e('Thanks to setup equipments models specifications prior to associate them', 'racks');
+      echo __('Thanks to setup equipments models specifications prior to associate them', 'racks');
       echo "</a>";
       
       echo "</th>";
