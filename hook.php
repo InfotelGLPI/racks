@@ -34,47 +34,47 @@ function plugin_racks_install() {
    $migration = new Migration("1.7.1");
    $update    = false;
 
-   if (!TableExists("glpi_plugin_racks_racks")
-        && !TableExists("glpi_plugin_racks_configs")) {
+   if (!$DB->tableExists("glpi_plugin_racks_racks")
+        && !$DB->tableExists("glpi_plugin_racks_configs")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/empty-1.7.1.sql");
 
-   } elseif (TableExists("glpi_plugin_rack_content")
-      && !FieldExists("glpi_plugin_rack_content","first_powersupply")) {
+   } elseif ($DB->tableExists("glpi_plugin_rack_content")
+      && !$DB->fieldExists("glpi_plugin_rack_content","first_powersupply")) {
       $update = true;
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.0.2.sql");
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
 
-   } elseif (!TableExists("glpi_plugin_rack")
-               && TableExists("glpi_plugin_racks_profiles")) {
+   } elseif (!$DB->tableExists("glpi_plugin_rack")
+               && $DB->tableExists("glpi_plugin_racks_profiles")) {
       $update = true;
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
    }
    //from 1.1 version
-   if (TableExists("glpi_plugin_racks_racks")
-      && !FieldExists("glpi_plugin_racks_racks","otherserial")) {
+   if ($DB->tableExists("glpi_plugin_racks_racks")
+      && !$DB->fieldExists("glpi_plugin_racks_racks","otherserial")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.2.1.sql");
    }
 
-   if (TableExists("glpi_plugin_racks_racks")
-      && !FieldExists("glpi_plugin_racks_racks","users_id_tech")) {
+   if ($DB->tableExists("glpi_plugin_racks_racks")
+      && !$DB->fieldExists("glpi_plugin_racks_racks","users_id_tech")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.3.0.sql");
    }
 
-   if (!TableExists("glpi_plugin_racks_racktypes")) {
+   if (!$DB->tableExists("glpi_plugin_racks_racktypes")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.3.2.sql");
    }
 
-   if (TableExists("glpi_plugin_racks_racktypes")
-                  && !FieldExists("glpi_plugin_racks_racktypes","is_recursive")) {
+   if ($DB->tableExists("glpi_plugin_racks_racktypes")
+                  && !$DB->fieldExists("glpi_plugin_racks_racktypes","is_recursive")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.4.1.sql");
    }
 
-   if (TableExists("glpi_plugin_racks_profiles")
-                  && !FieldExists("glpi_plugin_racks_profiles","open_ticket")) {
+   if ($DB->tableExists("glpi_plugin_racks_profiles")
+                  && !$DB->fieldExists("glpi_plugin_racks_profiles","open_ticket")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.4.2.sql");
    }
-   if (TableExists("glpi_plugin_racks_roomlocations")
-                  && !FieldExists("glpi_plugin_racks_roomlocations","ancestors_cache")) {
+   if ($DB->tableExists("glpi_plugin_racks_roomlocations")
+                  && !$DB->fieldExists("glpi_plugin_racks_roomlocations","ancestors_cache")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.7.1.sql");
    }
 
@@ -109,7 +109,7 @@ function plugin_racks_install() {
 
       foreach ($notepad_tables as $t) {
          // Migrate data
-         if (FieldExists($t, 'notepad')) {
+         if ($DB->fieldExists($t, 'notepad')) {
             $query = "SELECT id, notepad
                       FROM `$t`
                       WHERE notepad IS NOT NULL

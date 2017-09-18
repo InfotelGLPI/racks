@@ -243,7 +243,10 @@ class PluginRacksItemSpecification extends CommonDBTM {
       if ($this->checkIfSpecUsedByRacks($ID))
          echo $this->fields["size"];
       else
-         Dropdown::showInteger("size", $this->fields["size"], 1, 100, 1);
+         Dropdown::showNumber("size", ['value' => $this->fields["size"],
+                                       'min'   => 1,
+                                       'max'   => 100,
+                                       'step'  => 1]);
       echo " U</td>";
 
       echo "<td>" . __('Full-depth item', 'racks') . "</td>";
@@ -257,7 +260,10 @@ class PluginRacksItemSpecification extends CommonDBTM {
 
       echo "<td>" . __('Power supplies number', 'racks') . "</td>";
       echo "<td>";
-      Dropdown::showInteger("nb_alim", $this->fields["nb_alim"], 0, 2, 1);
+      Dropdown::showNumber("nb_alim", ['value' => $this->fields["nb_alim"],
+                                        'min'   => 0,
+                                        'max'   => 2,
+                                        'step'  => 1]);
       echo "</td>";
 
       echo "<td>" . __('Total Current', 'racks') . "</td>";

@@ -251,8 +251,10 @@ class PluginRacksRack extends CommonDBTM {
       echo "</td>";
 
       echo "<td>" . __('Size') . "</td><td>";
-      Dropdown::showInteger("rack_size", $this->fields["rack_size"], 
-                             1, 100, 1);
+      Dropdown::showNumber("rack_size", ['value' => $this->fields["rack_size"],
+                                         'min' => 1,
+                                         'max' => 100,
+                                         'step' => 1]);
       echo " ".__('U', 'racks')."</td>";
       echo "</tr>";
 

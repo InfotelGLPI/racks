@@ -42,7 +42,7 @@ $item  = new $_REQUEST['itemtype'];
 $table = getTableForItemType($_REQUEST['itemtype']);
 
 // Security
-if (!TableExists($table)) {
+if (!$DB->tableExists($table)) {
    exit();
 }
 
