@@ -94,8 +94,8 @@ function plugin_racks_install() {
 
       Plugin::migrateItemType(array(4450 => 'PluginRacksRack',
                                     4451 => 'PluginRacksOther'),
-                              array("glpi_bookmarks",
-                                    "glpi_bookmarks_users",
+                              array("glpi_savedsearches",
+                                    "glpi_savedsearches_users",
                                     "glpi_displaypreferences",
                                     "glpi_documents_items",
                                     "glpi_infocoms",
@@ -183,11 +183,11 @@ function plugin_racks_uninstall() {
    }
 
    $tables_glpi = array("glpi_displaypreferences",
-               "glpi_documents_items",
-               "glpi_bookmarks",
-               "glpi_logs",
-               "glpi_items_tickets",
-               "glpi_dropdowntranslations");
+                        "glpi_documents_items",
+                        "glpi_savedsearches",
+                        "glpi_logs",
+                        "glpi_items_tickets",
+                        "glpi_dropdowntranslations");
 
    foreach($tables_glpi as $table_glpi)
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks%';");
