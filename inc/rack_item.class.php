@@ -43,15 +43,17 @@ class PluginRacksRack_Item extends CommonDBTM {
    public $items_id_2 = 'items_id';
 
    static function countForRack(PluginRacksRack $item, $face) {
-      return countElementsInTable('glpi_plugin_racks_racks_items',
-                                  "`plugin_racks_racks_id` = '".$item->getID()."'
-                                    AND `faces_id` ='$face.'");
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_racks_racks_items',
+                                        "`plugin_racks_racks_id` = '" . $item->getID() . "'
+                                       AND `faces_id` ='$face.'");
    }
 
    static function countForItem(CommonDBTM $item) {
-      return countElementsInTable('glpi_plugin_racks_racks_items',
-                                  "`itemtype`='".$item->getType()."Model'
-                                   AND `items_id` = '".$item->getID()."'");
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_racks_racks_items',
+                                        "`itemtype`='" . $item->getType() . "Model'
+                                       AND `items_id` = '" . $item->getID() . "'");
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {

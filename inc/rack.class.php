@@ -220,7 +220,8 @@ class PluginRacksRack extends CommonDBTM {
          && isset($this->updates) 
             && in_array('locations_id', $this->updates)) {
          $locations_id = $this->fields['locations_id'];
-         $items = getAllDatasFromTable('glpi_plugin_racks_racks_items', 
+         $dbu = new DbUtils();
+         $items = $dbu->getAllDataFromTable('glpi_plugin_racks_racks_items',
                                        "`plugin_racks_racks_id`='".$this->getID()."'");
          foreach ($items as $item) {
             if (preg_match("/(.*)Model/", $item['itemtype'], $results)) {

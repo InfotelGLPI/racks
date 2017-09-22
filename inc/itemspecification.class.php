@@ -81,7 +81,8 @@ class PluginRacksItemSpecification extends CommonDBTM {
    }
 
    function checkIfSpecUsedByRacks($id) {
-      return (countElementsInTable('glpi_plugin_racks_racks_items', 
+      $dbu = new DbUtils();
+      return ($dbu->countElementsInTable('glpi_plugin_racks_racks_items',
                                    "`plugin_racks_itemspecifications_id` = '" . $id . "'") > 0);
    }
 
