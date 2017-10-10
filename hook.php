@@ -44,7 +44,7 @@ function plugin_racks_install() {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.0.2.sql");
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
 
-   } elseif (!$DB->tableExists("glpi_plugin_rack")
+   } elseif ($DB->tableExists("glpi_plugin_rack")
                && $DB->tableExists("glpi_plugin_racks_profiles")) {
       $update = true;
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
