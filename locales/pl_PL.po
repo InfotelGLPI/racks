@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Adam Wysocki <lexuselk@elk.one.pl>, 2017
 # Grzegorz Kaniewski <grzegorzkaniewski@gmail.com>, 2015
 # Marek Wojtaszek <marek@wojtaszek.name>, 2013
 # Ryszard Jeziorski <ryszard.jeziorski@gmail.com>, 2013,2015
@@ -10,18 +11,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - racks plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-26 12:00+0200\n"
-"PO-Revision-Date: 2015-10-15 11:49+0000\n"
-"Last-Translator: Ryszard Jeziorski <ryszard.jeziorski@gmail.com>\n"
+"POT-Creation-Date: 2017-10-19 09:33+0200\n"
+"PO-Revision-Date: 2017-10-19 07:48+0000\n"
+"Last-Translator: Amandine Manceau\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/tsmr/GLPI_racks/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl_PL\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: hook.php:269 inc/rack.class.php:75 inc/rack.class.php:282
-#: inc/rack_item.class.php:1152 inc/rack_item.class.php:1241
+#: hook.php:278 inc/rack.class.php:75 inc/rack.class.php:285
+#: inc/rack_item.class.php:1165 inc/rack_item.class.php:1254
 #: inc/report.class.php:187 inc/report.class.php:243
 #: inc/roomlocation.class.php:41
 msgid "Place"
@@ -29,27 +30,30 @@ msgid_plural "Places"
 msgstr[0] "Miejsce"
 msgstr[1] "Miejsca"
 msgstr[2] "Miejsc"
+msgstr[3] "Miejsc"
 
-#: hook.php:271 inc/connection.class.php:40
+#: hook.php:280 inc/connection.class.php:40
 msgid "Power supply connection"
 msgid_plural "Power supply connections"
 msgstr[0] "Podłączenie zasilania"
 msgstr[1] "Podłączenia zasilania"
 msgstr[2] "Podłączeń zasilania"
+msgstr[3] "Podłączeń zasilania"
 
-#: hook.php:272 inc/other.class.php:39 inc/othermodel.class.php:40
+#: hook.php:281 inc/other.class.php:39 inc/othermodel.class.php:40
 msgid "Others equipments"
 msgstr "Pozostały sprzęt"
 
-#: hook.php:287 inc/menu.class.php:35 inc/profile.class.php:116
+#: hook.php:296 inc/menu.class.php:35 inc/profile.class.php:116
 #: inc/rack.class.php:48
 msgid "Rack enclosure"
 msgid_plural "Rack enclosures"
 msgstr[0] "Szafa Rack"
 msgstr[1] "Szafy Rack"
 msgstr[2] "Szafy Rack"
+msgstr[3] "Szafy Rack"
 
-#: setup.php:91 front/report.php:61
+#: setup.php:92 front/report.php:61
 msgid "Report - Bays management"
 msgstr "Raport - zarządzanie wnękami"
 
@@ -59,18 +63,16 @@ msgid_plural "Rack enclosures management"
 msgstr[0] "Zarządzanie szafą Rack"
 msgstr[1] "Zarządzanie szafami Rack"
 msgstr[2] "Szafy Rack"
+msgstr[3] "Szafy Rack"
 
-#: setup.php:113
-msgid "This plugin requires GLPI >= 0.90"
-msgstr "Ta wtyczka wymaga wersji GLPI >=0.90"
+#: ajax/synchronize_device.php:62 front/rack.form.php:106
+#: front/rack.form.php:160
+msgid "No more place for insertion"
+msgstr "Brak miejsca na dodanie nowych elementów"
 
 #: front/config.form.php:49
 msgid "Please activate the plugin"
 msgstr "Proszę aktywować wtyczkę"
-
-#: front/rack.form.php:106 front/rack.form.php:159
-msgid "No more place for insertion"
-msgstr "Brak miejsca na dodanie nowych elementów"
 
 #: inc/config.class.php:54
 msgid "Configuration of units"
@@ -90,7 +92,7 @@ msgstr "Skopiuj lokalizację szafy rack dodając do niej nowy sprzęt"
 
 #: inc/config.class.php:81
 msgid "Forward rack's location to linked assets on change"
-msgstr ""
+msgstr "Przekaż lokalizację szafy rack do powiązanego sprzętu przy zmianie"
 
 #: inc/config.class.php:113
 msgid "kg"
@@ -140,6 +142,7 @@ msgid_plural "Network equipments"
 msgstr[0] "Wyposażenie sieciowe"
 msgstr[1] "Wyposażenia sieciowe"
 msgstr[2] "Wyposażeń sieciowych"
+msgstr[3] "Wyposażeń sieciowych"
 
 #: inc/itemspecificationcentral.class.php:54
 msgid "Peripheral"
@@ -147,6 +150,7 @@ msgid_plural "Peripherals"
 msgstr[0] "Urządzenie peryferyjne"
 msgstr[1] "Urządzenia peryferyjne"
 msgstr[2] "Urządzeń peryferyjnych"
+msgstr[3] "Urządzeń peryferyjnych"
 
 #: inc/itemspecificationcentral.class.php:55
 msgid "Other equipment"
@@ -154,184 +158,186 @@ msgid_plural "Others equipments"
 msgstr[0] "Inne wyposażenie"
 msgstr[1] "Inne wyposażenia"
 msgstr[2] "Innych wyposażeń"
+msgstr[3] "Innych wyposażeń"
 
 #: inc/itemspecification.class.php:52 inc/menu.class.php:54
-#: inc/rack_item.class.php:170
+#: inc/rack_item.class.php:172
 msgid "Specifications"
 msgstr "Specyfikacja"
 
-#: inc/itemspecification.class.php:249 inc/itemspecification.class.php:340
+#: inc/itemspecification.class.php:253 inc/itemspecification.class.php:347
 msgid "Full-depth item"
 msgstr "pozycja zajmująca pełną głębokość"
 
-#: inc/itemspecification.class.php:258 inc/itemspecification.class.php:329
-#: inc/rack.class.php:432
+#: inc/itemspecification.class.php:262 inc/itemspecification.class.php:336
+#: inc/rack.class.php:435
 msgid "Power supplies number"
 msgstr "Ilość zasilaczy"
 
-#: inc/itemspecification.class.php:263 inc/itemspecification.class.php:328
-#: inc/rack_item.class.php:636
+#: inc/itemspecification.class.php:270 inc/itemspecification.class.php:335
+#: inc/rack_item.class.php:643
 msgid "Total Current"
 msgstr "Prąd całkowity"
 
-#: inc/itemspecification.class.php:271 inc/itemspecification.class.php:330
-#: inc/rack.class.php:434 inc/rack_item.class.php:199
-#: inc/rack_item.class.php:637
+#: inc/itemspecification.class.php:278 inc/itemspecification.class.php:337
+#: inc/rack.class.php:437 inc/rack_item.class.php:201
+#: inc/rack_item.class.php:644
 msgid "Calorific waste"
 msgstr "Ciepło wydzielane"
 
-#: inc/itemspecification.class.php:278 inc/itemspecification.class.php:333
-#: inc/rack_item.class.php:641
+#: inc/itemspecification.class.php:285 inc/itemspecification.class.php:340
+#: inc/rack_item.class.php:648
 msgid "Flow Rate"
 msgstr "Przepływ powietrza"
 
-#: inc/itemspecification.class.php:288 inc/itemspecification.class.php:337
-#: inc/rack.class.php:143 inc/rack.class.php:334 inc/rack.class.php:436
-#: inc/rack_item.class.php:219 inc/rack_item.class.php:645
+#: inc/itemspecification.class.php:295 inc/itemspecification.class.php:344
+#: inc/rack.class.php:143 inc/rack.class.php:337 inc/rack.class.php:439
+#: inc/rack_item.class.php:221 inc/rack_item.class.php:652
 msgid "Weight"
 msgstr "Waga"
 
-#: inc/itemspecification.class.php:327 inc/rack_item.class.php:498
+#: inc/itemspecification.class.php:334 inc/rack_item.class.php:500
 msgid "Equipment"
 msgstr "Sprzęt"
 
-#: inc/itemspecification.class.php:328 inc/rack.class.php:453
-#: inc/rack_item.class.php:191 inc/rack_item.class.php:636
-#: inc/rack_item.class.php:901 inc/rack_item.class.php:902
+#: inc/itemspecification.class.php:335 inc/rack.class.php:456
+#: inc/rack_item.class.php:193 inc/rack_item.class.php:643
+#: inc/rack_item.class.php:912 inc/rack_item.class.php:913
 msgid "amps"
 msgstr "amperów"
 
-#: inc/itemspecification.class.php:336 inc/rack.class.php:256
-#: inc/rack_item.class.php:871 inc/rack_item.class.php:883
-#: inc/rack_item.class.php:885 inc/rack_item.class.php:887
-#: inc/rack_item.class.php:889 inc/report.class.php:190
+#: inc/itemspecification.class.php:343 inc/rack.class.php:259
+#: inc/rack_item.class.php:882 inc/rack_item.class.php:894
+#: inc/rack_item.class.php:896 inc/rack_item.class.php:898
+#: inc/rack_item.class.php:900 inc/report.class.php:190
 #: inc/report.class.php:246
 msgid "U"
 msgstr "U"
 
-#: inc/itemspecification.class.php:374
+#: inc/itemspecification.class.php:381
 msgid "Add specifications for servers models"
 msgstr "Dodaj specyfikację do modeli serwerów"
 
-#: inc/rack.class.php:104 inc/rack.class.php:318
+#: inc/rack.class.php:104 inc/rack.class.php:321
 msgid "Height"
 msgstr "Wysokość"
 
-#: inc/rack.class.php:109 inc/rack.class.php:301
+#: inc/rack.class.php:109 inc/rack.class.php:304
 msgid "Width"
 msgstr "Szerokość"
 
-#: inc/rack.class.php:114 inc/rack.class.php:352
+#: inc/rack.class.php:114 inc/rack.class.php:355
 msgid "Depth"
 msgstr "Głębokość"
 
-#: inc/rack.class.php:433 inc/rack_item.class.php:191
+#: inc/rack.class.php:436 inc/rack_item.class.php:193
 msgid "Total current"
 msgstr "Prąd całkowity"
 
-#: inc/rack.class.php:435 inc/rack_item.class.php:209
+#: inc/rack.class.php:438 inc/rack_item.class.php:211
 msgid "Flow rate"
 msgstr "Przepływ"
 
-#: inc/rack_item.class.php:64 inc/rack_item.class.php:68
-#: inc/rack_item.class.php:1191 inc/rack_item.class.php:1253
+#: inc/rack_item.class.php:66 inc/rack_item.class.php:70
+#: inc/rack_item.class.php:1204 inc/rack_item.class.php:1266
 #: inc/report.class.php:193 inc/report.class.php:249 inc/report.class.php:361
 #: inc/report.class.php:474 inc/report.class.php:484
 msgid "Front"
 msgstr "Przód"
 
-#: inc/rack_item.class.php:71 inc/rack_item.class.php:75
-#: inc/rack_item.class.php:1193 inc/rack_item.class.php:1255
+#: inc/rack_item.class.php:73 inc/rack_item.class.php:77
+#: inc/rack_item.class.php:1206 inc/rack_item.class.php:1268
 #: inc/report.class.php:193 inc/report.class.php:249 inc/report.class.php:363
 #: inc/report.class.php:474 inc/report.class.php:484
 msgctxt "Rack enclosure"
 msgid "Back"
 msgstr "Tył"
 
-#: inc/rack_item.class.php:173 inc/rack_item.class.php:633
+#: inc/rack_item.class.php:175 inc/rack_item.class.php:640
 msgid "Power supply 1"
 msgstr "Zasilacz 1"
 
-#: inc/rack_item.class.php:183 inc/rack_item.class.php:634
+#: inc/rack_item.class.php:185 inc/rack_item.class.php:641
 msgid "Power supply 2"
 msgstr "Zasilacz 2"
 
-#: inc/rack_item.class.php:497
+#: inc/rack_item.class.php:499
 msgid "Add equipment"
 msgstr "Dodaj sprzęt"
 
-#: inc/rack_item.class.php:500
+#: inc/rack_item.class.php:502
 msgid ""
 "Thanks to setup equipments models specifications prior to associate them"
 msgstr "Uzupełnij specyfikacje modeli sprzętu aby móc je dodać"
 
-#: inc/rack_item.class.php:504 inc/rack_item.class.php:629
-#: inc/rack_item.class.php:1150 inc/rack_item.class.php:1239
+#: inc/rack_item.class.php:506 inc/rack_item.class.php:636
+#: inc/rack_item.class.php:1163 inc/rack_item.class.php:1252
 msgid "Position"
 msgstr "Pozycja"
 
-#: inc/rack_item.class.php:585
+#: inc/rack_item.class.php:592
 msgid "Rack enclosure arrangement"
 msgstr "Rozmieszczenie obudów rackowych"
 
-#: inc/rack_item.class.php:635
+#: inc/rack_item.class.php:642
 msgid "C13 Power Cord Quantity"
 msgstr "Przewód zasilający C13"
 
-#: inc/rack_item.class.php:883
+#: inc/rack_item.class.php:894
 msgid "Total Servers"
 msgstr "Wszystkich serwerów"
 
-#: inc/rack_item.class.php:885
+#: inc/rack_item.class.php:896
 msgid "Total Network equipements"
 msgstr "Wszystkich urządzeń sieciowych"
 
-#: inc/rack_item.class.php:887
+#: inc/rack_item.class.php:898
 msgid "Total Peripherals"
 msgstr "Wszystkich urządzeń peryferyjnych"
 
-#: inc/rack_item.class.php:889
+#: inc/rack_item.class.php:900
 msgid "Total Others"
 msgstr "Pozostałe"
 
-#: inc/rack_item.class.php:895 inc/rack_item.class.php:897
+#: inc/rack_item.class.php:906 inc/rack_item.class.php:908
 msgid "U availables"
 msgstr "Dostępnych U"
 
-#: inc/rack_item.class.php:900
+#: inc/rack_item.class.php:911
 msgid "Total power Cords"
 msgstr "Wszystkich przewodów zasilających"
 
-#: inc/rack_item.class.php:901
+#: inc/rack_item.class.php:912
 msgid "Amperage on power Cords"
 msgstr "Prąd na przewodach zasilających"
 
-#: inc/rack_item.class.php:975
+#: inc/rack_item.class.php:988
 msgid "Left rack enclosure"
 msgstr "Osłona boczna z lewej strony"
 
-#: inc/rack_item.class.php:977
+#: inc/rack_item.class.php:990
 msgid "No rack enclosure on the left"
 msgstr "Brak osłony bocznej z lewej strony"
 
-#: inc/rack_item.class.php:998
+#: inc/rack_item.class.php:1011
 msgid "Right rack enclosure"
 msgstr "Osłona boczna z prawej strony"
 
-#: inc/rack_item.class.php:1000
+#: inc/rack_item.class.php:1013
 msgid "No rack enclosure on the right"
 msgstr "Brak osłony bocznej z prawej strony"
 
-#: inc/rack_item.class.php:1149 inc/rack_item.class.php:1238
+#: inc/rack_item.class.php:1162 inc/rack_item.class.php:1251
 msgid "Disposition"
 msgstr "Dyspozycja"
 
-#: inc/rack_item.class.php:1236
+#: inc/rack_item.class.php:1249
 msgid "Associated rack enclosure"
 msgid_plural "Associated rack enclosures"
 msgstr[0] "Skojarzona osłona boczna"
 msgstr[1] "Skojarzone osłony boczne"
 msgstr[2] "Skojarzonych osłon bocznych"
+msgstr[3] "Skojarzonych osłon bocznych"
 
 #: inc/report.class.php:181 inc/report.class.php:237 inc/report.class.php:464
 msgid "Bay name"
@@ -371,4 +377,4 @@ msgstr "Zapytania"
 
 #: inc/report.class.php:1026
 msgid "End of line"
-msgstr ""
+msgstr "Koniec linii"
