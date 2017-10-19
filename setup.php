@@ -34,6 +34,7 @@ function plugin_init_racks() {
    //load changeprofile function
    $PLUGIN_HOOKS['change_profile']['racks']   = array('PluginRacksProfile',
                                                                 'initProfile');
+   $PLUGIN_HOOKS['javascript']['racks'][]   = '/plugins/racks/racks.js';
 
    $plugin = new Plugin();
    if ($plugin->isInstalled('racks') && $plugin->isActivated('racks')) {

@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-include ('../../../inc/includes.php');
+include('../../../inc/includes.php');
 
 if (!isset($_GET["id"])) {
    $_GET["id"] = "";
@@ -43,9 +43,9 @@ $PluginRacksRack_Item = new PluginRacksRack_Item();
 if (isset ($_POST["add"])) {
    $PluginRacksRack->check(-1, CREATE, $_POST);
 
-   $newID= $PluginRacksRack->add($_POST);
+   $newID = $PluginRacksRack->add($_POST);
    if ($_SESSION['glpibackcreated']) {
-      Html::redirect($PluginRacksRack->getFormURL()."?id=".$newID);
+      Html::redirect($PluginRacksRack->getFormURL() . "?id=" . $newID);
    }
    Html::back();
 
@@ -54,25 +54,25 @@ if (isset ($_POST["add"])) {
    $PluginRacksRack->check($_POST['id'], DELETE);
    $PluginRacksRack->delete($_POST);
    $PluginRacksRack->redirectToList();
-   
+
 } elseif (isset ($_POST["restore"])) {
 
    $PluginRacksRack->check($_POST['id'], PURGE);
    $PluginRacksRack->restore($_POST);
    $PluginRacksRack->redirectToList();
-   
+
 } else if (isset ($_POST["purge"])) {
 
    $PluginRacksRack->check($_POST['id'], PURGE);
    $PluginRacksRack->delete($_POST, true);
    $PluginRacksRack->redirectToList();
-   
+
 } else if (isset ($_POST["update"])) {
 
    $PluginRacksRack->check($_POST['id'], UPDATE);
    $PluginRacksRack->update($_POST);
    Html::back();
-   
+
 } else if (isset ($_POST["addDevice"])) {
    if (!isset ($_POST['rack_size'])) {
       $PluginRacksRack->getFromDB($_POST['racks_id']);
@@ -80,27 +80,27 @@ if (isset ($_POST["add"])) {
    }
 
    $test = explode(";", $_POST['itemtype']);
-   
+
    $_POST['itemtype']                           = $test[0];
    $_POST['items_id']                           = $test[1];
    $_POST['plugin_racks_itemspecifications_id'] = $test[2];
-        
-   if ($_POST['itemtype']=='PluginRacksOtherModel') {
-      $newid=$PluginRacksOther->addOthers($_POST['items_id']);
-      $_POST['items_id']=$newid;
+
+   if ($_POST['itemtype'] == 'PluginRacksOtherModel') {
+      $newid             = $PluginRacksOther->addOthers($_POST['items_id']);
+      $_POST['items_id'] = $newid;
    }
 
    if (!empty($_POST['itemtype']) && $_POST['items_id'] > 0 && !empty ($_POST['pos'])) {
       if ($PluginRacksRack->canCreate()) {
-          $space_left = $PluginRacksRack_Item->addItem($_POST['plugin_racks_racks_id'], 
-                                                       $_POST['rack_size'], 
-                                                       $_POST['faces_id'], 
-                                                       $_POST['items_id'], 
-                                                       $_POST['itemtype'], 
-                                                       $_POST['plugin_racks_itemspecifications_id'], 
-                                                       $_POST['pos']);
+         $space_left = $PluginRacksRack_Item->addItem($_POST['plugin_racks_racks_id'],
+                                                      $_POST['rack_size'],
+                                                      $_POST['faces_id'],
+                                                      $_POST['items_id'],
+                                                      $_POST['itemtype'],
+                                                      $_POST['plugin_racks_itemspecifications_id'],
+                                                      $_POST['pos']);
          if ($space_left < 0) {
-            if ($_POST['itemtype']=='PluginRacksOtherModel') {
+            if ($_POST['itemtype'] == 'PluginRacksOtherModel') {
                $PluginRacksOther->deleteOthers($_POST['items_id']);
             }
             Session::addMessageAfterRedirect(__('No more place for insertion', 'racks'),
@@ -115,50 +115,51 @@ if (isset ($_POST["add"])) {
    if ($PluginRacksRack->canCreate()
          && isset($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
-            $input = array('id' => $key);
-            if ($val == 1) {
-               $PluginRacksRack_Item->delete($input);
-               
-               $vartype     = "type" . $key;
-               $varitems_id = "items_id" . $key;
-               if ($_POST[$vartype] == 'PluginRacksOtherModel') {
-                  $PluginRacksOther->deleteOthers($_POST[$varitems_id]);
-               }
+         $input = array('id' => $key);
+         if ($val == 1) {
+            $PluginRacksRack_Item->delete($input);
+
+            $vartype     = "type" . $key;
+            $varitems_id = "items_id" . $key;
+            if ($_POST[$vartype] == 'PluginRacksOtherModel') {
+               $PluginRacksOther->deleteOthers($_POST[$varitems_id]);
             }
          }
+      }
    }
    Html::back();
 } elseif (isset ($_POST["deleteitem"])) {
    $input = array('id' => $_POST["id"]);
-   $PluginRacksRack_Item->check($_POST["id"],UPDATE);
+   $PluginRacksRack_Item->check($_POST["id"], UPDATE);
    $PluginRacksRack_Item->delete($input);
    Html::back();
 } else if (isset ($_POST["update_server"])) {
    if ($PluginRacksRack->canCreate()) {
-      foreach ($_POST["updateDevice"] as $key => $val) {
-         $vartype     = "type" . $key;
-         $varspec     = "plugin_racks_itemspecifications_id" . $key;
-         $varname     = "name" . $key;
-         $varitems_id = "items_id" . $key;
+      if ($_POST["updateDevice"]) {
+         $key = $_POST["updateDevice"];
+         $vartype     = "type";
+         $varspec     = "plugin_racks_itemspecifications_id";
+         $varname     = "name";
+         $varitems_id = "items_id";
          if ($_POST[$vartype] == 'PluginRacksOtherModel') {
-            $PluginRacksOther->updateOthers($_POST[$varitems_id],$_POST[$varname]);
+            $PluginRacksOther->updateOthers($_POST[$varitems_id], $_POST[$varname]);
          }
          $varpos = "position" . $key;
 
-         $space_left = $PluginRacksRack_Item->updateItem($key, 
-                                                         $_POST[$vartype], 
+         $space_left = $PluginRacksRack_Item->updateItem($key,
+                                                         $_POST[$vartype],
                                                          $_POST[$varspec],
-                                                         $_POST['plugin_racks_racks_id'], 
-                                                         $_POST['rack_size'], 
-                                                         $_POST['faces_id'], 
-                                                         $_POST[$varitems_id], 
+                                                         $_POST['plugin_racks_racks_id'],
+                                                         $_POST['rack_size'],
+                                                         $_POST['faces_id'],
+                                                         $_POST[$varitems_id],
                                                          $_POST[$varpos]);
-                }
-        }
-        if ($space_left < 0) {
-         Session::addMessageAfterRedirect(__('No more place for insertion', 'racks'), false, ERROR);
-        }
-        Html::back();
+      }
+   }
+   if ($space_left < 0) {
+      Session::addMessageAfterRedirect(__('No more place for insertion', 'racks'), false, ERROR);
+   }
+   Html::back();
 } else {
    $PluginRacksRack->checkGlobal(READ);
    Html::header(PluginRacksRack::getTypeName(2), '', "assets", "pluginracksmenu", "racks");

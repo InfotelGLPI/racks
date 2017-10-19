@@ -332,19 +332,19 @@ class PluginRacksRack_Item extends CommonDBTM {
                && $length == 1) {
             $space_left = -1;
          }
-         
+
          foreach ($position_table as $key => $val) {
             foreach ($server_size as $cle => $value) {
-               if ($val==$value)
+               if ($val == $value)
                   $space_left = -1;
             }
          }
-         
+
          if ($device_size > $position)
             $space_left = -1;
-            
+
          //reste a gerer les inclusions en 1 avec size > 1
-         if ($device_size>1 && ($position==1 || $position==01))
+         if ($device_size > 1 && ($position == 1 || $position == 01))
             $space_left = -1;
       } else {
          $space_left = -1;
@@ -355,11 +355,11 @@ class PluginRacksRack_Item extends CommonDBTM {
 
    function addItem($plugin_racks_racks_id, $rack_size, $face, $ID, $itemtype, $spec, $position) {
       $space_left = $this->checkPosition($plugin_racks_racks_id,
-                                         $rack_size, 
+                                         $rack_size,
                                          $face,
-                                         $ID, 
-                                         $itemtype, 
-                                         $spec, 
+                                         $ID,
+                                         $itemtype,
+                                         $spec,
                                          $position);
       if ($space_left >= 0) {
 
@@ -383,36 +383,36 @@ class PluginRacksRack_Item extends CommonDBTM {
          //If rack's location must be copied in the associated item
          $config = PluginRacksConfig::getConfig();
          if ($config->canAddLocationOnNewItem()) {
-           $rack = new PluginRacksRack();
-           $rack->getFromDB($plugin_racks_racks_id);
-           if ($rack->fields['locations_id'] > 0) {
-             if (preg_match("/(.*)Model/", $itemtype, $results)) {
-               $item = new $results[1];
-               $item->update(array('id' => $ID, 
-                                   'locations_id' => $rack->fields['locations_id']));              
-             }
-           }
+            $rack = new PluginRacksRack();
+            $rack->getFromDB($plugin_racks_racks_id);
+            if ($rack->fields['locations_id'] > 0) {
+               if (preg_match("/(.*)Model/", $itemtype, $results)) {
+                  $item = new $results[1];
+                  $item->update(array('id'           => $ID,
+                                      'locations_id' => $rack->fields['locations_id']));
+               }
+            }
          }
       }
 
       return $space_left;
-  }
+   }
 
    function updateItem($ID, $itemtype, $plugin_racks_itemspecifications_id,
-                       $plugin_racks_racks_id, 
-                       $rack_size, $faces_id, 
+                       $plugin_racks_racks_id,
+                       $rack_size, $faces_id,
                        $items_id, $position) {
 
       $space_left = $this->checkPosition($plugin_racks_racks_id,
-                                         $rack_size, 
-                                         $faces_id, 
-                                         $items_id, 
-                                         $itemtype, 
-                                         $plugin_racks_itemspecifications_id, 
+                                         $rack_size,
+                                         $faces_id,
+                                         $items_id,
+                                         $itemtype,
+                                         $plugin_racks_itemspecifications_id,
                                          $position);
 
       if ($space_left >= 0) {
-         $values["id"] = $ID;
+         $values["id"]       = $ID;
          $values["position"] = $position;
          $this->update($values);
       }
@@ -428,39 +428,39 @@ class PluginRacksRack_Item extends CommonDBTM {
       $options = array();
 
       echo "<table border='0'><tr><td>\n";
-      
+
       echo "<select name='type' id='itemtype$rand'>\n";
-      echo "<option value='0'>".Dropdown::EMPTY_VALUE."</option>\n";
+      echo "<option value='0'>" . Dropdown::EMPTY_VALUE . "</option>\n";
 
       foreach ($types as $type) {
          $item = new $type();
-         echo "<option value='".$type."Model'>".$item::getTypeName(2)."</option>\n";
+         echo "<option value='" . $type . "Model'>" . $item::getTypeName(2) . "</option>\n";
       }
       echo "</select>";
 
-      $params = array('modeltable'     => '__VALUE__',
-                      'value'          => $value,
-                      'myname'         => $myname,
-                      'entity_restrict'=> $entity_restrict,
+      $params = array('modeltable'      => '__VALUE__',
+                      'value'           => $value,
+                      'myname'          => $myname,
+                      'entity_restrict' => $entity_restrict,
       );
 
       Ajax::UpdateItemOnSelectEvent("itemtype$rand",
                                     "show_$myname$rand",
-                                    $CFG_GLPI["root_doc"]."/plugins/racks/ajax/dropdownAllItems.php",
+                                    $CFG_GLPI["root_doc"] . "/plugins/racks/ajax/dropdownAllItems.php",
                                     $params);
 
-      echo "</td><td>\n"        ;
+      echo "</td><td>\n";
       echo "<span id='show_$myname$rand'>&nbsp;</span>\n";
       echo "</td></tr></table>\n";
 
       if ($value > 0) {
          echo "<script type='text/javascript' >\n";
-         echo "document.getElementById('itemtype$rand').value='".$value_type."';";
+         echo "document.getElementById('itemtype$rand').value='" . $value_type . "';";
          echo "</script>\n";
 
-         $params["modeltable"]=$value_type;
+         $params["modeltable"] = $value_type;
          Ajax::updateItem("show_$myname$rand",
-                          $CFG_GLPI["root_doc"]."/plugins/racks/ajax/dropdownAllItems.php",
+                          $CFG_GLPI["root_doc"] . "/plugins/racks/ajax/dropdownAllItems.php",
                           $params);
       }
       return $rand;
@@ -475,13 +475,13 @@ class PluginRacksRack_Item extends CommonDBTM {
     * @param $used already used elements key (do not display)
     *
     */
-   function dropdownArrayValues($name,$elements,$used=array()){
-      $rand=mt_rand();
-      echo "<select name='$name' id='dropdown_".$name.$rand."'>";
+   function dropdownArrayValues($name, $elements, $used = array()) {
+      $rand = mt_rand();
+      echo "<select name='$name' id='dropdown_" . $name . $rand . "'>";
 
-      foreach($elements as $key => $val){
+      foreach ($elements as $key => $val) {
          if (!isset($used[$key])) {
-            echo "<option value='".$key."'>".$val."</option>";
+            echo "<option value='" . $key . "'>" . $val . "</option>";
          }
       }
 
@@ -489,473 +489,484 @@ class PluginRacksRack_Item extends CommonDBTM {
       return $rand;
    }
 
-   function AddItemToRack($PluginRacksRack,$instID,$face) {
+   function AddItemToRack($PluginRacksRack, $instID, $face) {
       global $DB, $CFG_GLPI;
 
-      echo "<form method='post' name='racks_form' id='add_device_form'  action=\"".$CFG_GLPI["root_doc"]."/plugins/racks/front/rack.form.php\">";
+      echo "<form method='post' name='racks_form' id='add_device_form'  action=\"" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/rack.form.php\">";
 
       // Ajout element
       echo "<div class='center'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='5'>".__('Add equipment', 'racks')."</th></tr>";
-      echo "<th>".__('Equipment', 'racks')."<br>";
-      echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/racks/front/itemspecification.php'>";
+      echo "<tr><th colspan='5'>" . __('Add equipment', 'racks') . "</th></tr>";
+      echo "<th>" . __('Equipment', 'racks') . "<br>";
+      echo "<a href='" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/itemspecification.php'>";
       echo __('Thanks to setup equipments models specifications prior to associate them', 'racks');
       echo "</a>";
-      
+
       echo "</th>";
-      echo "<th>".__('Position', 'racks')."</th>" ;
+      echo "<th>" . __('Position', 'racks') . "</th>";
       echo "<th></th>";
       echo "<input type='hidden' name='plugin_racks_racks_id' value='$instID'>";
-      echo "<input type='hidden' name='rack_size' value='".$PluginRacksRack->fields['rack_size']."'>";
+      echo "<input type='hidden' name='rack_size' value='" . $PluginRacksRack->fields['rack_size'] . "'>";
 
       echo "<tr>";
       echo "<td class='tab_bg_1 center'>";
 
-      $this->showAllItems("itemtype",0,0,($PluginRacksRack->fields['is_recursive']?-1:$PluginRacksRack->fields['entities_id']));
+      $this->showAllItems("itemtype", 0, 0, ($PluginRacksRack->fields['is_recursive'] ? -1 : $PluginRacksRack->fields['entities_id']));
       echo "</td>";
 
-      if ($face==PluginRacksRack::FRONT_FACE) {
-        $otherface=PluginRacksRack::BACK_FACE;
+      if ($face == PluginRacksRack::FRONT_FACE) {
+         $otherface = PluginRacksRack::BACK_FACE;
       } else {
-        $otherface=PluginRacksRack::FRONT_FACE;
+         $otherface = PluginRacksRack::FRONT_FACE;
       }
       //tableau des emplacements occupes
-      $query_position = "SELECT `".$this->getTable()."`.`position` AS position,
+      $query_position  = "SELECT `" . $this->getTable() . "`.`position` AS position,
                               `glpi_plugin_racks_itemspecifications`.`size` AS size,
                               `glpi_plugin_racks_itemspecifications`.`length` AS length,
-                              `".$this->getTable()."`.`faces_id` AS faces_id
-                FROM `".$this->getTable()."`,`glpi_plugin_racks_itemspecifications`
-                WHERE `glpi_plugin_racks_itemspecifications`.`id` = `".$this->getTable()."`.`plugin_racks_itemspecifications_id`
-                AND `".$this->getTable()."`.`plugin_racks_racks_id` = '".$instID."'
-                AND (`".$this->getTable()."`.`faces_id` = '".$face."'
-                OR (`".$this->getTable()."`.`faces_id` = '".$otherface."')) ";
+                              `" . $this->getTable() . "`.`faces_id` AS faces_id
+                FROM `" . $this->getTable() . "`,`glpi_plugin_racks_itemspecifications`
+                WHERE `glpi_plugin_racks_itemspecifications`.`id` = `" . $this->getTable() . "`.`plugin_racks_itemspecifications_id`
+                AND `" . $this->getTable() . "`.`plugin_racks_racks_id` = '" . $instID . "'
+                AND (`" . $this->getTable() . "`.`faces_id` = '" . $face . "'
+                OR (`" . $this->getTable() . "`.`faces_id` = '" . $otherface . "')) ";
       $result_position = $DB->query($query_position);
 
-      $position_table=array();
+      $position_table = array();
 
-      while($data_position=$DB->fetch_array($result_position)) {
+      while ($data_position = $DB->fetch_array($result_position)) {
 
-         for ($i=0;$i<$data_position['size'];$i++)
-            if (($data_position['length']==1 && $data_position['faces_id']==$otherface) || $data_position['faces_id']==$face)
-               $position_table[]=$data_position['position']-$i;
+         for ($i = 0; $i < $data_position['size']; $i++)
+            if (($data_position['length'] == 1 && $data_position['faces_id'] == $otherface) || $data_position['faces_id'] == $face)
+               $position_table[] = $data_position['position'] - $i;
       }
 
       echo "<td class='tab_bg_1 center'>";
 
-      $racks=array();
-      for ($i=0;$i<=$PluginRacksRack->fields['rack_size'];$i++)
-        $racks[$i]=$i;
+      $racks = array();
+      for ($i = 0; $i <= $PluginRacksRack->fields['rack_size']; $i++)
+         $racks[$i] = $i;
 
       unset($racks[0]);
 
       $options = array_flip($position_table);
 
-      $this->dropdownArrayValues("pos",$racks,$options);
+      $this->dropdownArrayValues("pos", $racks, $options);
 
       echo "</td>";
 
       echo "<td class='tab_bg_1 center'>";
-      echo "<input type='hidden' name='faces_id' value='".$face."'>";
-      echo "<input type='submit' name='addDevice' value=\""._sx('button','Add')."\" class='submit'></tr>";
+      echo "<input type='hidden' name='faces_id' value='" . $face . "'>";
+      echo "<input type='submit' name='addDevice' value=\"" . _sx('button', 'Add') . "\" class='submit'></tr>";
       echo "</table></div>";
       Html::closeForm();
 
    }
 
-   function showItemFromPlugin($instID,$face) {
+   function showItemFromPlugin($instID, $face) {
       global $DB, $CFG_GLPI;
 
-      if (!$this->canView())    return false;
+      if (!$this->canView()) return false;
 
-      $rand=mt_rand();
+      Html::requireJs('racks');
+      // Init javascript
+      echo Html::scriptBlock('$(document).ready(function() {racks_initJs("' . $CFG_GLPI['root_doc'] . '");});');
 
-      $PluginRacksRack=new PluginRacksRack();
+      $rand = mt_rand();
+
+      $PluginRacksRack   = new PluginRacksRack();
       $PluginRacksConfig = new PluginRacksConfig();
 
       if ($PluginRacksRack->getFromDB($instID)) {
          $canedit = $PluginRacksRack->can($instID, UPDATE);
 
          if ($canedit) {
-            $this->AddItemToRack($PluginRacksRack,$instID,$face);
+            $this->AddItemToRack($PluginRacksRack, $instID, $face);
          }
 
          //LIST
-         echo "<form method='post' name='racks_form$rand' id='racks_form$rand'  
-               action=\"".PluginRacksRack::getFormURL(true)."\">";
+         Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+         $massiveactionparams = array('item' => __CLASS__, 'container' => 'mass'.__CLASS__.$rand);
+         Html::showMassiveActions($massiveactionparams);
 
          echo "<div class='center'><table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='12'>".__('Rack enclosure arrangement', 'racks').":</th></tr><tr>";
+         echo "<tr><th colspan='12'>" . __('Rack enclosure arrangement', 'racks') . ":</th></tr><tr>";
 
-         if ($face==PluginRacksRack::FRONT_FACE) {
-            $query = "SELECT `".$this->getTable()."`.*
-              FROM `".$this->getTable()."`,`glpi_plugin_racks_itemspecifications`
-              WHERE `".$this->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
-              AND `".$this->getTable()."`.`plugin_racks_racks_id` = '$instID'
-              AND (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::FRONT_FACE."' 
-               OR (`".$this->getTable()."`.`faces_id` ='".PluginRacksRack::BACK_FACE."' 
+         if ($face == PluginRacksRack::FRONT_FACE) {
+            $query = "SELECT `" . $this->getTable() . "`.*
+              FROM `" . $this->getTable() . "`,`glpi_plugin_racks_itemspecifications`
+              WHERE `" . $this->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
+              AND `" . $this->getTable() . "`.`plugin_racks_racks_id` = '$instID'
+              AND (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::FRONT_FACE . "' 
+               OR (`" . $this->getTable() . "`.`faces_id` ='" . PluginRacksRack::BACK_FACE . "' 
                   AND `glpi_plugin_racks_itemspecifications`.`length` = 1 ))
-              ORDER BY `".$this->getTable()."`.`position` ASC" ;
+              ORDER BY `" . $this->getTable() . "`.`position` ASC";
          } else {
-            $query = "SELECT `".$this->getTable()."`.*
-              FROM `".$this->getTable()."`,`glpi_plugin_racks_itemspecifications`
-              WHERE `".$this->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
-              AND `".$this->getTable()."`.`plugin_racks_racks_id` = '$instID'
-              AND (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::BACK_FACE."' 
-               OR (`".$this->getTable()."`.`faces_id` ='".PluginRacksRack::FRONT_FACE."' 
+            $query = "SELECT `" . $this->getTable() . "`.*
+              FROM `" . $this->getTable() . "`,`glpi_plugin_racks_itemspecifications`
+              WHERE `" . $this->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
+              AND `" . $this->getTable() . "`.`plugin_racks_racks_id` = '$instID'
+              AND (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::BACK_FACE . "' 
+               OR (`" . $this->getTable() . "`.`faces_id` ='" . PluginRacksRack::FRONT_FACE . "' 
                   AND `glpi_plugin_racks_itemspecifications`.`length` = 1 ))
-              ORDER BY `".$this->getTable()."`.`position` ASC" ;
+              ORDER BY `" . $this->getTable() . "`.`position` ASC";
          }
          $result = $DB->query($query);
          $number = $DB->numrows($result);
 
-         $amps_tot         = 0 ;
-         $flow_rate_tot    = 0 ;
-         $dissip_tot       = 0 ;
-         $weight_tot       = $PluginRacksRack->fields["weight"] ;
-         $nbcordons        = 0 ;
-         $nbcordons_tot    = 0 ;
-         $cordons_amps_tot = 0 ;
+         $amps_tot         = 0;
+         $flow_rate_tot    = 0;
+         $dissip_tot       = 0;
+         $weight_tot       = $PluginRacksRack->fields["weight"];
+         $nbcordons        = 0;
+         $nbcordons_tot    = 0;
+         $cordons_amps_tot = 0;
 
-         $computer_tot        = 0 ;
-         $computer_size_tot   = 0 ;
-         $networking_tot      = 0 ;
-         $networking_size_tot = 0 ;
-         $peripheral_tot      = 0 ;
-         $peripheral_size_tot = 0 ;
-         $others_tot          = 0 ;
-         $others_size_tot     = 0 ;
-         $next                = 0 ;
-         $device_size         = 0 ;
+         $computer_tot        = 0;
+         $computer_size_tot   = 0;
+         $networking_tot      = 0;
+         $networking_size_tot = 0;
+         $peripheral_tot      = 0;
+         $peripheral_size_tot = 0;
+         $others_tot          = 0;
+         $others_size_tot     = 0;
+         $next                = 0;
+         $device_size         = 0;
 
-         echo "<th>&nbsp;</th>";
-         echo "<th>".__('Position', 'racks')."</th>";
-         echo "<th>".__('Name')."</th>";        // nom
-         echo "<th>".__('Type')."</th>";        // type de materiel
-         echo "<th>".__('Model')."</th>";
-         echo "<th>".__('Power supply 1', 'racks')."</th>"; //alim1
-         echo "<th>".__('Power supply 2', 'racks')."</th>"; //alim2
-         echo "<th>".__('C13 Power Cord Quantity', 'racks')."</th>"; // nb cordons
-         echo "<th>".__('Total Current', 'racks')."<br>(".__('amps', 'racks').")</th>"; // Courant consommé
-         echo "<th>".__('Calorific waste', 'racks')."<br>"; // Dissipation calorifique
-          echo " (";
+         echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
+         echo "<th>" . __('Position', 'racks') . "</th>";
+         echo "<th>" . __('Name') . "</th>";        // nom
+         echo "<th>" . __('Type') . "</th>";        // type de materiel
+         echo "<th>" . __('Model') . "</th>";
+         echo "<th>" . __('Power supply 1', 'racks') . "</th>"; //alim1
+         echo "<th>" . __('Power supply 2', 'racks') . "</th>"; //alim2
+         echo "<th>" . __('C13 Power Cord Quantity', 'racks') . "</th>"; // nb cordons
+         echo "<th>" . __('Total Current', 'racks') . "<br>(" . __('amps', 'racks') . ")</th>"; // Courant consommé
+         echo "<th>" . __('Calorific waste', 'racks') . "<br>"; // Dissipation calorifique
+         echo " (";
          $PluginRacksConfig->getUnit("dissipation");
          echo ")</th>";
-         echo "<th>".__('Flow Rate', 'racks')."<br>"; // Débit d'air frais
+         echo "<th>" . __('Flow Rate', 'racks') . "<br>"; // Débit d'air frais
          echo " (";
          $PluginRacksConfig->getUnit("rate");
          echo ")</th>";
-         echo "<th>".__('Weight', 'racks')."<br>"; // poids
+         echo "<th>" . __('Weight', 'racks') . "<br>"; // poids
          echo " (";
          $PluginRacksConfig->getUnit("weight");
          echo ")</th>";
          echo "</tr>";
 
-         for( $i = $PluginRacksRack->fields['rack_size']; $i >= 1; $i-- ) {
-            $alim1 = 0 ;
-            $alim2 = 0 ;
-            $j     = $i ;
+         for ($i = $PluginRacksRack->fields['rack_size']; $i >= 1; $i--) {
+            $alim1 = 0;
+            $alim2 = 0;
+            $j     = $i;
 
             if ($i < 10) {
-               $j = "0".$i ;
+               $j = "0" . $i;
             }
 
             if ($face == PluginRacksRack::FRONT_FACE) {
                // recherche de l'equipement a la position courante
-               $query = "SELECT `".$this->getTable()."`.*
-              FROM `".$this->getTable()."`,`glpi_plugin_racks_itemspecifications`
-              WHERE `".$this->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
-              AND `".$this->getTable()."`.`plugin_racks_racks_id` = '$instID'
-              AND (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::FRONT_FACE."' 
-                  OR (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::BACK_FACE."' 
+               $query = "SELECT `" . $this->getTable() . "`.*
+              FROM `" . $this->getTable() . "`,`glpi_plugin_racks_itemspecifications`
+              WHERE `" . $this->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
+              AND `" . $this->getTable() . "`.`plugin_racks_racks_id` = '$instID'
+              AND (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::FRONT_FACE . "' 
+                  OR (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::BACK_FACE . "' 
                      AND `glpi_plugin_racks_itemspecifications`.`length` = 1)) AND `position` ='$j'
-              ORDER BY `".$this->getTable()."`.`position` ASC" ;
+              ORDER BY `" . $this->getTable() . "`.`position` ASC";
             } else {
-               $query = "SELECT `".$this->getTable()."`.*
-              FROM `".$this->getTable()."`,`glpi_plugin_racks_itemspecifications`
-              WHERE `".$this->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
-               AND `".$this->getTable()."`.`plugin_racks_racks_id` = '$instID'
-               AND (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::BACK_FACE."' 
-                  OR (`".$this->getTable()."`.`faces_id` = '".PluginRacksRack::FRONT_FACE."' 
+               $query = "SELECT `" . $this->getTable() . "`.*
+              FROM `" . $this->getTable() . "`,`glpi_plugin_racks_itemspecifications`
+              WHERE `" . $this->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` 
+               AND `" . $this->getTable() . "`.`plugin_racks_racks_id` = '$instID'
+               AND (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::BACK_FACE . "' 
+                  OR (`" . $this->getTable() . "`.`faces_id` = '" . PluginRacksRack::FRONT_FACE . "' 
                      AND `glpi_plugin_racks_itemspecifications`.`length` = 1)) AND `position` ='$j'
-              ORDER BY `".$this->getTable()."`.`position` ASC" ;
+              ORDER BY `" . $this->getTable() . "`.`position` ASC";
             }
             $result = $DB->query($query);
             $number = $DB->numrows($result);
 
             // Si equipement
-            if ( $number != 0 ) {
+            if ($number != 0) {
 
-               $data=$DB->fetch_array($result);
+               $data = $DB->fetch_array($result);
 
-               $class = substr($data["itemtype"], 0, -5);
-               $item = new $class();
-               $table = getTableForItemType($class);
-               $r = $DB->query("SELECT * FROM `".$table."` WHERE `id` = '".$data["items_id"]."' ");
+               $class  = substr($data["itemtype"], 0, -5);
+               $item   = new $class();
+               $table  = getTableForItemType($class);
+               $r      = $DB->query("SELECT * FROM `" . $table . "` WHERE `id` = '" . $data["items_id"] . "' ");
                $device = $DB->fetch_array($r);
 
-               $modelclass=$data["itemtype"];
+               $modelclass  = $data["itemtype"];
                $model_table = getTableForItemType($modelclass);
-               $modelfield = getForeignKeyFieldForTable(getTableForItemType($modelclass));
+               $modelfield  = getForeignKeyFieldForTable(getTableForItemType($modelclass));
 
-               $query = "SELECT `".$model_table."`.`name` AS model,`".$model_table."`.`id` AS modelid, `glpi_plugin_racks_itemspecifications`.* 
+               $query = "SELECT `" . $model_table . "`.`name` AS model,`" . $model_table . "`.`id` AS modelid, `glpi_plugin_racks_itemspecifications`.* 
                         FROM `glpi_plugin_racks_itemspecifications` "
-                   ." LEFT JOIN `".$model_table."` 
-                        ON (`glpi_plugin_racks_itemspecifications`.`model_id` = `".$model_table."`.`id`)"
-                   ." LEFT JOIN `".$table."` 
-                        ON (`glpi_plugin_racks_itemspecifications`.`model_id` = `".$table."`.`".$modelfield."` 
-                           AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '".$modelclass."')"
-                   ." WHERE `".$table."`.`id` = '".$data["items_id"]."' ";
+                        . " LEFT JOIN `" . $model_table . "` 
+                        ON (`glpi_plugin_racks_itemspecifications`.`model_id` = `" . $model_table . "`.`id`)"
+                        . " LEFT JOIN `" . $table . "` 
+                        ON (`glpi_plugin_racks_itemspecifications`.`model_id` = `" . $table . "`.`" . $modelfield . "` 
+                           AND `glpi_plugin_racks_itemspecifications`.`itemtype` = '" . $modelclass . "')"
+                        . " WHERE `" . $table . "`.`id` = '" . $data["items_id"] . "' ";
                //Rack recursivity .getEntitiesRestrictRequest(" AND ",$table,'','',$item->maybeRecursive())
-               $res = $DB->query($query);
+               $res         = $DB->query($query);
                $device_spec = $DB->fetch_array($res);
-               $device_size = $device_spec["size"] ;
+               $device_size = $device_spec["size"];
 
                if ($data["first_powersupply"] > 0) {
-                  $nbcordons +=1;
-                  $nbcordons_tot +=1;
+                  $nbcordons += 1;
+                  $nbcordons_tot += 1;
                }
 
                if ($data["second_powersupply"] > 0) {
-                  $nbcordons +=1;
-                  $nbcordons_tot +=1;
+                  $nbcordons += 1;
+                  $nbcordons_tot += 1;
                }
-               if ($data["itemtype"]=='ComputerModel') {
-                  $computer_tot += 1 ;
-                  $computer_size_tot += $device_spec["size"] ;
-               } else if ($data["itemtype"]=='PeripheralModel') {
-                  $peripheral_tot += 1 ;
-                  $peripheral_size_tot += $device_spec["size"] ;
-               } else if ($data["itemtype"]=='NetworkEquipmentModel') {
-                  $networking_tot += 1 ;
-                  $networking_size_tot += $device_spec["size"] ;
-               } else if ($data["itemtype"]=='PluginRacksOtherModel') {
-                  $others_tot += 1 ;
-                  $others_size_tot += $device_spec["size"] ;
+               if ($data["itemtype"] == 'ComputerModel') {
+                  $computer_tot += 1;
+                  $computer_size_tot += $device_spec["size"];
+               } else if ($data["itemtype"] == 'PeripheralModel') {
+                  $peripheral_tot += 1;
+                  $peripheral_size_tot += $device_spec["size"];
+               } else if ($data["itemtype"] == 'NetworkEquipmentModel') {
+                  $networking_tot += 1;
+                  $networking_size_tot += $device_spec["size"];
+               } else if ($data["itemtype"] == 'PluginRacksOtherModel') {
+                  $others_tot += 1;
+                  $others_size_tot += $device_spec["size"];
                }
 
-               for( $t = 0; $t < $device_size; $t++ ) {
+               for ($t = 0; $t < $device_size; $t++) {
 
-                  if ($t==0) {
+                  if ($t == 0) {
 
-                     if ($data["itemtype"]=='ComputerModel') {
+                     if ($data["itemtype"] == 'ComputerModel') {
                         echo "<tr class='plugin_racks_device_computers_color'>";
-                     } else if ($data["itemtype"]=='PeripheralModel') {
+                     } else if ($data["itemtype"] == 'PeripheralModel') {
                         echo "<tr class='plugin_racks_device_peripherals_color'>";
-                     } else if ($data["itemtype"]=='NetworkEquipmentModel') {
+                     } else if ($data["itemtype"] == 'NetworkEquipmentModel') {
                         echo "<tr class='plugin_racks_device_networking_color'>";
-                     } else if ($data["itemtype"]=='PluginRacksOtherModel') {
+                     } else if ($data["itemtype"] == 'PluginRacksOtherModel') {
                         echo "<tr class='plugin_racks_device_others_color'>";
                      }
 
-
-                     echo "<td width='10' rowspan='".$device_size."'>";
-                     $sel="";
-                     if (isset($_GET["select"])&&$_GET["select"]=="all") $sel="checked";
-                     echo "<input type='checkbox' name='item[".$data["id"]."]' value='1' $sel>";
+                     echo "<td width='10'>";
+                     Html::showMassiveActionCheckBox(__CLASS__, $data["id"]);
                      echo "</td>";
 
                      echo "<td class='center'>U";
-                     if ($canedit){
-                        echo "<input type='text' size='3' name='position".$data["id"]."' value='$j'>";
-                        echo "&nbsp;<input type='image' name='updateDevice[".$data["id"]."]' value=\""._sx('button', 'Save')."\" src='" . $CFG_GLPI["root_doc"] . "/pics/actualiser.png' class='calendrier'>";
+                     if ($canedit) {
+                        echo "<input type='text' size='3' name='position" . $data["id"] . "' value='$j'>&nbsp;";
+                        $params = array('plugin_racks_racks_id'              => $PluginRacksRack->getID(),
+                                        'id'                                 => $data["id"],
+                                        'rack_size'                          => $PluginRacksRack->fields['rack_size'],
+                                        'type'                               => $data["itemtype"],
+                                        'items_id'                           => $data["items_id"],
+                                        'plugin_racks_itemspecifications_id' => $data["plugin_racks_itemspecifications_id"],
+                                        'update_server'                      => 1,
+                                        'faces_id'                           => $face,
+                                        'position'                           => $j,
+                                        'name'                               => 'name' . $data["id"]);
+                        echo "&nbsp;<img class='pointer' name='updateDevice[" . $data["id"] . "]'
+                        value=\"" . _sx('button', 'Save') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/actualiser.png'
+                           onclick='racks_synchronize(".json_encode($params).");'>";
                      } else {
                         echo $j;
                      }
-                     echo "</td>" ;
-                     $link=Toolbox::getItemTypeFormURL(substr($data["itemtype"], 0, -5));
-                     if ($data["itemtype"]!='PluginRacksOtherModel')
-                        $name= "<a href=\"".$link."?id=".$data["items_id"]."\">".$device["name"]."</a>";
+                     echo "</td>";
+                     $link = Toolbox::getItemTypeFormURL(substr($data["itemtype"], 0, -5));
+                     if ($data["itemtype"] != 'PluginRacksOtherModel')
+                        $name = "<a href=\"" . $link . "?id=" . $data["items_id"] . "\">" . $device["name"] . "</a>";
                      else
-                        $name= $device["name"];
-                     echo "<input type='hidden' name='plugin_racks_racks_id' value='".$PluginRacksRack->fields['id']."'>";
-                     echo "<input type='hidden' name='rack_size' value='".$PluginRacksRack->fields['rack_size']."'>";
-                     echo "<input type='hidden' name='type".$data["id"]."' value='".$data["itemtype"]."'>";
-                     echo "<input type='hidden' name='items_id".$data["id"]."' value='".$data["items_id"]."'>";
-                     echo "<input type='hidden' name='plugin_racks_itemspecifications_id".$data["id"]."' value='".$data["plugin_racks_itemspecifications_id"]."'>";
-                     echo "<input type='hidden' name='update_server' value='1'>";
-                     echo "<input type='hidden' name='faces_id' value='".$face."'>";
-                     if ($data["itemtype"]!='PluginRacksOtherModel') {
-                        echo "<td class='center' ".(isset($data['is_deleted'])&&$data['is_deleted']?"class='tab_bg_2_2'":"")." >".$name."</td>";
+                        $name = $device["name"];
+
+                     if ($data["itemtype"] != 'PluginRacksOtherModel') {
+                        echo "<td class='center' " . (isset($data['is_deleted']) && $data['is_deleted'] ? "class='tab_bg_2_2'" : "") . " >" . $name . "</td>";
                      } else {
                         $PluginRacksOther = new PluginRacksOther();
                         $PluginRacksOther->GetfromDB($data["items_id"]);
-                        echo "<td class='center'><input type='text' name='name".$data["id"]."' value='".$PluginRacksOther->fields["name"]."' size='10'></td>";
+                        echo "<td class='center'><input type='text' name='name" . $data["id"] . "' id='name" . $data["id"] . "' value='" . $PluginRacksOther->fields["name"] . "' size='20'></td>";
                      }
-                     echo "<td class='center'>".$item::getTypeName(2)."</td>";
+                     echo "<td class='center'>" . $item::getTypeName(2) . "</td>";
 
-                     $linkmodel=Toolbox::getItemTypeFormURL($modelclass);
-                     $trans = DropdownTranslation::getTranslatedValue($device_spec["modelid"], $modelclass,'name',
-                                         $_SESSION['glpilanguage']);
+                     $linkmodel  = Toolbox::getItemTypeFormURL($modelclass);
+                     $trans      = DropdownTranslation::getTranslatedValue($device_spec["modelid"], $modelclass, 'name',
+                                                                           $_SESSION['glpilanguage']);
                      $trans_name = $device_spec["model"];
                      if (!empty($trans)) {
                         $trans_name = $trans;
-                     }                   
-                     echo "<td class='center'><a href=\"".$linkmodel."?id=".$device_spec["modelid"]."\">" . $trans_name . " (" . $device_spec["size"] . "U)</a></td>";
+                     }
+                     echo "<td class='center'><a href=\"" . $linkmodel . "?id=" . $device_spec["modelid"] . "\">" . $trans_name . " (" . $device_spec["size"] . "U)</a></td>";
 
                      echo "<td class='center'>";
-                     echo Dropdown::getDropdownName("glpi_plugin_racks_connections",$data["first_powersupply"]);
+                     echo Dropdown::getDropdownName("glpi_plugin_racks_connections", $data["first_powersupply"]);
                      echo "</td>";
                      echo "<td class='center'>";
-                     echo Dropdown::getDropdownName("glpi_plugin_racks_connections",$data["second_powersupply"]);
+                     echo Dropdown::getDropdownName("glpi_plugin_racks_connections", $data["second_powersupply"]);
                      echo "</td>";
 
-                     echo "<td class='center'>".$nbcordons."</td>";
+                     echo "<td class='center'>" . $nbcordons . "</td>";
 
-                     if ($data["amps"]=='0.0000')
+                     if ($data["amps"] == '0.0000')
                         $amps = $device_spec["amps"];
                      else
                         $amps = $data["amps"];
 
-                     $cordons_amps_tot+=        $amps*$nbcordons;
-                     echo "<td class='center'>".Html::formatNumber($amps,true)."</td>";
-                     if ($data["dissipation"]=='0.0000')
+                     $cordons_amps_tot += $amps * $nbcordons;
+                     echo "<td class='center'>" . Html::formatNumber($amps, true) . "</td>";
+                     if ($data["dissipation"] == '0.0000')
                         $dissipation = $device_spec["dissipation"];
                      else
                         $dissipation = $data["dissipation"];
 
-                     echo "<td class='center'>".Html::formatNumber($dissipation,true)."</td>";
-                     if ($data["flow_rate"]=='0.0000')
+                     echo "<td class='center'>" . Html::formatNumber($dissipation, true) . "</td>";
+                     if ($data["flow_rate"] == '0.0000')
                         $flow_rate = $device_spec["flow_rate"];
                      else
                         $flow_rate = $data["flow_rate"];
 
-                     echo "<td class='center'>".Html::formatNumber($flow_rate,true)."</td>";
-                     if ($data["weight"]=='0.0000')
+                     echo "<td class='center'>" . Html::formatNumber($flow_rate, true) . "</td>";
+                     if ($data["weight"] == '0.0000')
                         $weight = $device_spec["weight"];
                      else
                         $weight = $data["weight"];
 
-                     echo "<td class='center'>".Html::formatNumber($weight,true)."</td>";
+                     echo "<td class='center'>" . Html::formatNumber($weight, true) . "</td>";
 
                      echo "</tr>";
 
-                     if ($data["amps"]=='0.0000')
+                     if ($data["amps"] == '0.0000')
                         $amps_tot += $device_spec["amps"];
                      else
                         $amps_tot += $data["amps"];
 
-                     if ($data["flow_rate"]=='0.0000')
+                     if ($data["flow_rate"] == '0.0000')
                         $flow_rate_tot += $device_spec["flow_rate"];
                      else
                         $flow_rate_tot += $data["flow_rate"];
 
-                     if ($data["dissipation"]=='0.0000')
+                     if ($data["dissipation"] == '0.0000')
                         $dissip_tot += $device_spec["dissipation"];
                      else
                         $dissip_tot += $data["dissipation"];
 
-                     if ($data["weight"]=='0.0000')
+                     if ($data["weight"] == '0.0000')
                         $weight_tot += $device_spec["weight"];
                      else
                         $weight_tot += $data["weight"];
 
                   } else {
-                     $name=$j-$t;
-                     if ($data["itemtype"]=='ComputerModel') {
+                     $name = $j - $t;
+                     if ($data["itemtype"] == 'ComputerModel') {
                         echo "<tr class='plugin_racks_device_computers_color'>";
-                     } else if ($data["itemtype"]=='PeripheralModel') {
+                     } else if ($data["itemtype"] == 'PeripheralModel') {
                         echo "<tr class='plugin_racks_device_peripherals_color'>";
-                     } else if ($data["itemtype"]=='NetworkEquipmentModel') {
+                     } else if ($data["itemtype"] == 'NetworkEquipmentModel') {
                         echo "<tr class='plugin_racks_device_networking_color'>";
-                     } else if ($data["itemtype"]=='PluginRacksOtherModel') {
+                     } else if ($data["itemtype"] == 'PluginRacksOtherModel') {
                         echo "<tr class='plugin_racks_device_others_color'>";
                      }
+                     echo "<td></td>";
                      echo "<td class='center'>U$name</td><td colspan='10'></td></tr>";
                   }
                }
 
-               if ($device_size>1)
-                  for( $d = 1; $d < $device_size; $d++ )
+               if ($device_size > 1)
+                  for ($d = 1; $d < $device_size; $d++)
                      $i--;
 
             } else { // Si pas d'equipement a la position courante
 
-               echo "<tr class='tab_bg_1'><td></td><td class='center'>".__('U', 'racks').$j;
+               echo "<tr class='tab_bg_1'><td></td><td class='center'>" . __('U', 'racks') . $j;
                echo "</td><td colspan='10'></td></tr>";
             }
 
-            $nbcordons = 0 ;
+            $nbcordons = 0;
          }
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td></td>";
-         echo "<td class='center'><b>".__('Total')."</b></td>";
+         echo "<td width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</td>";
+         echo "<td class='center'><b>" . __('Total') . "</b></td>";
          echo "<td colspan='3' class='center'><b>";
-         if ($computer_tot!=0)
-            echo __('Total Servers', 'racks')." : ".$computer_tot." (".$computer_size_tot.__('U', 'racks').")<br>";
-         if ($networking_tot!=0)
-            echo __('Total Network equipements', 'racks')." : ".$networking_tot." (".$networking_size_tot.__('U', 'racks').")<br>";
-         if ($peripheral_tot!=0)
-            echo __('Total Peripherals', 'racks')." : ".$peripheral_tot." (".$peripheral_size_tot.__('U', 'racks').")<br>";
-         if ($others_tot!=0)
-            echo __('Total Others', 'racks')." : ".$others_tot." (".$others_size_tot.__('U', 'racks').")<br>";
+         if ($computer_tot != 0)
+            echo __('Total Servers', 'racks') . " : " . $computer_tot . " (" . $computer_size_tot . __('U', 'racks') . ")<br>";
+         if ($networking_tot != 0)
+            echo __('Total Network equipements', 'racks') . " : " . $networking_tot . " (" . $networking_size_tot . __('U', 'racks') . ")<br>";
+         if ($peripheral_tot != 0)
+            echo __('Total Peripherals', 'racks') . " : " . $peripheral_tot . " (" . $peripheral_size_tot . __('U', 'racks') . ")<br>";
+         if ($others_tot != 0)
+            echo __('Total Others', 'racks') . " : " . $others_tot . " (" . $others_size_tot . __('U', 'racks') . ")<br>";
 
          //number of U availables
-         $available=$PluginRacksRack->fields['rack_size']-$computer_size_tot-$networking_size_tot-$peripheral_size_tot-$others_size_tot;
+         $available = $PluginRacksRack->fields['rack_size'] - $computer_size_tot - $networking_size_tot - $peripheral_size_tot - $others_size_tot;
 
          if ($available > 0)
-            echo "<font color='green'>".$available." ".__('U availables', 'racks')."</font>";
+            echo "<font color='green'>" . $available . " " . __('U availables', 'racks') . "</font>";
          else
-            echo "<font color='red'>".$available." ".__('U availables', 'racks')."</font>";
+            echo "<font color='red'>" . $available . " " . __('U availables', 'racks') . "</font>";
          echo "</b></td>";
 
-         echo "<td colspan='3' class='center'><b>".__('Total power Cords', 'racks')." : ".$nbcordons_tot."</b><br>";
-         echo "<b>".__('Amperage on power Cords', 'racks')." : ".$cordons_amps_tot." ".__('amps', 'racks')."</b></td>";
-         echo "<td class='center'><b>".Html::formatNumber($amps_tot,true)." ".__('amps', 'racks')."</b></td>";
-         echo "<td class='center'><b>".Html::formatNumber($dissip_tot,true)." ";
+         echo "<td colspan='3' class='center'><b>" . __('Total power Cords', 'racks') . " : " . $nbcordons_tot . "</b><br>";
+         echo "<b>" . __('Amperage on power Cords', 'racks') . " : " . $cordons_amps_tot . " " . __('amps', 'racks') . "</b></td>";
+         echo "<td class='center'><b>" . Html::formatNumber($amps_tot, true) . " " . __('amps', 'racks') . "</b></td>";
+         echo "<td class='center'><b>" . Html::formatNumber($dissip_tot, true) . " ";
          $PluginRacksConfig->getUnit("dissipation");
          echo "</b></td>";
-         echo "<td class='center'><b>".Html::formatNumber($flow_rate_tot,true)." ";
+         echo "<td class='center'><b>" . Html::formatNumber($flow_rate_tot, true) . " ";
          $PluginRacksConfig->getUnit("rate");
          echo "</b></td>";
 
-         echo "<td class='center'><b>".Html::formatNumber($weight_tot,true)." ";
+         echo "<td class='center'><b>" . Html::formatNumber($weight_tot, true) . " ";
          $PluginRacksConfig->getUnit("weight");
          echo "</b></td>";
          echo "</tr>";
 
-         echo "</table></div>" ;
+         echo "</table></div>";
 
-         if ($canedit)  {
-            Html::openArrowMassives("racks_form$rand",true);
-            Html::closeArrowMassives(array('deleteDevice' => _sx('button','Delete permanently')));
+         if ($canedit) {
+            $massiveactionparams['ontop'] = false;
+            Html::showMassiveActions($massiveactionparams);
+            Html::closeForm();
+            //            Html::openArrowMassives("racks_form$rand",true);
+            //            Html::closeArrowMassives(array('deleteDevice' => _sx('button','Delete permanently')));
 
          } else {
-            echo "<input type='hidden' name='rack_size' value='".$PluginRacksRack->fields['rack_size']."'>";
+            echo "<input type='hidden' name='rack_size' value='" . $PluginRacksRack->fields['rack_size'] . "'>";
             echo "</table></div>";
          }
-         Html::closeForm();
 
 
          ////////////////////////////////////////////////////
          // Recherche des racks a gauche et a droite
          // Recuperation de la rangee
-         $qPos = "SELECT `name`
+         $qPos  = "SELECT `name`
                                                         FROM `glpi_plugin_racks_roomlocations`
-                                                        WHERE `id` = '".$PluginRacksRack->fields['plugin_racks_roomlocations_id']."' ";
-         $rPos = $DB->query($qPos) ;
-         $nbPos = $DB->numrows($rPos) ;
-         $pos = "";
-         $next = "";
-         $prev = "";
-         if ( $nbPos != 0 ) {
-            $dataPos = $DB->fetch_array( $rPos ) ;
-            $pos = $dataPos['name'];
-                }
-                // Incrementation & docrementation de la lettre de rang
+                                                        WHERE `id` = '" . $PluginRacksRack->fields['plugin_racks_roomlocations_id'] . "' ";
+         $rPos  = $DB->query($qPos);
+         $nbPos = $DB->numrows($rPos);
+         $pos   = "";
+         $next  = "";
+         $prev  = "";
+         if ($nbPos != 0) {
+            $dataPos = $DB->fetch_array($rPos);
+            $pos     = $dataPos['name'];
+         }
+         // Incrementation & docrementation de la lettre de rang
          if (!empty($pos)) {
             // Z is the last letter...
             if ($pos[0] != "Z") {
-               $next = chr((ord( $pos[0] )+1 ));
-               for($h =1; $h < strlen($pos);$h++) {
-                  $next.= $pos[$h];
+               $next = chr((ord($pos[0]) + 1));
+               for ($h = 1; $h < strlen($pos); $h++) {
+                  $next .= $pos[$h];
                }
             }
             // A is the first letter....
             if ($pos[0] != "A") {
-               $prev = chr((ord($pos[0] )-1));
-               for($h =1; $h < strlen($pos);$h++) {
-                  $prev.= $pos[$h];
+               $prev = chr((ord($pos[0]) - 1));
+               for ($h = 1; $h < strlen($pos); $h++) {
+                  $prev .= $pos[$h];
                }
             }
 
@@ -963,41 +974,41 @@ class PluginRacksRack_Item extends CommonDBTM {
             FROM `glpi_plugin_racks_racks`
             LEFT JOIN `glpi_plugin_racks_roomlocations`
             ON (`glpi_plugin_racks_roomlocations`.`id` = `glpi_plugin_racks_racks`.`plugin_racks_roomlocations_id`)
-            WHERE `glpi_plugin_racks_racks`.`is_deleted` = '0' AND `glpi_plugin_racks_roomlocations`.`name` = '".$prev."' "
-            .getEntitiesRestrictRequest(" AND ","glpi_plugin_racks_racks",'','',$PluginRacksRack->maybeRecursive());
-            $rLeft = $DB->query($qLeft) ;
-            $nb = $DB->numrows($rLeft) ;
+            WHERE `glpi_plugin_racks_racks`.`is_deleted` = '0' AND `glpi_plugin_racks_roomlocations`.`name` = '" . $prev . "' "
+                     . getEntitiesRestrictRequest(" AND ", "glpi_plugin_racks_racks", '', '', $PluginRacksRack->maybeRecursive());
+            $rLeft = $DB->query($qLeft);
+            $nb    = $DB->numrows($rLeft);
 
             echo "<br><br>";
 
             echo "<div align='center'><table border='0' width='950px'><tr><td class='left'>";
             if ($nb != 0) {
-               $left_racks = $DB->fetch_array($rLeft) ;
-               echo "<a href =\"".$CFG_GLPI["root_doc"]."/plugins/racks/front/rack.form.php?id=".$left_racks['id']."\">
-               <img src=\"".$CFG_GLPI["root_doc"]."/pics/left.png\" alt=''>&nbsp;".__('Left rack enclosure', 'racks')." ".$left_racks['name']."</a>";
+               $left_racks = $DB->fetch_array($rLeft);
+               echo "<a href =\"" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/rack.form.php?id=" . $left_racks['id'] . "\">
+               <img src=\"" . $CFG_GLPI["root_doc"] . "/pics/left.png\" alt=''>&nbsp;" . __('Left rack enclosure', 'racks') . " " . $left_racks['name'] . "</a>";
             } else {
                echo __('No rack enclosure on the left', 'racks');
             }
 
             echo "</td>";
             echo "<td>";
-            echo"</td>";
+            echo "</td>";
 
-            echo "<td class='right'>" ;
+            echo "<td class='right'>";
 
             $qRight = "SELECT `glpi_plugin_racks_racks`.`id`, `glpi_plugin_racks_roomlocations`.`name`
             FROM `glpi_plugin_racks_racks`
             LEFT JOIN `glpi_plugin_racks_roomlocations`
             ON (`glpi_plugin_racks_roomlocations`.`id` = `glpi_plugin_racks_racks`.`plugin_racks_roomlocations_id`)
-            WHERE `glpi_plugin_racks_racks`.`is_deleted` = '0' AND `glpi_plugin_racks_roomlocations`.`name` = '".$next."' "
-            .getEntitiesRestrictRequest(" AND ","glpi_plugin_racks_racks",'','',$PluginRacksRack->maybeRecursive());
-            $rRight = $DB->query($qRight) ;
-            $nb = $DB->numrows($rRight) ;
+            WHERE `glpi_plugin_racks_racks`.`is_deleted` = '0' AND `glpi_plugin_racks_roomlocations`.`name` = '" . $next . "' "
+                      . getEntitiesRestrictRequest(" AND ", "glpi_plugin_racks_racks", '', '', $PluginRacksRack->maybeRecursive());
+            $rRight = $DB->query($qRight);
+            $nb     = $DB->numrows($rRight);
 
             if ($nb != 0) {
-               $right_racks = $DB->fetch_array($rRight) ;
-               echo "<a href =\"".$CFG_GLPI["root_doc"]."/plugins/racks/front/rack.form.php?id=".$right_racks['id']."\">"
-               .__('Right rack enclosure', 'racks')." ".$right_racks['name']."&nbsp;<img src=\"".$CFG_GLPI["root_doc"]."/pics/right.png\" alt=''></a>";
+               $right_racks = $DB->fetch_array($rRight);
+               echo "<a href =\"" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/rack.form.php?id=" . $right_racks['id'] . "\">"
+                    . __('Right rack enclosure', 'racks') . " " . $right_racks['name'] . "&nbsp;<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/right.png\" alt=''></a>";
             } else {
                echo __('No rack enclosure on the right', 'racks');
             }
@@ -1064,32 +1075,32 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo "</table>";
       }
    }*/
-   
+
    /**
     * @since version 0.84
-   **/
+    **/
    function getForbiddenStandardMassiveAction() {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();
       $forbidden[] = 'update';
       return $forbidden;
    }
-   
+
    /**
-   * Show rack associated to an item
-   *
-   * @since version 0.84
-   *
-   * @param $item            CommonDBTM object for which associated rack must be displayed
-   * @param $withtemplate    (default '')
-   **/
-   static function showForItem(CommonDBTM $item, $withtemplate='') {
+    * Show rack associated to an item
+    *
+    * @since version 0.84
+    *
+    * @param $item            CommonDBTM object for which associated rack must be displayed
+    * @param $withtemplate (default '')
+    **/
+   static function showForItem(CommonDBTM $item, $withtemplate = '') {
       global $DB, $CFG_GLPI;
 
       $ID = $item->getField('id');
 
-      if ($item->isNewID($ID) 
-         || !self::canView() 
+      if ($item->isNewID($ID)
+          || !self::canView()
             || !$item->can($item->fields['id'], READ)) {
          return false;
       }
@@ -1098,11 +1109,11 @@ class PluginRacksRack_Item extends CommonDBTM {
          $withtemplate = 0;
       }
 
-      $canedit       =  $item->canadditem('PluginRacksRack');
-      $rand          = mt_rand();
-      $is_recursive  = $item->isRecursive();
-      $itemtype      = $item->getType()."Model";
-      
+      $canedit      = $item->canadditem('PluginRacksRack');
+      $rand         = mt_rand();
+      $is_recursive = $item->isRecursive();
+      $itemtype     = $item->getType() . "Model";
+
       $query = "SELECT `glpi_plugin_racks_racks_items`.`id` AS assocID,
                        `glpi_plugin_racks_racks_items`.`faces_id`,
                        `glpi_plugin_racks_racks_items`.`position`,
@@ -1114,17 +1125,17 @@ class PluginRacksRack_Item extends CommonDBTM {
                  ON (`glpi_plugin_racks_racks_items`.`plugin_racks_racks_id`=`glpi_plugin_racks_racks`.`id`)
                 LEFT JOIN `glpi_entities` ON (`glpi_plugin_racks_racks`.`entities_id`=`glpi_entities`.`id`)
                 WHERE `glpi_plugin_racks_racks_items`.`items_id` = '$ID'
-                      AND `glpi_plugin_racks_racks_items`.`itemtype` = '".$itemtype."' ";
-      $query .= getEntitiesRestrictRequest(" AND","glpi_plugin_racks_racks",'','',true);
+                      AND `glpi_plugin_racks_racks_items`.`itemtype` = '" . $itemtype . "' ";
+      $query .= getEntitiesRestrictRequest(" AND", "glpi_plugin_racks_racks", '', '', true);
       $query .= " ORDER BY `assocName`";
 
       $result = $DB->query($query);
       $number = $DB->numrows($result);
       $i      = 0;
 
-      $racks      = array();
-      $rack       = new PluginRacksRack();
-      $used       = array();
+      $racks = array();
+      $rack  = new PluginRacksRack();
+      $used  = array();
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetch_assoc($result)) {
             $racks[$data['assocID']] = $data;
@@ -1134,51 +1145,51 @@ class PluginRacksRack_Item extends CommonDBTM {
 
       echo "<div class='spaced'>";
       if ($canedit && $number && ($withtemplate < 2)) {
-         Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
-         $massiveactionparams = array('num_displayed'  => $number);
+         Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+         $massiveactionparams = array('num_displayed' => $number);
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
       if ($canedit && $number && ($withtemplate < 2)) {
-         echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
+         echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
       }
-      echo "<th>".__('Name')."</th>";
+      echo "<th>" . __('Name') . "</th>";
       if (Session::isMultiEntitiesMode()) {
-         echo "<th>".__('Entity')."</th>";
+         echo "<th>" . __('Entity') . "</th>";
       }
-      echo "<th>".__('Disposition', 'racks')."</th>";
-      echo "<th>".__('Position', 'racks')."</th>";
-      echo "<th>".__('Location')."</th>";
-      echo "<th>".__('Place', 'racks')."</th>";
-      echo "<th>".__('Manufacturer')."</th>";
+      echo "<th>" . __('Disposition', 'racks') . "</th>";
+      echo "<th>" . __('Position', 'racks') . "</th>";
+      echo "<th>" . __('Location') . "</th>";
+      echo "<th>" . __('Place', 'racks') . "</th>";
+      echo "<th>" . __('Manufacturer') . "</th>";
       echo "</tr>";
       $used = array();
 
       if ($number) {
 
          Session::initNavigateListItems('PluginRacksRack',
-                           //TRANS : %1$s is the itemtype name,
-                           //        %2$s is the name of the item (used for headings of a list)
+            //TRANS : %1$s is the itemtype name,
+            //        %2$s is the name of the item (used for headings of a list)
                                         sprintf(__('%1$s = %2$s'),
                                                 $item->getTypeName(1), $item->getName()));
 
-         
-         foreach  ($racks as $data) {
-            $rackID        = $data["id"];
-            $link          = NOT_AVAILABLE;
+
+         foreach ($racks as $data) {
+            $rackID = $data["id"];
+            $link   = NOT_AVAILABLE;
 
             if ($rack->getFromDB($rackID)) {
-               $link       = $rack->getLink();
+               $link = $rack->getLink();
             }
 
             Session::addToNavigateListItems('PluginRacksRack', $rackID);
-            
-            $used[$rackID] = $rackID;
-            $assocID      = $data["assocID"];
 
-            echo "<tr class='tab_bg_1".($data["is_deleted"]?"_2":"")."'>";
+            $used[$rackID] = $rackID;
+            $assocID       = $data["assocID"];
+
+            echo "<tr class='tab_bg_1" . ($data["is_deleted"] ? "_2" : "") . "'>";
             if ($canedit && ($withtemplate < 2)) {
                echo "<td width='10'>";
                Html::showMassiveActionCheckBox(__CLASS__, $data["assocID"]);
@@ -1186,19 +1197,19 @@ class PluginRacksRack_Item extends CommonDBTM {
             }
             echo "<td class='center'>$link</td>";
             if (Session::isMultiEntitiesMode()) {
-               echo "<td class='center'>".Dropdown::getDropdownName("glpi_entities", $data['entities_id']).
+               echo "<td class='center'>" . Dropdown::getDropdownName("glpi_entities", $data['entities_id']) .
                     "</td>";
             }
-            if ($data["faces_id"]==PluginRacksRack::FRONT_FACE) {
-               $faces_id=__('Front', 'racks');
+            if ($data["faces_id"] == PluginRacksRack::FRONT_FACE) {
+               $faces_id = __('Front', 'racks');
             } else {
-               $faces_id=_x('Rack enclosure' , 'Back', 'racks');
+               $faces_id = _x('Rack enclosure', 'Back', 'racks');
             }
-            echo "<td class='center'>".$faces_id."</td>";
-            echo "<td class='center'>".$data["position"]."</td>";
-            echo "<td>".Dropdown::getDropdownName("glpi_locations",$data["locations_id"])."</td>";
-            echo "<td class='center'>".Dropdown::getDropdownName("glpi_plugin_racks_roomlocations",$data["plugin_racks_roomlocations_id"],0)."</td>";
-            echo "<td>".Dropdown::getDropdownName("glpi_manufacturers",$data["manufacturers_id"])."</td>";
+            echo "<td class='center'>" . $faces_id . "</td>";
+            echo "<td class='center'>" . $data["position"] . "</td>";
+            echo "<td>" . Dropdown::getDropdownName("glpi_locations", $data["locations_id"]) . "</td>";
+            echo "<td class='center'>" . Dropdown::getDropdownName("glpi_plugin_racks_roomlocations", $data["plugin_racks_roomlocations_id"], 0) . "</td>";
+            echo "<td>" . Dropdown::getDropdownName("glpi_manufacturers", $data["manufacturers_id"]) . "</td>";
             echo "</tr>";
             $i++;
          }
@@ -1213,62 +1224,62 @@ class PluginRacksRack_Item extends CommonDBTM {
       }
       echo "</div>";
    }
-   
-   function showPluginFromItems($itemtype,$ID,$withtemplate='') {
-      global $DB,$CFG_GLPI;
+
+   function showPluginFromItems($itemtype, $ID, $withtemplate = '') {
+      global $DB, $CFG_GLPI;
 
       $item = new $itemtype();
       if ($item->getFromDB($ID))
-         $entity=$item->fields["entities_id"];
+         $entity = $item->fields["entities_id"];
 
-      $itemtype=$itemtype."Model";
+      $itemtype = $itemtype . "Model";
 
-      $query = "SELECT `glpi_plugin_racks_racks`.*,`".$this->getTable()."`.`id` AS items_id,
-                  `".$this->getTable()."`.`position`, `".$this->getTable()."`.`faces_id` "
-          ." FROM `glpi_plugin_racks_racks`,`".$this->getTable()."` "
-          ." WHERE `".$this->getTable()."`.`items_id` = '$ID'"
-          ." AND `".$this->getTable()."`.`itemtype` = '$itemtype'"
-        ." AND `glpi_plugin_racks_racks`.`id` = `".$this->getTable()."`.`plugin_racks_racks_id` "
-          . getEntitiesRestrictRequest(" AND ","glpi_plugin_racks_racks",'','',true);
+      $query = "SELECT `glpi_plugin_racks_racks`.*,`" . $this->getTable() . "`.`id` AS items_id,
+                  `" . $this->getTable() . "`.`position`, `" . $this->getTable() . "`.`faces_id` "
+               . " FROM `glpi_plugin_racks_racks`,`" . $this->getTable() . "` "
+               . " WHERE `" . $this->getTable() . "`.`items_id` = '$ID'"
+               . " AND `" . $this->getTable() . "`.`itemtype` = '$itemtype'"
+               . " AND `glpi_plugin_racks_racks`.`id` = `" . $this->getTable() . "`.`plugin_racks_racks_id` "
+               . getEntitiesRestrictRequest(" AND ", "glpi_plugin_racks_racks", '', '', true);
 
       $result = $DB->query($query);
       $number = $DB->numrows($result);
 
       echo "<div align='center'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='7'>"._n('Associated rack enclosure' , 'Associated rack enclosures', 2, 'racks').":</th></tr>";
-      echo "<tr><th>".__('Name')."</th>";
-      echo "<th>".__('Disposition', 'racks')."</th>";
-      echo "<th>".__('Position', 'racks')."</th>";
-      echo "<th>".__('Location')."</th>";
-      echo "<th>".__('Place', 'racks')."</th>";
-      echo "<th>".__('Manufacturer')."</th>";
+      echo "<tr><th colspan='7'>" . _n('Associated rack enclosure', 'Associated rack enclosures', 2, 'racks') . ":</th></tr>";
+      echo "<tr><th>" . __('Name') . "</th>";
+      echo "<th>" . __('Disposition', 'racks') . "</th>";
+      echo "<th>" . __('Position', 'racks') . "</th>";
+      echo "<th>" . __('Location') . "</th>";
+      echo "<th>" . __('Place', 'racks') . "</th>";
+      echo "<th>" . __('Manufacturer') . "</th>";
       if ($this->canCreate())
          echo "<th>&nbsp;</th>";
       echo "</tr>";
 
-      while ($data= $DB->fetch_array($result)) {
-         echo "<tr class='tab_bg_1".($data["is_deleted"]=='1'?"_2":"")."'>";
-         echo "<td class='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/racks/front/rack.form.php?id=".$data["id"]."'>".$data["name"];
-         if ($_SESSION["glpiis_ids_visible"]) echo " (".$data["id"].")";
+      while ($data = $DB->fetch_array($result)) {
+         echo "<tr class='tab_bg_1" . ($data["is_deleted"] == '1' ? "_2" : "") . "'>";
+         echo "<td class='center'><a href='" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/rack.form.php?id=" . $data["id"] . "'>" . $data["name"];
+         if ($_SESSION["glpiis_ids_visible"]) echo " (" . $data["id"] . ")";
          echo "</a></td>";
-         if ($data["faces_id"]==PluginRacksRack::FRONT_FACE) {
-            $faces_id=__('Front', 'racks');
+         if ($data["faces_id"] == PluginRacksRack::FRONT_FACE) {
+            $faces_id = __('Front', 'racks');
          } else {
-            $faces_id=_x('Rack enclosure' , 'Back', 'racks');
+            $faces_id = _x('Rack enclosure', 'Back', 'racks');
          }
-         echo "<td class='center'>".$faces_id."</td>";
-         echo "<td class='center'>".$data["position"]."</td>";
-         echo "<td>".Dropdown::getDropdownName("glpi_locations",$data["locations_id"])."</td>";
-         echo "<td class='center'>".Dropdown::getDropdownName("glpi_plugin_racks_roomlocations",$data["plugin_racks_roomlocations_id"],0)."</td>";
-         echo "<td>".Dropdown::getDropdownName("glpi_manufacturers",$data["manufacturers_id"])."</td>";
+         echo "<td class='center'>" . $faces_id . "</td>";
+         echo "<td class='center'>" . $data["position"] . "</td>";
+         echo "<td>" . Dropdown::getDropdownName("glpi_locations", $data["locations_id"]) . "</td>";
+         echo "<td class='center'>" . Dropdown::getDropdownName("glpi_plugin_racks_roomlocations", $data["plugin_racks_roomlocations_id"], 0) . "</td>";
+         echo "<td>" . Dropdown::getDropdownName("glpi_manufacturers", $data["manufacturers_id"]) . "</td>";
 
-         if ($this->canCreate() && ($withtemplate<2)) {
+         if ($this->canCreate() && ($withtemplate < 2)) {
 
             echo "<td class='center tab_bg_2'>";
-            Html::showSimpleForm($CFG_GLPI['root_doc'].'/plugins/racks/front/rack.form.php',
-                                    'deleteitem',
-                                    _x('button', 'Delete permanently'),
-                                    array('id' => $data['items_id']));
+            Html::showSimpleForm($CFG_GLPI['root_doc'] . '/plugins/racks/front/rack.form.php',
+                                 'deleteitem',
+                                 _x('button', 'Delete permanently'),
+                                 array('id' => $data['items_id']));
             echo "</td>";
          }
          echo "</tr>";
@@ -1279,4 +1290,5 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "</table></div>";
    }
 }
+
 ?>
