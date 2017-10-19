@@ -38,4 +38,3 @@ if (PluginRacksRack::canView() || Config::canCreate()) {
                                   $_GET["add"]);
 }
 Html::footer();
-?>

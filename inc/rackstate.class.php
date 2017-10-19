@@ -63,4 +63,3 @@ class PluginRacksRackState extends CommonDropdown {
       return 0;
    }
 }
-?>

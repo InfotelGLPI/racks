@@ -61,4 +61,3 @@ if (isset($_POST["modeltable"]) && !empty($_POST["modeltable"])) {
                              $CFG_GLPI['root_doc']."/plugins/racks/ajax/dropdownValue.php", 
                              $params);
 }
-?>

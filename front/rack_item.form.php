@@ -36,5 +36,3 @@ if (isset ($_POST["update"])) {
       $PluginRacksRack_Item->update($_POST);
    Html::back();
 }
-
-?>

@@ -119,5 +119,3 @@ function plugin_racks_check_prerequisites() {
 function plugin_racks_check_config() {
    return true;
 }
-
-?>

@@ -33,39 +33,3 @@ Html::header(PluginRacksRack::getTypeName(2), '', "assets", "pluginracksmenu", "
 $central = new PluginRacksItemSpecificationCentral();
 $central->display();
 Html::footer();
-
-//$itemSpecificationCentral->checkGlobal(READ);
-
-
-/*
-if (!isset($_SESSION['glpi_plugin_racks_tab'])) {
-   $_SESSION['glpi_plugin_racks_tab'] = 'ComputerModel';
-}
-if (isset($_GET['onglet'])) {
-  $_SESSION['glpi_plugin_racks_tab'] = $_GET['onglet'];
-}
-
-$tabs['ComputerModel'] = array('title'  => __('Servers', 'racks'),
-                               'url'    => $CFG_GLPI['root_doc']."/plugins/racks/ajax/itemspecification.tabs.php",
-                               'params' => "target=".$_SERVER['PHP_SELF']."&id=-1&plugin_racks_tab=".'ComputerModel');
-$tabs['NetworkEquipmentModel'] = array('title'  => _n('Network equipment' , 'Network equipments', 2, 'racks'),
-                                       'url'    =>  $CFG_GLPI['root_doc']."/plugins/racks/ajax/itemspecification.tabs.php",
-                                       'params' => "target=".$_SERVER['PHP_SELF']."&id=-1&plugin_racks_tab=".'NetworkEquipmentModel');
-
-$tabs['PeripheralModel']=array('title'=>_n('Peripheral' , 'Peripherals', 2, 'racks'),
-'url'=>$CFG_GLPI['root_doc']."/plugins/racks/ajax/itemspecification.tabs.php",
-'params'=>"target=".$_SERVER['PHP_SELF']."&id=-1&plugin_racks_tab=".'PeripheralModel');
-
-$tabs['PluginRacksOtherModel']=array('title'=>_n('Other equipment' , 'Others equipments', 2, 'racks'),
-'url'=>$CFG_GLPI['root_doc']."/plugins/racks/ajax/itemspecification.tabs.php",
-'params'=>"target=".$_SERVER['PHP_SELF']."&id=-1&plugin_racks_tab=".'PluginRacksOtherModel');
-        
-$tabs['all']=array('title'=>__('All'),
-'url'=>$CFG_GLPI['root_doc']."/plugins/racks/ajax/itemspecification.tabs.php",
-'params'=>"target=".$_SERVER['PHP_SELF']."&id=-1&plugin_racks_tab=all");
-        
-echo "<div id='tabspanel' class='center-h'></div>";
-Ajax::createTabs('tabspanel','tabcontent',$tabs,'PluginRacksItemSpecification');
-$itemSpecification->addDivForTabs();
-*/
-?>

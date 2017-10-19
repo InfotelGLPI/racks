@@ -48,4 +48,3 @@ if ($plugin->isActivated("racks")) {
       echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
       echo "<b>".__('Please activate the plugin', 'racks')."</b></div>";
 }
-?>

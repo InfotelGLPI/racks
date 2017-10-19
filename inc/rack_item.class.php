@@ -132,8 +132,10 @@ class PluginRacksRack_Item extends CommonDBTM {
       return true;
    }
 
-        /**
+   /**
     * Hook called After an item is uninstall or purge
+    *
+    * @param \CommonDBTM $item
     */
    static function cleanForItem(CommonDBTM $item) {
       $temp = new self();
@@ -425,7 +427,6 @@ class PluginRacksRack_Item extends CommonDBTM {
       $types   = PluginRacksRack::getTypes();
       $types[] = 'PluginRacksOther';
       $rand    = mt_rand();
-      $options = array();
 
       echo "<table border='0'><tr><td>\n";
 
@@ -629,7 +630,6 @@ class PluginRacksRack_Item extends CommonDBTM {
          $peripheral_size_tot = 0;
          $others_tot          = 0;
          $others_size_tot     = 0;
-         $next                = 0;
          $device_size         = 0;
 
          echo "<th width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>";
@@ -656,8 +656,6 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo "</tr>";
 
          for ($i = $PluginRacksRack->fields['rack_size']; $i >= 1; $i--) {
-            $alim1 = 0;
-            $alim2 = 0;
             $j     = $i;
 
             if ($i < 10) {
@@ -1095,7 +1093,7 @@ class PluginRacksRack_Item extends CommonDBTM {
     * @param $withtemplate (default '')
     **/
    static function showForItem(CommonDBTM $item, $withtemplate = '') {
-      global $DB, $CFG_GLPI;
+      global $DB;
 
       $ID = $item->getField('id');
 
@@ -1111,7 +1109,6 @@ class PluginRacksRack_Item extends CommonDBTM {
 
       $canedit      = $item->canadditem('PluginRacksRack');
       $rand         = mt_rand();
-      $is_recursive = $item->isRecursive();
       $itemtype     = $item->getType() . "Model";
 
       $query = "SELECT `glpi_plugin_racks_racks_items`.`id` AS assocID,
@@ -1187,7 +1184,6 @@ class PluginRacksRack_Item extends CommonDBTM {
             Session::addToNavigateListItems('PluginRacksRack', $rackID);
 
             $used[$rackID] = $rackID;
-            $assocID       = $data["assocID"];
 
             echo "<tr class='tab_bg_1" . ($data["is_deleted"] ? "_2" : "") . "'>";
             if ($canedit && ($withtemplate < 2)) {
@@ -1243,7 +1239,6 @@ class PluginRacksRack_Item extends CommonDBTM {
                . getEntitiesRestrictRequest(" AND ", "glpi_plugin_racks_racks", '', '', true);
 
       $result = $DB->query($query);
-      $number = $DB->numrows($result);
 
       echo "<div align='center'><table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='7'>" . _n('Associated rack enclosure', 'Associated rack enclosures', 2, 'racks') . ":</th></tr>";
@@ -1290,5 +1285,3 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "</table></div>";
    }
 }
-
-?>

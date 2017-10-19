@@ -65,4 +65,3 @@ class PluginRacksRoomLocation extends CommonTreeDropdown {
 
    }
 }
-?>

@@ -336,5 +336,3 @@ function plugin_item_purge_racks($item) {
                                  'items_id' => $item->getField('id')));
    return true;
 }
-
-?>

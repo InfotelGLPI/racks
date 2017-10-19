@@ -31,5 +31,3 @@ include ('../../../inc/includes.php');
 
 $dropdown = new PluginRacksRackModel();
 include (GLPI_ROOT . "/front/dropdown.common.php");
-
-?>

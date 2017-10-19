@@ -34,8 +34,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginRacksReport extends CommonDBTM {
 
-   const UTF8_ENCODING = 0;
-   const ANSI_ENCODING = 1;
+   const UTF8_ENCODING       = 0;
+   const ANSI_ENCODING       = 1;
    const WINDOWS_END_OF_LINE = 0;
    const UNIX_END_OF_LINE    = 1;
 
@@ -44,9 +44,9 @@ class PluginRacksReport extends CommonDBTM {
 
       $pRack = new PluginRacksRack();
 
-      $query = "SELECT DISTINCT `".$pRack->getTable()."`.*
-              FROM `".$pRack->getTable()."`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC";
+      $query = "SELECT DISTINCT `" . $pRack->getTable() . "`.*
+              FROM `" . $pRack->getTable() . "`
+              ORDER BY `" . $pRack->getTable() . "`.`name` ASC";
 
       $ret = array(
          "query"        => $query,
@@ -68,12 +68,11 @@ class PluginRacksReport extends CommonDBTM {
       }
 
       if (isset($post['plugin_racks_racks_id']) && $post['plugin_racks_racks_id'] != 0) {
-         $restrictRackId = "   AND `".$pRack->getTable()."`.`id` = '".$post['plugin_racks_racks_id']."'";
-         $restrictRackId .= "   AND `".$pRack->getTable()."`.`id` = `".$pRackItem->getTable()."`.`plugin_racks_racks_id`";
-         $leftjoin       = ", `glpi_plugin_racks_racks_items` WHERE (1) ".$restrictRackId;
+         $restrictRackId = "   AND `" . $pRack->getTable() . "`.`id` = '" . $post['plugin_racks_racks_id'] . "'";
+         $restrictRackId .= "   AND `" . $pRack->getTable() . "`.`id` = `" . $pRackItem->getTable() . "`.`plugin_racks_racks_id`";
+         $leftjoin = ", `glpi_plugin_racks_racks_items` WHERE (1) " . $restrictRackId;
       } else {
-         $restrictRackId = "";
-         $leftjoin       = "LEFT JOIN `glpi_plugin_racks_racks_items` ON (`glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`)";
+         $leftjoin = "LEFT JOIN `glpi_plugin_racks_racks_items` ON (`glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`)";
 
          $restrictRackId = "AND `glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`";
       }
@@ -81,26 +80,26 @@ class PluginRacksReport extends CommonDBTM {
 
       switch ($face) {
          case PluginRacksRack::FRONT_FACE:
-            $query = "SELECT `".$pRackItem->getTable()."`.* , `".$pRack->getTable()."`.*
-              FROM `".$pRackItem->getTable()."`,`glpi_plugin_racks_itemspecifications` , `".$pRack->getTable()."`
-              WHERE `".$pRackItem->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` ".$restrictRackId." 
-              AND (`".$pRackItem->getTable()."`.`faces_id` = '".PluginRacksRack::FRONT_FACE."' ) AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
+            $query = "SELECT `" . $pRackItem->getTable() . "`.* , `" . $pRack->getTable() . "`.*
+              FROM `" . $pRackItem->getTable() . "`,`glpi_plugin_racks_itemspecifications` , `" . $pRack->getTable() . "`
+              WHERE `" . $pRackItem->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` " . $restrictRackId . " 
+              AND (`" . $pRackItem->getTable() . "`.`faces_id` = '" . PluginRacksRack::FRONT_FACE . "' ) AND NOT `" . $pRack->getTable() . "`.`is_deleted`
+              ORDER BY `" . $pRack->getTable() . "`.`name` ASC, `" . $pRackItem->getTable() . "`.`faces_id` ASC, `" . $pRackItem->getTable() . "`.`position` DESC";
             break;
 
          case PluginRacksRack::BACK_FACE:
-            $query = "SELECT `".$pRackItem->getTable()."`.* , `".$pRack->getTable()."`.*
-              FROM `".$pRackItem->getTable()."`,`glpi_plugin_racks_itemspecifications` , `".$pRack->getTable()."`
-              WHERE `".$pRackItem->getTable()."`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` ".$restrictRackId." 
-              AND (`".$pRackItem->getTable()."`.`faces_id` = '".PluginRacksRack::BACK_FACE."' ) AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
+            $query = "SELECT `" . $pRackItem->getTable() . "`.* , `" . $pRack->getTable() . "`.*
+              FROM `" . $pRackItem->getTable() . "`,`glpi_plugin_racks_itemspecifications` , `" . $pRack->getTable() . "`
+              WHERE `" . $pRackItem->getTable() . "`.`plugin_racks_itemspecifications_id` = `glpi_plugin_racks_itemspecifications`.`id` " . $restrictRackId . " 
+              AND (`" . $pRackItem->getTable() . "`.`faces_id` = '" . PluginRacksRack::BACK_FACE . "' ) AND NOT `" . $pRack->getTable() . "`.`is_deleted`
+              ORDER BY `" . $pRack->getTable() . "`.`name` ASC, `" . $pRackItem->getTable() . "`.`faces_id` ASC, `" . $pRackItem->getTable() . "`.`position` DESC";
             break;
          default:
-            $query = "SELECT `".$pRackItem->getTable()."`.* , `".$pRack->getTable()."`.*
-              FROM  `".$pRack->getTable()."`
+            $query = "SELECT `" . $pRackItem->getTable() . "`.* , `" . $pRack->getTable() . "`.*
+              FROM  `" . $pRack->getTable() . "`
               $leftjoin
-              AND NOT `".$pRack->getTable()."`.`is_deleted`
-              ORDER BY `".$pRack->getTable()."`.`name` ASC, `".$pRackItem->getTable()."`.`faces_id` ASC, `".$pRackItem->getTable()."`.`position` DESC";
+              AND NOT `" . $pRack->getTable() . "`.`is_deleted`
+              ORDER BY `" . $pRack->getTable() . "`.`name` ASC, `" . $pRackItem->getTable() . "`.`faces_id` ASC, `" . $pRackItem->getTable() . "`.`position` DESC";
 
             break;
       }
@@ -128,7 +127,7 @@ class PluginRacksReport extends CommonDBTM {
             $start = 0;
          }
          if ($start > 0 || $start + $limit < $nbtot) {
-            $result = $DB->query($query." LIMIT $start,$limit");
+            $result = $DB->query($query . " LIMIT $start,$limit");
          }
       } else {
          $start = 0;
@@ -144,7 +143,7 @@ class PluginRacksReport extends CommonDBTM {
 
       $title = date("d/m/Y H:i");
       if ($nbtot == 0) {
-         echo "<div class='center'><font class='red b'>".__("No item found")."</font></div>";
+         echo "<div class='center'><font class='red b'>" . __("No item found") . "</font></div>";
          Html::footer();
       } else if ($output_type == Search::HTML_OUTPUT) {
          echo "<div class='center'><table class='tab_cadre_fixe'>";
@@ -159,23 +158,21 @@ class PluginRacksReport extends CommonDBTM {
 
       if ($nbtot > 0) {
          if ($output_type == Search::HTML_OUTPUT)
-            echo "<form method='POST' action='".$_SERVER["PHP_SELF"]."?start=$start'>\n";
+            echo "<form method='POST' action='" . $_SERVER["PHP_SELF"] . "?start=$start'>\n";
 
          echo Search::showHeader($output_type, $nbrows, $nbCols, true);
          echo Search::showNewLine($output_type);
-         $showAllFieds = true;
-         $listFields   = array();
-         $cptField     = 0;
+         $listFields = array();
+         $cptField   = 0;
 
-         $showAllFieds = (!isset($_REQUEST['cb_object_name']) || $_REQUEST['cb_object_name'] != "on") 
-               && (!isset($_REQUEST['cb_object_location']) || $_REQUEST['cb_object_location'] != "on") 
-               && (!isset($_REQUEST['cb_group']) || $_REQUEST['cb_group'] != "on") 
-               && (!isset($_REQUEST['cb_manufacturer']) || $_REQUEST['cb_manufacturer'] != "on") 
-               && (!isset($_REQUEST['cb_model']) || $_REQUEST['cb_model'] != "on") 
-               && (!isset($_REQUEST['cb_serial_number']) || $_REQUEST['cb_serial_number'] != "on");
+         $showAllFieds = (!isset($_REQUEST['cb_object_name']) || $_REQUEST['cb_object_name'] != "on")
+                         && (!isset($_REQUEST['cb_object_location']) || $_REQUEST['cb_object_location'] != "on")
+                         && (!isset($_REQUEST['cb_group']) || $_REQUEST['cb_group'] != "on")
+                         && (!isset($_REQUEST['cb_manufacturer']) || $_REQUEST['cb_manufacturer'] != "on")
+                         && (!isset($_REQUEST['cb_model']) || $_REQUEST['cb_model'] != "on")
+                         && (!isset($_REQUEST['cb_serial_number']) || $_REQUEST['cb_serial_number'] != "on");
 
-         $num    = 1;
-         $cptRow = 1;
+         $num = 1;
 
          if (!$showAllFieds) {
             $this->showTitle($output_type, $num, __("Bay name", "racks"), 'name', false, $params);
@@ -190,7 +187,7 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
             $cptField++;
 
-            $this->showTitle($output_type, $num, __("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
+            $this->showTitle($output_type, $num, __("Front", "racks") . " / " . _x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
             $cptField++;
 
             if (isset($_REQUEST['cb_object_name']) && $_REQUEST['cb_object_name'] == "on") {
@@ -246,7 +243,7 @@ class PluginRacksReport extends CommonDBTM {
             $this->showTitle($output_type, $num, __("U", "racks"), 'u', false, $params);
             $listFields['u'] = true;
 
-            $this->showTitle($output_type, $num, __("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
+            $this->showTitle($output_type, $num, __("Front", "racks") . " / " . _x('Rack enclosure', 'Back', 'racks'), 'front_rear', false, $params);
             $listFields['front_rear'] = true;
 
             $this->showTitle($output_type, $num, __("Object name", "racks"), 'object_name', false, $params);
@@ -278,8 +275,8 @@ class PluginRacksReport extends CommonDBTM {
 
          echo self::showEndLine($output_type, $params);
 
-         $num = 1;
-         $cptRow = 1;
+         $num         = 1;
+         $cptRow      = 1;
          $currentRack = -1;
 
          while ($row = $DB->fetch_array($result)) {
@@ -294,7 +291,7 @@ class PluginRacksReport extends CommonDBTM {
                $class  = substr($itemtype, 0, -5);
                $item   = new $class();
                $table  = getTableForItemType($class);
-               $r      = $DB->query("SELECT * FROM `".$table."` WHERE `id` = '".$row["items_id"]."' ");
+               $r      = $DB->query("SELECT * FROM `" . $table . "` WHERE `id` = '" . $row["items_id"] . "' ");
                $device = $DB->fetch_array($r);
             }
 
@@ -302,7 +299,7 @@ class PluginRacksReport extends CommonDBTM {
             $link = Toolbox::getItemTypeFormURL("PluginRacksRack");
             if ($groupByRackName || $currentRack != $row['id']) {
                if ($output_type == Search::HTML_OUTPUT) {
-                  echo self::showItem($output_type, "<a href=\"".$link."?id=".$row["id"]."\">".$row["name"]."</a>", $num, $cptRow, null, $params);
+                  echo self::showItem($output_type, "<a href=\"" . $link . "?id=" . $row["id"] . "\">" . $row["name"] . "</a>", $num, $cptRow, null, $params);
                } else {
                   echo self::showItem($output_type, $row["name"], $num, $cptRow, null, $params);
                }
@@ -324,20 +321,18 @@ class PluginRacksReport extends CommonDBTM {
 
             // Emplacement
             if ($groupByRackName || $currentRack != $row['id']) {
-               $tmpId  = $row['plugin_racks_roomlocations_id'];
-               
-               $tmpId  = $row['plugin_racks_roomlocations_id'];
-               $tmpObj = new PluginRacksRoomLocation();
+               $tmpId      = $row['plugin_racks_roomlocations_id'];
+               $tmpObj     = new PluginRacksRoomLocation();
                $trans_name = "";
                if ($tmpObj->getFromDB($tmpId)) {
                   $trans_name = $tmpObj->fields['name'];
                }
-               $trans = DropdownTranslation::getTranslatedValue($tmpId, "PluginRacksRoomLocation",'name',
-                                         $_SESSION['glpilanguage']);
+               $trans = DropdownTranslation::getTranslatedValue($tmpId, "PluginRacksRoomLocation", 'name',
+                                                                $_SESSION['glpilanguage']);
 
                if (!empty($trans)) {
                   $trans_name = $trans;
-               }  
+               }
 
                if (isset($tmpId)) {
                   echo self::showItem($output_type, $trans_name, $num, $cptRow, null, $params);
@@ -368,7 +363,7 @@ class PluginRacksReport extends CommonDBTM {
                   $link = Toolbox::getItemTypeFormURL(substr($itemtype, 0, -5));
                   if ($itemtype != 'PluginRacksOtherModel') {
                      if ($output_type == Search::HTML_OUTPUT) {
-                        echo self::showItem($output_type, "<a href=\"".$link."?id=".$row["items_id"]."\">".$device["name"]."</a>", $num, $cptRow, null, $params);
+                        echo self::showItem($output_type, "<a href=\"" . $link . "?id=" . $row["items_id"] . "\">" . $device["name"] . "</a>", $num, $cptRow, null, $params);
                      } else {
                         echo self::showItem($output_type, $device["name"], $num, $cptRow, null, $params);
                      }
@@ -445,7 +440,7 @@ class PluginRacksReport extends CommonDBTM {
          }
 
          echo self::showFooter($output_type, $title, $params);
-         
+
          if ($output_type == Search::HTML_OUTPUT) {
             Html::closeForm();
          }
@@ -458,10 +453,10 @@ class PluginRacksReport extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe' >";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".__("Search criteria", "racks")."</th>";
+      echo "<th colspan='4'>" . __("Search criteria", "racks") . "</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Bay name", "racks")." :</td>";
+      echo "<td>" . __("Bay name", "racks") . " :</td>";
       echo "<td>";
 
       $arrayValue = array();
@@ -469,10 +464,10 @@ class PluginRacksReport extends CommonDBTM {
          $arrayValue = array("value" => $post['plugin_racks_racks_id']);
       }
       $idSelectRankName = Dropdown::show('PluginRacksRack', $arrayValue);
-      echo "<input type='hidden' name='id_select_rank_name' id='id_select_rank_name' val  ue='".$idSelectRankName."' />";
+      echo "<input type='hidden' name='id_select_rank_name' id='id_select_rank_name' val  ue='" . $idSelectRankName . "' />";
       echo "</td>";
-      echo "<td>".__("Front", "racks")." / "._x('Rack enclosure', 'Back', 'racks');
-      echo "<input type='hidden' name='id_select_front_rear' id='id_select_front_rear' value='".$idSelectRankName."' />";
+      echo "<td>" . __("Front", "racks") . " / " . _x('Rack enclosure', 'Back', 'racks');
+      echo "<input type='hidden' name='id_select_front_rear' id='id_select_front_rear' value='" . $idSelectRankName . "' />";
       echo "</td>";
 
       echo "<td>";
@@ -481,30 +476,30 @@ class PluginRacksReport extends CommonDBTM {
       if (isset($post['select_front_rear'])) {
          $arrayValue = array("value" => $post['select_front_rear']);
       }
-      $idSelectFrontRear = Dropdown::showFromArray("select_front_rear", array("0" => Dropdown::EMPTY_VALUE, "1" => __("Front", "racks"), "2" => _x('Rack enclosure', 'Back', 'racks')), $arrayValue);
+      Dropdown::showFromArray("select_front_rear", array("0" => Dropdown::EMPTY_VALUE, "1" => __("Front", "racks"), "2" => _x('Rack enclosure', 'Back', 'racks')), $arrayValue);
       echo "</td>";
       echo "</tr>";
       echo "<tr  class='tab_bg_1'>";
-      echo "<td class='top'>".__("Field to export", "racks")."</td>";
+      echo "<td class='top'>" . __("Field to export", "racks") . "</td>";
       echo "<td>";
 
       echo "<label for='cb_object_name'>   <input type='checkbox' name='cb_object_name' id='cb_object_name' ";
       if (isset($post['cb_object_name'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Object name", "racks")."<br/></label>";
+      echo "/>&nbsp;" . __("Object name", "racks") . "<br/></label>";
 
       echo "<label for='cb_object_location'>      <input type='checkbox' name='cb_object_location' id='cb_object_location' ";
       if (isset($post['cb_object_location'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Object location", "racks")."<br/></label>";
+      echo "/>&nbsp;" . __("Object location", "racks") . "<br/></label>";
 
       echo "<label for='cb_group'>      <input type='checkbox' name='cb_group' id='cb_group' ";
       if (isset($post['cb_group'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Group")."<br/></label>";
+      echo "/>&nbsp;" . __("Group") . "<br/></label>";
 
       echo "</td>";
       echo "<td colspan='2'>";
@@ -512,29 +507,29 @@ class PluginRacksReport extends CommonDBTM {
       if (isset($post['cb_manufacturer'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Manufacturer")."<br/></label>";
+      echo "/>&nbsp;" . __("Manufacturer") . "<br/></label>";
 
       echo "<label for='cb_model'>      <input type='checkbox' name='cb_model' id='cb_model' ";
       if (isset($post['cb_model'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Model")."<br/></label>";
+      echo "/>&nbsp;" . __("Model") . "<br/></label>";
 
       echo "<label for='cb_serial_number'><input type='checkbox' name='cb_serial_number' id='cb_serial_number' ";
       if (isset($post['cb_serial_number'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Serial number")."<br/></label>";
+      echo "/>&nbsp;" . __("Serial number") . "<br/></label>";
 
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'><td colspan='4' class='center'>";
 
       echo "<input type='hidden' name='result_search_reports' id='result_search_reports' value='searchdone' />";
-      echo "<input type='submit' value='"._sx("button", "Search")."' class='submit' />";
+      echo "<input type='submit' value='" . _sx("button", "Search") . "' class='submit' />";
       echo "</td></tr>";
 
-      echo "<tr class='tab_bg_1'><td>".__("Display options", "racks")."</td>\n";
+      echo "<tr class='tab_bg_1'><td>" . __("Display options", "racks") . "</td>\n";
       echo "<td colspan='3'><label for='groupByRackName'><input type='checkbox' name='groupByRackName' id='groupByRackName' ";
 
       if (!isset($_REQUEST['result_search_reports'])) {
@@ -542,7 +537,7 @@ class PluginRacksReport extends CommonDBTM {
       } else if (isset($post['groupByRackName'])) {
          echo " checked ";
       }
-      echo "/>&nbsp;".__("Group by bay name", "racks")."</label></td>";
+      echo "/>&nbsp;" . __("Group by bay name", "racks") . "</label></td>";
       echo "</tr>";
       echo "</table>";
 
@@ -552,11 +547,14 @@ class PluginRacksReport extends CommonDBTM {
    /**
     * Display the column title and allow the sort
     *
-    * @param $output_type
-    * @param $num
-    * @param $title
-    * @param $columnname
-    * @param bool $sort
+    * @param       $output_type
+    * @param       $num
+    * @param       $title
+    * @param       $columnname
+    * @param bool  $sort
+    *
+    * @param array $params
+    *
     * @return mixed
     */
    function showTitle($output_type, &$num, $title, $columnname, $sort = false, $params = array()) {
@@ -577,12 +575,12 @@ class PluginRacksReport extends CommonDBTM {
       foreach ($_REQUEST as $name => $value) {
          if (!in_array($name, array('sort', 'order', 'PHPSESSID'))) {
             $link .= ($first ? '?' : '&amp;');
-            $link .= $name.'='.urlencode($value);
+            $link .= $name . '=' . urlencode($value);
             $first = false;
          }
       }
-      $link .= ($first ? '?' : '&amp;').'sort='.urlencode($columnname);
-      $link .= '&amp;order='.$order;
+      $link .= ($first ? '?' : '&amp;') . 'sort=' . urlencode($columnname);
+      $link .= '&amp;order=' . $order;
       echo self::showHeaderItem($output_type, $title, $num, $link, $issort, ($order == 'ASC' ? 'DESC' : 'ASC'), null, $params);
 
    }
@@ -628,10 +626,10 @@ class PluginRacksReport extends CommonDBTM {
 
             switch ($params['encoding']) {
                case self::ANSI_ENCODING :
-                  $out = "$quotes".Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252')."$quotes".$_SESSION["glpicsv_delimiter"];
+                  $out = "$quotes" . Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252') . "$quotes" . $_SESSION["glpicsv_delimiter"];
                   break;
                case self::UTF8_ENCODING :
-                  $out = "$quotes".Search::csv_clean($value)."$quotes".$_SESSION["glpicsv_delimiter"];
+                  $out = "$quotes" . Search::csv_clean($value) . "$quotes" . $_SESSION["glpicsv_delimiter"];
                   break;
             }
             break;
@@ -640,9 +638,9 @@ class PluginRacksReport extends CommonDBTM {
             $out = "<th $options>";
             if ($issort) {
                if ($order == "DESC") {
-                  $out .= "<img src=\"".$CFG_GLPI["root_doc"]."/pics/puce-down.png\" alt='' title=''>";
+                  $out .= "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/puce-down.png\" alt='' title=''>";
                } else {
-                  $out .= "<img src=\"".$CFG_GLPI["root_doc"]."/pics/puce-up.png\" alt='' title=''>";
+                  $out .= "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/puce-up.png\" alt='' title=''>";
                }
             }
             if (!empty($linkto)) {
@@ -672,7 +670,7 @@ class PluginRacksReport extends CommonDBTM {
          case Search::PDF_OUTPUT_LANDSCAPE : //pdf
          case Search::PDF_OUTPUT_PORTRAIT :
             global $PDF_TABLE;
-            $PDF_TABLE.= '</tr>';
+            $PDF_TABLE .= '</tr>';
             break;
 
          case Search::SYLK_OUTPUT : //sylk
@@ -719,9 +717,8 @@ class PluginRacksReport extends CommonDBTM {
             $pdf->SetAuthor('GLPI');
             $pdf->SetTitle($title);
             $pdf->SetHeaderData('', '', $title, '');
-            $font    = 'helvetica';
+            $font = 'helvetica';
             //$subsetting = true;
-            $fonsize = 8;
             if (isset($_SESSION['glpipdffont']) && $_SESSION['glpipdffont']) {
                $font = $_SESSION['glpipdffont'];
                //$subsetting = false;
@@ -751,23 +748,23 @@ class PluginRacksReport extends CommonDBTM {
             global $SYLK_HEADER, $SYLK_ARRAY, $SYLK_SIZE;
             // largeurs des colonnes
             foreach ($SYLK_SIZE as $num => $val) {
-               $out .= "F;W".$num." ".$num." ".min(50, $val)."\n";
+               $out .= "F;W" . $num . " " . $num . " " . min(50, $val) . "\n";
             }
             $out .= "\n";
             // Header
             foreach ($SYLK_HEADER as $num => $val) {
-               $out .= "F;SDM4;FG0C;".($num == 1 ? "Y1;" : "")."X$num\n";
-               $out .= "C;N;K\"".Search::sylk_clean($val)."\"\n";
+               $out .= "F;SDM4;FG0C;" . ($num == 1 ? "Y1;" : "") . "X$num\n";
+               $out .= "C;N;K\"" . Search::sylk_clean($val) . "\"\n";
                $out .= "\n";
             }
             // Datas
             foreach ($SYLK_ARRAY as $row => $tab) {
                foreach ($tab as $num => $val) {
-                  $out .= "F;P3;FG0L;".($num == 1 ? "Y".$row.";" : "")."X$num\n";
-                  $out .= "C;N;K\"".Search::sylk_clean($val)."\"\n";
+                  $out .= "F;P3;FG0L;" . ($num == 1 ? "Y" . $row . ";" : "") . "X$num\n";
+                  $out .= "C;N;K\"" . Search::sylk_clean($val) . "\"\n";
                }
             }
-            $out.= "E\n";
+            $out .= "E\n";
             break;
 
          case Search::CSV_OUTPUT : //csv
@@ -797,8 +794,8 @@ class PluginRacksReport extends CommonDBTM {
          case Search::PDF_OUTPUT_LANDSCAPE : //pdf
          case Search::PDF_OUTPUT_PORTRAIT :
             global $PDF_TABLE;
-            $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
-            $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+            $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
+            $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
             $PDF_TABLE .= "<td $extraparam valign='top'>";
             $PDF_TABLE .= Html::weblink_extract(Html::clean($value));
             $PDF_TABLE .= "</td>\n";
@@ -806,17 +803,17 @@ class PluginRacksReport extends CommonDBTM {
             break;
 
          case Search::SYLK_OUTPUT : //sylk
-            global $SYLK_ARRAY, $SYLK_HEADER, $SYLK_SIZE;
+            global $SYLK_ARRAY, $SYLK_SIZE;
             $value                  = Html::weblink_extract($value);
-            $value                  = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
-            $value                  = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+            $value                  = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
+            $value                  = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
             $SYLK_ARRAY[$row][$num] = Search::sylk_clean($value);
             $SYLK_SIZE[$num]        = max($SYLK_SIZE[$num], Toolbox::strlen($SYLK_ARRAY[$row][$num]));
             break;
 
          case Search::CSV_OUTPUT : //csv
-            $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
-            $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+            $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
+            $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
             $value = Html::weblink_extract($value);
 
             $quotes = "";
@@ -826,10 +823,10 @@ class PluginRacksReport extends CommonDBTM {
 
             switch ($params['encoding']) {
                case self::ANSI_ENCODING :
-                  $out = "$quotes".Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252')."$quotes".$_SESSION["glpicsv_delimiter"];
+                  $out = "$quotes" . Toolbox::decodeFromUtf8(Search::csv_clean($value), 'windows-1252') . "$quotes" . $_SESSION["glpicsv_delimiter"];
                   break;
                case self::UTF8_ENCODING :
-                  $out = "$quotes".Search::csv_clean($value)."$quotes".$_SESSION["glpicsv_delimiter"];
+                  $out = "$quotes" . Search::csv_clean($value) . "$quotes" . $_SESSION["glpicsv_delimiter"];
                   break;
             }
             break;
@@ -837,27 +834,27 @@ class PluginRacksReport extends CommonDBTM {
          default :
             $out = "<td $extraparam valign='top'>";
 
-            if (!preg_match('/'.Search::LBHR.'/', $value)) {
-               $values         = preg_split('/'.Search::LBBR.'/i', $value);
+            if (!preg_match('/' . Search::LBHR . '/', $value)) {
+               $values         = preg_split('/' . Search::LBBR . '/i', $value);
                $line_delimiter = '<br>';
             } else {
-               $values         = preg_split('/'.Search::LBHR.'/i', $value);
+               $values         = preg_split('/' . Search::LBHR . '/i', $value);
                $line_delimiter = '<hr>';
             }
             $limitto = 20;
             if (count($values) > $limitto) {
                for ($i = 0; $i < $limitto; $i++) {
-                  $out .= $values[$i].$line_delimiter;
+                  $out .= $values[$i] . $line_delimiter;
                }
-//                $rand=mt_rand();
+               //                $rand=mt_rand();
                $out .= "...&nbsp;";
-               $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
-               $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+               $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
+               $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
                $out .= Html::showToolTip($value, array('display'   => false,
-                        'autoclose' => false));
+                                                       'autoclose' => false));
             } else {
-               $value = preg_replace('/'.Search::LBBR.'/', '<br>', $value);
-               $value = preg_replace('/'.Search::LBHR.'/', '<hr>', $value);
+               $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
+               $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
                $out .= $value;
             }
             $out .= "</td>\n";
@@ -886,7 +883,7 @@ class PluginRacksReport extends CommonDBTM {
 
       $list_limit = $_SESSION['glpilist_limit'];
       // Forward is the next step forward
-      $forward    = $start + $list_limit;
+      $forward = $start + $list_limit;
 
       // This is the end, my friend
       $end = $numrows - $list_limit;
@@ -921,13 +918,13 @@ class PluginRacksReport extends CommonDBTM {
       if (!$start == 0) {
          echo "<th class='left'>";
          echo "<a href='$target?$parameters&amp;start=0'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/first.png' alt=\"".__s('Start').
-         "\" title=\"".__s('Start')."\">";
+         echo "<img src='" . $CFG_GLPI["root_doc"] . "/pics/first.png' alt=\"" . __s('Start') .
+              "\" title=\"" . __s('Start') . "\">";
          echo "</a></th>";
          echo "<th class='left'>";
          echo "<a href='$target?$parameters&amp;start=$back'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/left.png' alt=\"".__s('Previous').
-         "\" title=\"".__s('Previous')."\">";
+         echo "<img src='" . $CFG_GLPI["root_doc"] . "/pics/left.png' alt=\"" . __s('Previous') .
+              "\" title=\"" . __s('Previous') . "\">";
          echo "</a></th>";
       }
 
@@ -944,8 +941,8 @@ class PluginRacksReport extends CommonDBTM {
 
       if (!empty($item_type_output) && isset($_SESSION["glpiactiveprofile"]) && ($_SESSION["glpiactiveprofile"]["interface"] == "central")) {
          echo "<td class='tab_bg_2' width='30%'>";
-         echo "<form method='GET' action='".$target."' target='_blank'>";
-         
+         echo "<form method='GET' action='" . $target . "' target='_blank'>";
+
          echo Html::hidden('item_type', array('value' => $item_type_output));
 
          if ($item_type_output_param != 0) {
@@ -955,13 +952,12 @@ class PluginRacksReport extends CommonDBTM {
 
          for ($i = 0; $i < count($split); $i++) {
             $pos    = Toolbox::strpos($split[$i], '=');
-            $length = Toolbox::strlen($split[$i]);
             echo Html::hidden(Toolbox::substr($split[$i], 0, $pos), array('value' => urldecode(Toolbox::substr($split[$i], $pos + 1))));
          }
-         
+
          Dropdown::showOutputFormat();
          $this->showCSVOptions();
-         
+
          echo "<script type='text/javascript'>";
          echo "$('select[name=display_type]').change(function() {
                   switch($(this).val()){
@@ -974,7 +970,7 @@ class PluginRacksReport extends CommonDBTM {
                   }
                });";
          echo "</script>";
-         
+
          Html::closeForm();
          echo "</td>";
       }
@@ -988,26 +984,26 @@ class PluginRacksReport extends CommonDBTM {
       if ($forward < $numrows) {
          echo "<th class='right'>";
          echo "<a href='$target?$parameters&amp;start=$forward'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/right.png' alt=\"".__s('Next').
-         "\" title=\"".__s('Next')."\">";
+         echo "<img src='" . $CFG_GLPI["root_doc"] . "/pics/right.png' alt=\"" . __s('Next') .
+              "\" title=\"" . __s('Next') . "\">";
          echo "</a></th>\n";
 
          echo "<th class='right'>";
          echo "<a href='$target?$parameters&amp;start=$end'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/last.png' alt=\"".__s('End').
-         "\" title=\"".__s('End')."\">";
+         echo "<img src='" . $CFG_GLPI["root_doc"] . "/pics/last.png' alt=\"" . __s('End') .
+              "\" title=\"" . __s('End') . "\">";
          echo "</a></th>\n";
       }
       // End pager
       echo "</tr></table></div>";
    }
-   
+
    function showCSVOptions() {
       echo "<div id='display_csv_preferences' style='display:none'>";
       echo "<table class='tab_cadre_fixe'>";
       // Encoding
       echo "<tr>";
-      echo "<td>".__('Encoding', 'racks')."</td>";
+      echo "<td>" . __('Encoding', 'racks') . "</td>";
       echo "<td>";
       Dropdown::showFromArray("encoding", array('UTF-8 unicode', 'ANSI'), array('width' => '150px'));
       echo "</td>";
@@ -1015,7 +1011,7 @@ class PluginRacksReport extends CommonDBTM {
 
       // Quotes
       echo "<tr>";
-      echo "<td>".__('Quotes', 'racks')."</td>";
+      echo "<td>" . __('Quotes', 'racks') . "</td>";
       echo "<td>";
       Dropdown::showYesNo("quotes", 0, -1, array('width' => '100px'));
       echo "</td>";
@@ -1023,7 +1019,7 @@ class PluginRacksReport extends CommonDBTM {
 
       // End of line
       echo "<tr>";
-      echo "<td>".__('End of line', 'racks')."</td>";
+      echo "<td>" . __('End of line', 'racks') . "</td>";
       echo "<td>";
       Dropdown::showFromArray("end_of_line", array('Windows', 'Unix'), array('width' => '100px'));
       echo "</td>";

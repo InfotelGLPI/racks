@@ -40,4 +40,3 @@ if ($PluginRacksRack->canView() || Config::canCreate()) {
 }
 
 Html::footer();
-?>

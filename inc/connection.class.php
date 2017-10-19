@@ -40,4 +40,3 @@ class PluginRacksConnection extends CommonDropdown {
       return _n('Power supply connection', 'Power supply connections', $nb, 'racks');
    }
 }
-?>

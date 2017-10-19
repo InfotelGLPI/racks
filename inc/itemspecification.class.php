@@ -56,7 +56,6 @@ class PluginRacksItemSpecification extends CommonDBTM {
    }
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      global $CFG_GLPI;
       $self = new self();
       if (in_array($item->getType(), self::getModelClasses(true))) {
          $self->showForm("", array('items_id' => $item->getID(),
@@ -110,10 +109,6 @@ class PluginRacksItemSpecification extends CommonDBTM {
       $table      = getTableForItemType($itemtype);
 
       //selection de tous les materiels lies au modele
-      $query_spec = "SELECT *
-                     FROM `".$this->getTable()."`
-                     WHERE `id` = '" . $input["id"] . "' ";
-
       foreach ($DB->request($this->getTable(), array ('id' => $input['id'])) as $device) {
          $query_device = "SELECT `" . $table . "`.`id` 
                           FROM `" . $table . "`, `".$this->getTable()."` 
@@ -173,7 +168,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
                 FROM `glpi_plugin_racks_racks_items`
                 WHERE `itemtype` = '" . $itemtype . "'
                 AND `items_id` ='" . $model['id'] . "';";
-            $result = $DB->query($query);
+            $DB->query($query);
          }
       }
       $this->delete(array("id"=>$ID));
@@ -320,53 +315,53 @@ class PluginRacksItemSpecification extends CommonDBTM {
       $this->showModels($itemtype,$rand);
    }
 
-   function showModels($itemtype,$rand) {
+   function showModels($itemtype, $rand) {
       global $DB;
 
       $PluginRacksConfig = new PluginRacksConfig();
 
-      $link = Toolbox::getItemTypeFormURL($itemtype);
-      $table = getTableForItemType($itemtype);
+      $link   = Toolbox::getItemTypeFormURL($itemtype);
+      $table  = getTableForItemType($itemtype);
       $search = Toolbox::getItemTypeSearchURL($itemtype);
       echo "<table class='tab_cadre_fixe' cellpadding='5'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>&nbsp;</th>";
       echo "<th>" . __('Equipment', 'racks') . "</th>";
-      echo "<th>" . __('Total Current', 'racks') . "<br>(".__('amps', 'racks').")</th>";
+      echo "<th>" . __('Total Current', 'racks') . "<br>(" . __('amps', 'racks') . ")</th>";
       echo "<th>" . __('Power supplies number', 'racks') . "</th>";
-      echo "<th>".__('Calorific waste', 'racks')."<br> ("; // Dissipation calorifique
+      echo "<th>" . __('Calorific waste', 'racks') . "<br> ("; // Dissipation calorifique
       $PluginRacksConfig->getUnit("dissipation");
       echo ")</th>";
-      echo "<th>".__('Flow Rate', 'racks')."<br> ("; // Débit d'air frais
+      echo "<th>" . __('Flow Rate', 'racks') . "<br> ("; // Débit d'air frais
       $PluginRacksConfig->getUnit("rate");
       echo ")</th>";
-      echo "<th>" . __('Size') . " (".__('U', 'racks').")</th>";
-      echo "<th>".__('Weight', 'racks')."<br> ("; // poids
+      echo "<th>" . __('Size') . " (" . __('U', 'racks') . ")</th>";
+      echo "<th>" . __('Weight', 'racks') . "<br> ("; // poids
       $PluginRacksConfig->getUnit("weight");
       echo ")</th>";
       echo "<th>" . __('Full-depth item', 'racks') . "</th>";
       echo "</tr>";
-      $modelid=-1;
-      $result = $DB->query("SELECT *
-                        FROM `".$this->getTable()."` ".($itemtype != -1?"WHERE `itemtype` = '$itemtype'":"")." ");
+      $modelid = -1;
+      $result  = $DB->query("SELECT *
+                        FROM `" . $this->getTable() . "` " . ($itemtype != -1 ? "WHERE `itemtype` = '$itemtype'" : "") . " ");
       while ($data = $DB->fetch_assoc($result)) {
          $modelid = $data['model_id'];
-         $id=$data['id'];
+         $id      = $data['id'];
          echo "<tr class='tab_bg_1'>";
          echo "<td class='center'>";
          echo "<input type='checkbox' name='item[$id]' value='1'>";
          echo "</td>";
-                        echo "<td>";
-         echo "<a href=\"".$link."?id=".$modelid."\">";
-         echo Dropdown::getDropdownName($table,$modelid);
+         echo "<td>";
+         echo "<a href=\"" . $link . "?id=" . $modelid . "\">";
+         echo Dropdown::getDropdownName($table, $modelid);
          echo "</a>";
-                        echo "</td>";
-         echo "<td>" . Html::formatNumber($data['amps'],true) . "</td>";
+         echo "</td>";
+         echo "<td>" . Html::formatNumber($data['amps'], true) . "</td>";
          echo "<td>" . $data['nb_alim'] . "</td>";
-         echo "<td>" . Html::formatNumber($data['dissipation'],true) . "</td>";
-         echo "<td>" . Html::formatNumber($data['flow_rate'],true) . "</td>";
+         echo "<td>" . Html::formatNumber($data['dissipation'], true) . "</td>";
+         echo "<td>" . Html::formatNumber($data['flow_rate'], true) . "</td>";
          echo "<td>" . $data['size'] . "</td>";
-         echo "<td>" . Html::formatNumber($data['weight'],true) . "</td>";
+         echo "<td>" . Html::formatNumber($data['weight'], true) . "</td>";
          echo "<td>" . Dropdown::getYesNo($data['length']) . "</td>";
       }
 
@@ -377,7 +372,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
          echo "<input type='submit' name='deleteSpec' value=\"" . __s('Delete permanently') . "\" class='submit' ></div></td></tr>";
 
          echo "<tr class='tab_bg_1 right'><td colspan='10'>";
-         echo "<a href=\"".$search."\">";
+         echo "<a href=\"" . $search . "\">";
          echo __('Add specifications for servers models', 'racks');
          echo "</a>";
          echo "</td></tr>";
@@ -395,4 +390,3 @@ class PluginRacksItemSpecification extends CommonDBTM {
       return $values;
    }
 }
-?>

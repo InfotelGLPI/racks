@@ -130,4 +130,3 @@ class PluginRacksConfig extends CommonDBTM {
       return $config;
    }
 }
-?>

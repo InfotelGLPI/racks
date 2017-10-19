@@ -166,4 +166,3 @@ if (isset ($_POST["add"])) {
    $PluginRacksRack->display($_GET);
    Html::footer();
 }
-?>

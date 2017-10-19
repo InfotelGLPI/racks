@@ -161,4 +161,3 @@ if ($count = $DB->numrows($result)) {
 
 $return['count'] = $count;
 echo json_encode($return);
-?>

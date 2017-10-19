@@ -63,4 +63,3 @@ class PluginRacksRackType extends CommonDropdown {
       return 0;
    }
 }
-?>

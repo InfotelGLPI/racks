@@ -40,4 +40,3 @@ class PluginRacksRackModel extends CommonDropdown {
       return _n('Model', 'Models', $nb);
    }
 }
-?>

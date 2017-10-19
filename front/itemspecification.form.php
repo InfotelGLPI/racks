@@ -66,4 +66,3 @@ if (isset ($_POST["add"])) {
    $PluginRacksItemSpecification->display($_GET);
    Html::footer();
 }
-?>

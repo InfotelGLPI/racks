@@ -40,4 +40,3 @@ class PluginRacksOtherModel extends CommonDropdown {
       return __('Others equipments', 'racks');
    }
 }
-?>

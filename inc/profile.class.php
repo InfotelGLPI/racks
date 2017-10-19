@@ -260,4 +260,3 @@ class PluginRacksProfile extends Profile {
       }
    }
 }
-?>

@@ -56,4 +56,3 @@ class PluginRacksOther extends CommonDBTM {
       $this->delete($values);
    }
 }
-?>

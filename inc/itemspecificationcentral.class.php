@@ -85,4 +85,3 @@ class PluginRacksItemSpecificationCentral extends CommonGLPI {
    }
 
 }
-?>

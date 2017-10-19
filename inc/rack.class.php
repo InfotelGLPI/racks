@@ -421,13 +421,13 @@ class PluginRacksRack extends CommonDBTM {
                       FROM `glpi_plugin_racks_racks_items`
                       WHERE `plugin_racks_racks_id` = '$ID' 
                         AND `first_powersupply` > 0 ";
-      $result_alim1 = $DB->query($query_alim1);
+      $DB->query($query_alim1);
 
       $query_alim2 = "SELECT COUNT(`second_powersupply`) AS total_alim2
                       FROM `glpi_plugin_racks_racks_items`
                       WHERE `plugin_racks_racks_id` = '$ID' 
                         AND `second_powersupply` > 0 ";
-      $result_alim2 = $DB->query($query_alim2);
+      $DB->query($query_alim2);
 
       echo "<form><div class='center'><table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='6'>".__('Total')."</th></tr><tr>";
@@ -549,7 +549,13 @@ class PluginRacksRack extends CommonDBTM {
     * @since version 0.85
     *
     * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    *
+    * @param \MassiveAction $ma
+    * @param \CommonDBTM    $item
+    * @param array          $ids
+    *
+    * @return \nothing|void
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
@@ -574,5 +580,3 @@ class PluginRacksRack extends CommonDBTM {
       }
    }
 }
-
-?>
