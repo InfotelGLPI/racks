@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -49,13 +49,13 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 
-} elseif (isset ($_POST["delete"])) {
+} else if (isset ($_POST["delete"])) {
 
    $PluginRacksRack->check($_POST['id'], DELETE);
    $PluginRacksRack->delete($_POST);
    $PluginRacksRack->redirectToList();
 
-} elseif (isset ($_POST["restore"])) {
+} else if (isset ($_POST["restore"])) {
 
    $PluginRacksRack->check($_POST['id'], PURGE);
    $PluginRacksRack->restore($_POST);
@@ -110,12 +110,12 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 
-} elseif (isset ($_POST["deleteDevice"])) {
+} else if (isset ($_POST["deleteDevice"])) {
 
    if ($PluginRacksRack->canCreate()
          && isset($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
-         $input = array('id' => $key);
+         $input = ['id' => $key];
          if ($val == 1) {
             $PluginRacksRack_Item->delete($input);
 
@@ -128,8 +128,8 @@ if (isset ($_POST["add"])) {
       }
    }
    Html::back();
-} elseif (isset ($_POST["deleteitem"])) {
-   $input = array('id' => $_POST["id"]);
+} else if (isset ($_POST["deleteitem"])) {
+   $input = ['id' => $_POST["id"]];
    $PluginRacksRack_Item->check($_POST["id"], UPDATE);
    $PluginRacksRack_Item->delete($input);
    Html::back();

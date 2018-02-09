@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ if ($plugin->isActivated("racks")) {
       Html::footer();
    }
 } else {
-      Html::header(__('Setup'),'',"config","plugins");
+      Html::header(__('Setup'), '', "config", "plugins");
       echo "<div align='center'><br><br>";
       echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
       echo "<b>".__('Please activate the plugin', 'racks')."</b></div>";

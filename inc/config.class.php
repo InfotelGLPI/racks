@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -35,13 +35,13 @@ class PluginRacksConfig extends CommonDBTM {
 
    static $rightname = "plugin_racks";
 
-   //Metric unit, for more information see : 
+   //Metric unit, for more information see :
    //http://en.wikipedia.org/wiki/Metric_system
    const METRIC_UNIT  = 1;
    //No metric unit
    const NON_METRIC_UNIT = 2;
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Setup');
    }
 
@@ -87,8 +87,8 @@ class PluginRacksConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2' align='center'>";
-      echo Html::hidden('id', array('value' => 1));
-      echo Html::submit(_sx('button', 'Post'), array('name' => 'update'));
+      echo Html::hidden('id', ['value' => 1]);
+      echo Html::submit(_sx('button', 'Post'), ['name' => 'update']);
       echo "</table>";
       Html::closeForm();
       echo "</div>";
@@ -110,15 +110,15 @@ class PluginRacksConfig extends CommonDBTM {
    //TODO : this method should return a value, that is diplayed in a form
    //it should not echo the value directly
    function getUnit($field) {
-      $units[self::METRIC_UNIT] = array('weight'      => __('kg', 'racks'),
+      $units[self::METRIC_UNIT] = ['weight'      => __('kg', 'racks'),
                                         'dissipation' => __('btu/h', 'racks'),
                                         'rate'        => __('m3/h', 'racks'),
-                                        'size'        => __('mm', 'racks'));
+                                        'size'        => __('mm', 'racks')];
 
-      $units[self::NON_METRIC_UNIT] = array('weight'      => __('lbs', 'racks'),
+      $units[self::NON_METRIC_UNIT] = ['weight'      => __('lbs', 'racks'),
                                             'dissipation' => __('watts', 'racks'),
                                             'rate'        => __('CFM', 'racks'),
-                                            'size'        => __('pouces', 'racks'));
+                                            'size'        => __('pouces', 'racks')];
 
       $this->getFromDB(1);
       echo $units[$this->getField('unit')][$field];

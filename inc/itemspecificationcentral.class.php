@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -34,25 +34,25 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksItemSpecificationCentral extends CommonGLPI {
 
    static $rightname = "plugin_racks_model";
-   
-   static function getTypeName($nb=0) {
+
+   static function getTypeName($nb = 0) {
       return __('Equipments models specifications', 'racks');
    }
 
-   function defineTabs($options=array()) {
-      $ong = array();
+   function defineTabs($options = []) {
+      $ong = [];
       $this->addStandardTab(__CLASS__, $ong, $options);
       return $ong;
    }
 
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($item->getType() == __CLASS__
             && Session::haveRight('plugin_racks_model', READ)) {
          $tabs[1] = __('Servers', 'racks');
-         $tabs[2] = _n('Network equipment' , 'Network equipments', 2, 'racks');
-         $tabs[3] = _n('Peripheral' , 'Peripherals', 2, 'racks');
-         $tabs[4] = _n('Other equipment' , 'Others equipments', 2, 'racks');
+         $tabs[2] = _n('Network equipment', 'Network equipments', 2, 'racks');
+         $tabs[3] = _n('Peripheral', 'Peripherals', 2, 'racks');
+         $tabs[4] = _n('Other equipment', 'Others equipments', 2, 'racks');
 
          return $tabs;
       }
@@ -60,7 +60,7 @@ class PluginRacksItemSpecificationCentral extends CommonGLPI {
    }
 
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $itemspecification = new PluginRacksItemSpecification();
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {

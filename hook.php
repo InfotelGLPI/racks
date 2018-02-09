@@ -38,25 +38,25 @@ function plugin_racks_install() {
         && !$DB->tableExists("glpi_plugin_racks_configs")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/empty-1.7.1.sql");
 
-   } elseif ($DB->tableExists("glpi_plugin_rack_content")
-      && !$DB->fieldExists("glpi_plugin_rack_content","first_powersupply")) {
+   } else if ($DB->tableExists("glpi_plugin_rack_content")
+      && !$DB->fieldExists("glpi_plugin_rack_content", "first_powersupply")) {
       $update = true;
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.0.2.sql");
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
 
-   } elseif ($DB->tableExists("glpi_plugin_rack")
+   } else if ($DB->tableExists("glpi_plugin_rack")
                && $DB->tableExists("glpi_plugin_racks_profiles")) {
       $update = true;
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.1.0.sql");
    }
    //from 1.1 version
    if ($DB->tableExists("glpi_plugin_racks_racks")
-      && !$DB->fieldExists("glpi_plugin_racks_racks","otherserial")) {
+      && !$DB->fieldExists("glpi_plugin_racks_racks", "otherserial")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.2.1.sql");
    }
 
    if ($DB->tableExists("glpi_plugin_racks_racks")
-      && !$DB->fieldExists("glpi_plugin_racks_racks","users_id_tech")) {
+      && !$DB->fieldExists("glpi_plugin_racks_racks", "users_id_tech")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.3.0.sql");
    }
 
@@ -65,16 +65,16 @@ function plugin_racks_install() {
    }
 
    if ($DB->tableExists("glpi_plugin_racks_racktypes")
-                  && !$DB->fieldExists("glpi_plugin_racks_racktypes","is_recursive")) {
+                  && !$DB->fieldExists("glpi_plugin_racks_racktypes", "is_recursive")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.4.1.sql");
    }
 
    if ($DB->tableExists("glpi_plugin_racks_profiles")
-                  && !$DB->fieldExists("glpi_plugin_racks_profiles","open_ticket")) {
+                  && !$DB->fieldExists("glpi_plugin_racks_profiles", "open_ticket")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.4.2.sql");
    }
    if ($DB->tableExists("glpi_plugin_racks_roomlocations")
-                  && !$DB->fieldExists("glpi_plugin_racks_roomlocations","ancestors_cache")) {
+                  && !$DB->fieldExists("glpi_plugin_racks_roomlocations", "ancestors_cache")) {
       $DB->runFile(GLPI_ROOT ."/plugins/racks/sql/update-1.7.1.sql");
    }
 
@@ -83,7 +83,7 @@ function plugin_racks_install() {
    $migration->migrationOneTable('glpi_plugin_racks_configs');
 
    if ($update) {
-      foreach($DB->request('glpi_plugin_racks_profiles') as $data) {
+      foreach ($DB->request('glpi_plugin_racks_profiles') as $data) {
          $query  = "UPDATE `glpi_plugin_racks_profiles`
                     SET `profiles_id` = '".$data["id"]."'
                     WHERE `id` = '".$data["id"]."';";
@@ -92,39 +92,39 @@ function plugin_racks_install() {
 
       $migration->dropField('glpi_plugin_racks_profiles', 'name');
 
-      Plugin::migrateItemType(array(4450 => 'PluginRacksRack',
-                                    4451 => 'PluginRacksOther'),
-                              array("glpi_savedsearches",
+      Plugin::migrateItemType([4450 => 'PluginRacksRack',
+                                    4451 => 'PluginRacksOther'],
+                              ["glpi_savedsearches",
                                     "glpi_savedsearches_users",
                                     "glpi_displaypreferences",
                                     "glpi_documents_items",
                                     "glpi_infocoms",
                                     "glpi_logs",
-                                    "glpi_items_tickets"),
-                              array("glpi_plugin_racks_racks_items",
-                              "glpi_plugin_racks_itemspecifications"));
+                                    "glpi_items_tickets"],
+                              ["glpi_plugin_racks_racks_items",
+                              "glpi_plugin_racks_itemspecifications"]);
    }
 
-   $notepad_tables = array('glpi_plugin_racks_racks');
+   $notepad_tables = ['glpi_plugin_racks_racks'];
 
-      foreach ($notepad_tables as $t) {
-         // Migrate data
-         if ($DB->fieldExists($t, 'notepad')) {
-            $query = "SELECT id, notepad
+   foreach ($notepad_tables as $t) {
+      // Migrate data
+      if ($DB->fieldExists($t, 'notepad')) {
+         $query = "SELECT id, notepad
                       FROM `$t`
                       WHERE notepad IS NOT NULL
                             AND notepad <>'';";
-            foreach ($DB->request($query) as $data) {
-               $iq = "INSERT INTO `glpi_notepads`
+         foreach ($DB->request($query) as $data) {
+            $iq = "INSERT INTO `glpi_notepads`
                              (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
                       VALUES ('".getItemTypeForTable($t)."', '".$data['id']."',
                               '".addslashes($data['notepad'])."', NOW(), NOW())";
-               $DB->queryOrDie($iq, "0.85 migrate notepad data");
-            }
-            $query = "ALTER TABLE `glpi_plugin_racks_racks` DROP COLUMN `notepad`;";
-            $DB->query($query);
+            $DB->queryOrDie($iq, "0.85 migrate notepad data");
          }
+         $query = "ALTER TABLE `glpi_plugin_racks_racks` DROP COLUMN `notepad`;";
+         $DB->query($query);
       }
+   }
 
    $migration->addField('glpi_plugin_racks_rackmodels', 'entities_id', 'integer');
    $migration->addField('glpi_plugin_racks_rackmodels', 'is_recursive', 'bool');
@@ -150,7 +150,7 @@ function plugin_racks_uninstall() {
 
    $migration = new Migration("1.6.1");
 
-   $tables = array ("glpi_plugin_racks_racks",
+   $tables =  ["glpi_plugin_racks_racks",
                     "glpi_plugin_racks_racks_items",
                     "glpi_plugin_racks_itemspecifications",
                     "glpi_plugin_racks_rackmodels",
@@ -160,14 +160,14 @@ function plugin_racks_uninstall() {
                     "glpi_plugin_racks_others",
                     "glpi_plugin_racks_othermodels",
                     "glpi_plugin_racks_racktypes",
-                    "glpi_plugin_racks_rackstates");
+                    "glpi_plugin_racks_rackstates"];
 
    foreach ($tables as $table) {
       $migration->dropTable($table);
    }
 
    //old versions
-   $tables = array("glpi_plugin_rack",
+   $tables = ["glpi_plugin_rack",
                    "glpi_plugin_rack_content",
                    "glpi_plugin_rack_device_spec",
                    "glpi_plugin_rack_profiles",
@@ -176,26 +176,27 @@ function plugin_racks_uninstall() {
                    "glpi_dropdown_plugin_rack_room_locations",
                    "glpi_dropdown_plugin_rack_ways",
                    "glpi_plugin_rack_others",
-                   "glpi_dropdown_plugin_rack_others_type");
+                   "glpi_dropdown_plugin_rack_others_type"];
 
    foreach ($tables as $table) {
       $migration->dropTable($table);
    }
 
-   $tables_glpi = array("glpi_displaypreferences",
+   $tables_glpi = ["glpi_displaypreferences",
                         "glpi_documents_items",
                         "glpi_savedsearches",
                         "glpi_logs",
                         "glpi_items_tickets",
-                        "glpi_dropdowntranslations");
+                        "glpi_dropdowntranslations"];
 
-   foreach($tables_glpi as $table_glpi)
+   foreach ($tables_glpi as $table_glpi) {
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginRacks%';");
+   }
 
    //Delete rights associated with the plugin
    $profileRight = new ProfileRight();
    foreach (PluginRacksProfile::getAllRights() as $right) {
-      $profileRight->deleteByCriteria(array('name' => $right['field']));
+      $profileRight->deleteByCriteria(['name' => $right['field']]);
    }
    PluginRacksProfile::removeRightsFromSession();
    PluginRacksProfile::removeRightsFromDB();
@@ -207,11 +208,11 @@ function plugin_racks_uninstall() {
 function plugin_racks_postinit() {
    global $PLUGIN_HOOKS, $ORDER_TYPES;
 
-   $PLUGIN_HOOKS['item_purge']['racks'] = array();
+   $PLUGIN_HOOKS['item_purge']['racks'] = [];
 
    foreach (PluginRacksRack::getTypes(true) as $type) {
       $PLUGIN_HOOKS['item_purge']['racks'][$type]
-         = array('PluginRacksRack_Item','cleanForItem');
+         = ['PluginRacksRack_Item','cleanForItem'];
       CommonGLPI::registerStandardTab($type, 'PluginRacksRack_Item');
    }
    foreach (PluginRacksItemSpecification::getModelClasses() as $model) {
@@ -236,38 +237,38 @@ function plugin_racks_AssignToTicket($types) {
 function plugin_racks_getDatabaseRelations() {
    $plugin = new Plugin();
    if ($plugin->isActivated("racks")) {
-      return array("glpi_plugin_racks_roomlocations"
-                      => array("glpi_plugin_racks_racks" => "plugin_racks_roomlocations_id"),
+      return ["glpi_plugin_racks_roomlocations"
+                      => ["glpi_plugin_racks_racks" => "plugin_racks_roomlocations_id"],
                    "glpi_plugin_racks_rackmodels"
-                      => array("glpi_plugin_racks_racks" => "plugin_racks_rackmodels_id"),
+                      => ["glpi_plugin_racks_racks" => "plugin_racks_rackmodels_id"],
                    "glpi_locations"
-                      => array("glpi_plugin_racks_racks" => "locations_id"),
+                      => ["glpi_plugin_racks_racks" => "locations_id"],
                    "glpi_users"
-                      => array("glpi_plugin_racks_racks" => "users_id_tech"),
+                      => ["glpi_plugin_racks_racks" => "users_id_tech"],
                    "glpi_groups"
-                      => array("glpi_plugin_racks_racks" => "groups_id_tech"),
+                      => ["glpi_plugin_racks_racks" => "groups_id_tech"],
                    "glpi_manufacturers"
-                      => array("glpi_plugin_racks_racks" => "manufacturers_id"),
+                      => ["glpi_plugin_racks_racks" => "manufacturers_id"],
                    "glpi_plugin_racks_racks"
-                      => array("glpi_plugin_racks_racks_items" => "plugin_racks_racks_id"),
+                      => ["glpi_plugin_racks_racks_items" => "plugin_racks_racks_id"],
                    "glpi_plugin_racks_itemspecifications"
-                      => array("glpi_plugin_racks_racks_items" => "plugin_racks_itemspecifications_id"),
+                      => ["glpi_plugin_racks_racks_items" => "plugin_racks_itemspecifications_id"],
                    "glpi_plugin_racks_connections"
-                     => array("glpi_plugin_racks_racks_items" => "first_powersupply"),
+                     => ["glpi_plugin_racks_racks_items" => "first_powersupply"],
                    "glpi_plugin_racks_connections"
-                     => array("glpi_plugin_racks_racks_items" => "second_powersupply"),
+                     => ["glpi_plugin_racks_racks_items" => "second_powersupply"],
                    "glpi_plugin_racks_othermodels"
-                     => array("glpi_plugin_racks_others" => "plugin_racks_othermodels_id"),
+                     => ["glpi_plugin_racks_others" => "plugin_racks_othermodels_id"],
                    "glpi_plugin_racks_racktypes"
-                     => array("glpi_plugin_racks_racks" => "plugin_racks_racktypes_id"),
+                     => ["glpi_plugin_racks_racks" => "plugin_racks_racktypes_id"],
                    "glpi_plugin_racks_rackstates"
-                     => array("glpi_plugin_racks_racks" => "plugin_racks_rackstates_id"),
+                     => ["glpi_plugin_racks_racks" => "plugin_racks_rackstates_id"],
                    "glpi_entities"
-                     => array("glpi_plugin_racks_racks"         => "entities_id",
+                     => ["glpi_plugin_racks_racks"         => "entities_id",
                               "glpi_plugin_racks_roomlocations" => "entities_id",
-                              "glpi_plugin_racks_others"        => "entities_id"));
+                              "glpi_plugin_racks_others"        => "entities_id"]];
    } else {
-      return array();
+      return [];
    }
 }
 
@@ -275,19 +276,19 @@ function plugin_racks_getDatabaseRelations() {
 function plugin_racks_getDropdown() {
    $plugin = new Plugin();
    if ($plugin->isActivated("racks")) {
-      return array('PluginRacksRoomLocation' => _n('Place', 'Places', 2, 'racks'),
+      return ['PluginRacksRoomLocation' => _n('Place', 'Places', 2, 'racks'),
                    'PluginRacksRackModel'    => __('Model'),
                    'PluginRacksConnection'   => __('Power supply connection', 'racks'),
                    'PluginRacksOtherModel'   => __('Others equipments', 'racks'),
                    'PluginRacksRackType'     => _n('Type', 'Types', 2),
-                   'PluginRacksRackState'    => _n('Status', 'Statuses', 2));
+                   'PluginRacksRackState'    => _n('Status', 'Statuses', 2)];
    } else {
-      return array();
+      return [];
    }
 }
 
 function plugin_racks_getAddSearchOptions($itemtype) {
-   $sopt = array();
+   $sopt = [];
    if (in_array($itemtype, PluginRacksRack::getTypes(true))) {
 
       if (PluginRacksRack::canView()) {
@@ -332,7 +333,7 @@ function plugin_racks_addLeftJoin($type, $ref_table, $new_table,
 function plugin_item_purge_racks($item) {
    $type = get_class($item);
    $temp = new PluginRacksRack_Item();
-   $temp->deleteByCriteria(array('itemtype' => $type."Model",
-                                 'items_id' => $item->getField('id')));
+   $temp->deleteByCriteria(['itemtype' => $type."Model",
+                                 'items_id' => $item->getField('id')]);
    return true;
 }

@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 
 include ('../../../inc/includes.php');
 
-if(!isset($_GET["id"])) {
+if (!isset($_GET["id"])) {
    $_GET["id"] = "";
 }
 
@@ -41,28 +41,28 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 
-} elseif (isset ($_POST["update"])) {
+} else if (isset ($_POST["update"])) {
    if ($PluginRacksItemSpecification->canCreate()) {
       $PluginRacksItemSpecification->UpdateItemSpecification($_POST);
    }
    Html::back();
-   
+
 } else if (isset ($_POST["delete"])) {
    if ($PluginRacksItemSpecification->canCreate()) {
          $PluginRacksItemSpecification->deleteItemSpecification($_POST["id"]);
    }
    Html::redirect(Toolbox::getItemTypeFormURL($_POST["itemtype"])."?id=".$_POST["model_id"]);
 
-} elseif (isset ($_POST["deleteSpec"])) {
+} else if (isset ($_POST["deleteSpec"])) {
    foreach ($_POST["item"] as $key => $val) {
-      $input = array('id' => $key);
+      $input = ['id' => $key];
       if ($val == 1) {
          $PluginRacksItemSpecification->delete($input);
       }
    }
    Html::back();
 } else {
-   Html::header(PluginRacksRack::getTypeName(2), '', "assets","pluginracksmenu", "specifications");
+   Html::header(PluginRacksRack::getTypeName(2), '', "assets", "pluginracksmenu", "specifications");
    $PluginRacksItemSpecification->display($_GET);
    Html::footer();
 }

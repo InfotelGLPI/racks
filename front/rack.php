@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 
 include ('../../../inc/includes.php');
 
-Html::header(PluginRacksRack::getTypeName(2), '', "assets", 
+Html::header(PluginRacksRack::getTypeName(2), '', "assets",
              "pluginracksmenu", "racks");
 
 $PluginRacksRack=new PluginRacksRack();

@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -35,31 +35,31 @@ class PluginRacksProfile extends Profile {
 
    static $rightname = "profile";
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getType()=='Profile' 
+      if ($item->getType()=='Profile'
          && $item->getField('interface')!='helpdesk') {
          return PluginRacksRack::getTypeName(2);
       }
       return '';
    }
 
-   
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       global $CFG_GLPI;
 
       if ($item->getType() == 'Profile') {
          $prof = new self();
-         self::addDefaultProfileInfos($item->getField('id'), 
-                                      array('plugin_racks'                 => 0,
+         self::addDefaultProfileInfos($item->getField('id'),
+                                      ['plugin_racks'                 => 0,
                                              'plugin_racks_model'          => 0,
-                                             'plugin_racks_open_ticket'    => 0));
+                                             'plugin_racks_open_ticket'    => 0]);
          $prof->showForm($item->getField('id'));
       }
       return true;
    }
-   
-   
+
+
    /**
     * Show profile form
     *
@@ -68,10 +68,10 @@ class PluginRacksProfile extends Profile {
     *
     * @return nothing
     **/
-   function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
+   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='".$profile->getFormURL()."'>";
@@ -79,67 +79,67 @@ class PluginRacksProfile extends Profile {
 
       $profile = new Profile();
       $profile->getFromDB($profiles_id);
-      
+
       if ($profile->getField('interface') == 'central') {
          $rights = $this->getAllRights();
-         $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                          'default_class' => 'tab_bg_2',
-                                                         'title'         => __('General')));
+                                                         'title'         => __('General')]);
       }
       echo "<table class='tab_cadre_fixehov'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>".__('Helpdesk')."</th></tr>\n";
 
-      $effective_rights = ProfileRight::getProfileRights($profiles_id, array('plugin_racks_open_ticket'));
+      $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_racks_open_ticket']);
       echo "<tr class='tab_bg_2'>";
       echo "<td width='20%'>".__('Associable items to a ticket')."</td>";
       echo "<td colspan='5'>";
-      Html::showCheckbox(array('name'    => '_plugin_racks_open_ticket',
-                               'checked' => $effective_rights['plugin_racks_open_ticket']));
+      Html::showCheckbox(['name'    => '_plugin_racks_open_ticket',
+                               'checked' => $effective_rights['plugin_racks_open_ticket']]);
       echo "</td></tr>\n";
       echo "</table>";
-      
+
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo Html::hidden('id', array('value' => $profiles_id));
-         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $profiles_id]);
+         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
          echo "</div>\n";
          Html::closeForm();
       }
       echo "</div>";
 
    }
-   
+
    static function getAllRights($all = false) {
-      $rights = array(
-          array('itemtype'  => 'PluginRacksRack',
+      $rights = [
+          ['itemtype'  => 'PluginRacksRack',
                 'label'     => _n('Rack enclosure', 'Rack enclosures', 2, 'racks'),
                 'field'     => 'plugin_racks'
-          ),
-          array('itemtype'  => 'PluginRacksItemSpecification',
+          ],
+          ['itemtype'  => 'PluginRacksItemSpecification',
                 'label'     => __('Equipments models specifications', 'racks'),
                 'field'     => 'plugin_racks_model'
-          ),
-      );
+          ],
+      ];
 
       if ($all) {
-         $rights[] = array('itemtype' => 'PluginRacksRack',
+         $rights[] = ['itemtype' => 'PluginRacksRack',
                            'label'    =>  __('Associable items to a ticket'),
-                           'field'    => 'plugin_racks_open_ticket');
+                           'field'    => 'plugin_racks_open_ticket'];
       }
-      
+
       return $rights;
    }
-   
-   
+
+
    /**
     * Init profiles
     *
     **/
-    
+
    static function translateARight($old_right) {
       switch ($old_right) {
-         case '': 
+         case '':
             return 0;
          case 'r' :
             return READ;
@@ -148,12 +148,12 @@ class PluginRacksProfile extends Profile {
          case '0':
          case '1':
             return $old_right;
-            
+
          default :
             return 0;
       }
    }
-   
+
    /**
    * @since 0.85
    * Migration rights from old system to the new one for one profile
@@ -163,15 +163,15 @@ class PluginRacksProfile extends Profile {
       global $DB;
       //Cannot launch migration if there's nothing to migrate...
       if (!$DB->tableExists('glpi_plugin_racks_profiles')) {
-      return true;
+         return true;
       }
-      
-      foreach ($DB->request('glpi_plugin_racks_profiles', 
+
+      foreach ($DB->request('glpi_plugin_racks_profiles',
                             "`profiles_id`='$profiles_id'") as $profile_data) {
 
-         $matching = array('racks'    => 'plugin_racks', 
+         $matching = ['racks'    => 'plugin_racks',
                            'model'   => 'plugin_racks_model',
-                           'open_ticket' => 'plugin_racks_open_ticket');
+                           'open_ticket' => 'plugin_racks_open_ticket'];
          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
          foreach ($matching as $old => $new) {
             if (!isset($current_rights[$old])) {
@@ -184,7 +184,7 @@ class PluginRacksProfile extends Profile {
       }
    }
 
-   
+
    /**
    * Initialize profiles, and migrate it necessary
    */
@@ -196,10 +196,10 @@ class PluginRacksProfile extends Profile {
       foreach ($profile->getAllRights(true) as $data) {
          if ($dbu->countElementsInTable("glpi_profilerights",
                                   "`name` = '".$data['field']."'") == 0) {
-            ProfileRight::addProfileRights(array($data['field']));
+            ProfileRight::addProfileRights([$data['field']]);
          }
       }
-      
+
       //Migration old rights in new ones
       foreach ($DB->request("SELECT `id` FROM `glpi_profiles`") as $prof) {
          self::migrateOneProfile($prof['id']);
@@ -208,15 +208,15 @@ class PluginRacksProfile extends Profile {
                            FROM `glpi_profilerights` 
                            WHERE `profiles_id`='".$_SESSION['glpiactiveprofile']['id']."' 
                               AND `name` LIKE '%plugin_racks%'") as $prof) {
-         $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights']; 
+         $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
       }
    }
-   
+
    static function createFirstAccess($profiles_id) {
-      self::addDefaultProfileInfos($profiles_id, 
-                                   array('plugin_racks'             => ALLSTANDARDRIGHT,
+      self::addDefaultProfileInfos($profiles_id,
+                                   ['plugin_racks'             => ALLSTANDARDRIGHT,
                                          'plugin_racks_model'       => ALLSTANDARDRIGHT,
-                                         'plugin_racks_open_ticket' => 1), true);
+                                         'plugin_racks_open_ticket' => 1], true);
 
    }
 
@@ -228,14 +228,14 @@ class PluginRacksProfile extends Profile {
          }
       }
    }
-   
+
    static function removeRightsFromDB() {
       $plugprof = new ProfileRight();
       foreach (self::getAllRights(true) as $right) {
-         $plugprof->deleteByCriteria(array('name' => $right['field']));
+         $plugprof->deleteByCriteria(['name' => $right['field']]);
       }
    }
-   
+
    /**
     * @param $profile
    **/
@@ -245,7 +245,7 @@ class PluginRacksProfile extends Profile {
       foreach ($rights as $right => $value) {
          if ($dbu->countElementsInTable('glpi_profilerights',
                                    "`profiles_id`='$profiles_id' AND `name`='$right'") && $drop_existing) {
-            $profileRight->deleteByCriteria(array('profiles_id' => $profiles_id, 'name' => $right));
+            $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
          }
          if (!$dbu->countElementsInTable('glpi_profilerights',
                                    "`profiles_id`='$profiles_id' AND `name`='$right'")) {

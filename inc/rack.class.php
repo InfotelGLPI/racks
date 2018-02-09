@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -34,29 +34,29 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksRack extends CommonDBTM {
 
    static $rightname = "plugin_racks";
-   
-   static $types     = array('Computer', 
+
+   static $types     = ['Computer',
                              'NetworkEquipment',
-                             'Peripheral');
+                             'Peripheral'];
    public $dohistory = true;
    protected $usenotepad         = true;
 
    const FRONT_FACE = 1;
    const BACK_FACE  = 2;
 
-   static function getTypeName($nb=0) {
-      return _n('Rack enclosure', 
-                'Rack enclosures', 
+   static function getTypeName($nb = 0) {
+      return _n('Rack enclosure',
+                'Rack enclosures',
                 $nb, 'racks');
    }
 
    function cleanDBonPurge() {
       $temp = new PluginRacksRack_Item();
-      $temp->deleteByCriteria(array('plugin_racks_racks_id' => $this->fields['id']));
+      $temp->deleteByCriteria(['plugin_racks_racks_id' => $this->fields['id']]);
    }
 
    function getSearchOptions() {
-      $tab                       = array();
+      $tab                       = [];
       $tab['common']             = self::getTypeName(2);
 
       $tab[1]['table']           = $this->getTable();
@@ -74,7 +74,7 @@ class PluginRacksRack extends CommonDBTM {
       $tab[2]['field']           = 'completename';
       $tab[2]['name']            = __('Place', 'racks');
       $tab[2]['datatype']        = 'dropdown';
-      
+
       $tab[4]['table']           = $this->getTable();
       $tab[4]['field']           = 'rack_size';
       $tab[4]['name']            = __('Size');
@@ -137,12 +137,12 @@ class PluginRacksRack extends CommonDBTM {
       $tab[15]['field']          = 'name';
       $tab[15]['name']           = __('Status');
       $tab[15]['datatype']       = 'dropdown';
-      
+
       $tab[16]['table']           = $this->getTable();
       $tab[16]['field']           = 'weight';
       $tab[16]['name']            = __('Weight', 'racks');
       $tab[16]['datatype']        = 'decimal';
-      
+
       $tab[17]['table']          = 'glpi_plugin_racks_rackmodels';
       $tab[17]['field']          = 'name';
       $tab[17]['name']           = __('Model');
@@ -160,7 +160,7 @@ class PluginRacksRack extends CommonDBTM {
 
       return $tab;
    }
-/*
+   /*
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if (!$withtemplate) {
          if ($item->getType() == 'PluginRacksRack') {
@@ -179,22 +179,22 @@ class PluginRacksRack extends CommonDBTM {
       return true;
    } */
 
-   function defineTabs($options=array()) {
-      $ong = array();
+   function defineTabs($options = []) {
+      $ong = [];
       $this->addDefaultFormTab($ong);
       $this->addStandardTab(__CLASS__, $ong, $options);
       $this->addStandardTab('PluginRacksRack_Item', $ong, $options);
       $this->addStandardTab('Infocom', $ong, $options);
-      $this->addStandardTab('Document_Item',$ong, $options);
+      $this->addStandardTab('Document_Item', $ong, $options);
       $this->addStandardTab('Ticket', $ong, $options);
-      $this->addStandardTab('Notepad',$ong, $options);
-      $this->addStandardTab('Log',$ong, $options);
+      $this->addStandardTab('Notepad', $ong, $options);
+      $this->addStandardTab('Log', $ong, $options);
 
       return $ong;
    }
 
    function prepareInputForAdd($input) {
-      if (isset($input["id"]) 
+      if (isset($input["id"])
          && $input["id"] > 0) {
          $input["_oldID"] = $input["id"];
       }
@@ -216,8 +216,8 @@ class PluginRacksRack extends CommonDBTM {
 
    function post_updateItem($history = 1) {
       $config = PluginRacksConfig::getConfig();
-      if ($config->canForwardLocation() 
-         && isset($this->updates) 
+      if ($config->canForwardLocation()
+         && isset($this->updates)
             && in_array('locations_id', $this->updates)) {
          $locations_id = $this->fields['locations_id'];
          $dbu = new DbUtils();
@@ -227,15 +227,15 @@ class PluginRacksRack extends CommonDBTM {
             if (preg_match("/(.*)Model/", $item['itemtype'], $results)) {
                if (class_exists($results[1])) {
                   $myitem = new $results[1];
-                  $myitem->update(array('id' => $item['items_id'], 
-                                        'locations_id' => $locations_id));                  
+                  $myitem->update(['id' => $item['items_id'],
+                                        'locations_id' => $locations_id]);
                }
             }
          }
       }
    }
 
-   function showForm($ID, $options = array()) {
+   function showForm($ID, $options = []) {
       $PluginRacksConfig = new PluginRacksConfig();
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -244,11 +244,11 @@ class PluginRacksRack extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __('Name') . "</td><td>";
       $objectName = autoName($this->fields["name"], "name",
-                             (isset($options['withtemplate']) 
+                             (isset($options['withtemplate'])
                                 && ( $options['withtemplate']== 2)),
-                              $this->getType(), 
+                              $this->getType(),
                               $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', array('value' => $objectName));
+      Html::autocompletionTextField($this, 'name', ['value' => $objectName]);
       echo "</td>";
 
       echo "<td>" . __('Size') . "</td><td>";
@@ -263,23 +263,23 @@ class PluginRacksRack extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<td>" . __('Manufacturer') . "</td><td>";
-      Manufacturer::dropdown(array('value' => $this->fields["manufacturers_id"]));
+      Manufacturer::dropdown(['value' => $this->fields["manufacturers_id"]]);
       echo "</td>";
 
       echo "<td >" . __('Location') . "</td>";
       echo "<td>";
-      Location::dropdown(array('value'  => $this->fields["locations_id"],
-                               'entity' => $this->fields["entities_id"]));
+      Location::dropdown(['value'  => $this->fields["locations_id"],
+                               'entity' => $this->fields["entities_id"]]);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td >".__('Technician in charge of the hardware')."</td>";
       echo "<td >";
-      User::dropdown(array('name'   => 'users_id_tech',
+      User::dropdown(['name'   => 'users_id_tech',
                            'value'  => $this->fields["users_id_tech"],
                            'right'  => 'interface',
-                           'entity' => $this->fields["entities_id"]));
+                           'entity' => $this->fields["entities_id"]]);
       echo "</td>";
 
       echo "<td>" . __('Place', 'racks');
@@ -295,15 +295,15 @@ class PluginRacksRack extends CommonDBTM {
       //ligne 4
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Group in charge of the hardware')."</td><td>";
-      Group::dropdown(array('name'      => 'groups_id_tech',
+      Group::dropdown(['name'      => 'groups_id_tech',
                             'value'     => $this->fields['groups_id_tech'],
                             'entity'    => $this->fields['entities_id'],
-                            'condition' => '`is_assign`'));
+                            'condition' => '`is_assign`']);
       echo "</td>";
 
       echo "<td>" . __('Width', 'racks') . "</td><td>";
       echo "<input type='text' name='width' 
-                              value=\"".Html::formatNumber($this->fields["width"],true)."\" size='10'> ";
+                              value=\"".Html::formatNumber($this->fields["width"], true)."\" size='10'> ";
       $PluginRacksConfig->getUnit("size");
       echo "</td>";
 
@@ -315,12 +315,12 @@ class PluginRacksRack extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Serial number')."</td>";
       echo "<td >";
-      Html::autocompletionTextField($this,'serial');
+      Html::autocompletionTextField($this, 'serial');
       echo "</td>";
 
       echo "<td>" . __('Height', 'racks') . "</td><td>";
       echo "<input type='text' name='height' 
-                              value=\"".Html::formatNumber($this->fields["height"],true)."\" size='10'> ";
+                              value=\"".Html::formatNumber($this->fields["height"], true)."\" size='10'> ";
       $PluginRacksConfig->getUnit("size");
       echo "</td>";
 
@@ -331,12 +331,12 @@ class PluginRacksRack extends CommonDBTM {
 
       echo "<td>".__('Inventory number')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this,'otherserial');
+      Html::autocompletionTextField($this, 'otherserial');
       echo "</td>";
 
       echo "<td>" . __('Weight', 'racks') . "</td><td>";
       echo "<input type='text' name='weight' 
-                              value=\"".Html::formatNumber($this->fields["weight"],true)."\" size='10'> ";
+                              value=\"".Html::formatNumber($this->fields["weight"], true)."\" size='10'> ";
       $PluginRacksConfig->getUnit("weight");
       echo "</td>";
 
@@ -347,14 +347,14 @@ class PluginRacksRack extends CommonDBTM {
 
       echo "<td>".__('Model')."</td>";
       echo "<td>";
-      Dropdown::show('PluginRacksRackModel', 
-                     array('name'  => "plugin_racks_rackmodels_id",
-                           'value' => $this->fields["plugin_racks_rackmodels_id"]));
+      Dropdown::show('PluginRacksRackModel',
+                     ['name'  => "plugin_racks_rackmodels_id",
+                           'value' => $this->fields["plugin_racks_rackmodels_id"]]);
       echo "</td>";
 
       echo "<td>" . __('Depth', 'racks') . "</td><td>";
       echo "<input type='text' name='depth' 
-                              value=\"".Html::formatNumber($this->fields["depth"],true)."\" size='10'> ";
+                              value=\"".Html::formatNumber($this->fields["depth"], true)."\" size='10'> ";
       $PluginRacksConfig->getUnit("size");
       echo "</td>";
 
@@ -365,12 +365,12 @@ class PluginRacksRack extends CommonDBTM {
 
       echo "<td >" . __('Type') . "</td><td>";
       Dropdown::show('PluginRacksRackType',
-                     array('value'  => $this->fields["plugin_racks_racktypes_id"]));
+                     ['value'  => $this->fields["plugin_racks_racktypes_id"]]);
       echo "</td>";
 
       echo "<td >" . __('Status') . "</td><td>";
       Dropdown::show('PluginRacksRackState',
-                     array('value'  => $this->fields["plugin_racks_rackstates_id"]));
+                     ['value'  => $this->fields["plugin_racks_rackstates_id"]]);
       echo "</td>";
 
       echo "</tr>";
@@ -378,7 +378,7 @@ class PluginRacksRack extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'>";
-      if ((!isset($options['withtemplate']) 
+      if ((!isset($options['withtemplate'])
          || ($options['withtemplate'] == 0))
             && !empty($this->fields['template_name'])) {
          echo "<span class='small_space'>";
@@ -415,7 +415,7 @@ class PluginRacksRack extends CommonDBTM {
                      COUNT(`first_powersupply`) AS total_alim1,
                      COUNT(`second_powersupply`) AS total_alim2
                FROM `glpi_plugin_racks_racks_items`
-               WHERE `plugin_racks_racks_id` = '$ID' " ;
+               WHERE `plugin_racks_racks_id` = '$ID' ";
 
       $query_alim1 = "SELECT COUNT(`first_powersupply`) AS total_alim1
                       FROM `glpi_plugin_racks_racks_items`
@@ -441,7 +441,7 @@ class PluginRacksRack extends CommonDBTM {
 
       $total_cordons = 0;
       foreach ($DB->request($query_alim1) as $data_alim1) {
-         $total_cordons+=$data_alim1["total_alim1"];      
+         $total_cordons+=$data_alim1["total_alim1"];
       }
       foreach ($DB->request($query_alim2) as $data_alim2) {
          $total_cordons+=$data_alim2["total_alim2"];
@@ -451,20 +451,20 @@ class PluginRacksRack extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
 
          echo "<td class='center'>".$total_cordons."</td>";
-         echo "<td class='center'><b>"; 
-         echo Html::formatNumber($data["total_amps"], true); 
+         echo "<td class='center'><b>";
+         echo Html::formatNumber($data["total_amps"], true);
          echo " ".__('amps', 'racks')."</b></td>";
-         echo "<td class='center'><b>"; 
+         echo "<td class='center'><b>";
          echo Html::formatNumber($data["total_dissipation"], true)."&nbsp;";
          $PluginRacksConfig->getUnit("dissipation");
          echo "</b></td>";
-         echo "<td class='center'><b>"; 
+         echo "<td class='center'><b>";
          echo Html::formatNumber($data["total_flow_rate"], true)."&nbsp;";
          $PluginRacksConfig->getUnit("rate");
          echo "</b></td>";
 
          $total_weight=$data["total_weight"]+$this->fields['weight'];
-         echo "<td class='center'><b>"; 
+         echo "<td class='center'><b>";
          echo Html::formatNumber($total_weight, true)."&nbsp";
          $PluginRacksConfig->getUnit("weight");
          echo "</b></td>";
@@ -496,7 +496,7 @@ class PluginRacksRack extends CommonDBTM {
     *
     * @return array of types
    **/
-   static function getTypes($all=false) {
+   static function getTypes($all = false) {
 
       if ($all) {
          return self::$types;
@@ -517,20 +517,20 @@ class PluginRacksRack extends CommonDBTM {
       }
       return $types;
    }
-   
-   
+
+
    //Massive Action
-   function getSpecificMassiveActions($checkitem=NULL) {
+   function getSpecificMassiveActions($checkitem = null) {
       $isadmin = static::canUpdate();
       $actions = parent::getSpecificMassiveActions($checkitem);
-      
+
       if (Session::haveRight('transfer', READ)
             && Session::isMultiEntitiesMode()
             && $isadmin) {
          $actions['PluginRacksRack'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfer'] = __('Transfer');
       }
       return $actions;
-   }  
+   }
 
 
    static function showMassiveActionsSubForm(MassiveAction $ma) {
@@ -538,7 +538,7 @@ class PluginRacksRack extends CommonDBTM {
       switch ($ma->getAction()) {
          case "transfer" :
             Dropdown::show('Entity');
-            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
             break;
       }
@@ -560,11 +560,11 @@ class PluginRacksRack extends CommonDBTM {
                                                        array $ids) {
 
       switch ($ma->getAction()) {
-          case "transfer" :
+         case "transfer" :
             $input = $ma->getInput();
 
             if ($item->getType() == 'PluginRacksRack') {
-            foreach ($ids as $key) {
+               foreach ($ids as $key) {
 
                   $values["id"] = $key;
                   $values["entities_id"] = $input['entities_id'];
@@ -572,7 +572,7 @@ class PluginRacksRack extends CommonDBTM {
                   if ($item->update($values)) {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
-                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                   }
                }
             }

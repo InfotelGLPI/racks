@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -34,18 +34,18 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksItemSpecification extends CommonDBTM {
 
    static $rightname = "plugin_racks_model";
-   
-   static function getTypeName($nb=0) {
+
+   static function getTypeName($nb = 0) {
       return __('Equipments models specifications', 'racks');
    }
 
-   function defineTabs($options=array()) {
-      $tabs = array();
+   function defineTabs($options = []) {
+      $tabs = [];
       $this->addStandardTab(__CLASS__, $tabs, $options);
       return $tabs;
    }
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if (!$withtemplate) {
          if (in_array($item->getType(), self::getModelClasses(true))
                     && $this->canView()) {
@@ -55,11 +55,11 @@ class PluginRacksItemSpecification extends CommonDBTM {
       return '';
    }
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $self = new self();
       if (in_array($item->getType(), self::getModelClasses(true))) {
-         $self->showForm("", array('items_id' => $item->getID(),
-                                   'itemtype' => get_class($item)));
+         $self->showForm("", ['items_id' => $item->getID(),
+                                   'itemtype' => get_class($item)]);
       }
       return true;
    }
@@ -67,14 +67,14 @@ class PluginRacksItemSpecification extends CommonDBTM {
    function checkAlimNumber($id) {
       global $DB;
 
-      foreach ($DB->request('glpi_plugin_racks_racks_items', array('id' => $id)) as $model) { 
+      foreach ($DB->request('glpi_plugin_racks_racks_items', ['id' => $id]) as $model) {
          $result = $DB->query("SELECT nb_alim 
                                FROM `".$this->getTable()."`
                                WHERE `id` = '" . $model['plugin_racks_itemspecifications_id'] . "' ");
          if ($DB->numrows($result) > 0) {
-           return $DB->result($result, 0, "nb_alim");
+            return $DB->result($result, 0, "nb_alim");
          } else {
-           return 0;
+            return 0;
          }
       }
    }
@@ -86,10 +86,10 @@ class PluginRacksItemSpecification extends CommonDBTM {
    }
 
    static function getModelClasses () {
-      static $types = array('ComputerModel', 
-                            'NetworkEquipmentModel', 
-                            'PeripheralModel', 
-                            'PluginRacksOtherModel');
+      static $types = ['ComputerModel',
+                            'NetworkEquipmentModel',
+                            'PeripheralModel',
+                            'PluginRacksOtherModel'];
       foreach ($types as $key => $type) {
          if (!class_exists($type)) {
             continue;
@@ -109,7 +109,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
       $table      = getTableForItemType($itemtype);
 
       //selection de tous les materiels lies au modele
-      foreach ($DB->request($this->getTable(), array ('id' => $input['id'])) as $device) {
+      foreach ($DB->request($this->getTable(), ['id' => $input['id']]) as $device) {
          $query_device = "SELECT `" . $table . "`.`id` 
                           FROM `" . $table . "`, `".$this->getTable()."` 
                           WHERE `".$this->getTable()."`.`model_id` = `" . $table . "`.`".$modelfield."`
@@ -152,7 +152,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
             WHERE `id` = '" . $ID . "' ";
       $result_spec = $DB->query($query_spec);
 
-      while($device=$DB->fetch_array($result_spec)) {
+      while ($device=$DB->fetch_array($result_spec)) {
          $itemtype=$device['itemtype'];
 
          $modelfield = getForeignKeyFieldForTable(getTableForItemType($itemtype));
@@ -163,7 +163,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
                 "WHERE `".$this->getTable()."`.`model_id` = `" . $table . "`.`".$modelfield."`
                 AND `".$this->getTable()."`.`id` = '" . $ID . "'";
          $result_device = $DB->query($query_device);
-         while($model=$DB->fetch_array($result_device)) {
+         while ($model=$DB->fetch_array($result_device)) {
             $query = "DELETE
                 FROM `glpi_plugin_racks_racks_items`
                 WHERE `itemtype` = '" . $itemtype . "'
@@ -171,31 +171,31 @@ class PluginRacksItemSpecification extends CommonDBTM {
             $DB->query($query);
          }
       }
-      $this->delete(array("id"=>$ID));
+      $this->delete(["id"=>$ID]);
    }
 
-   function getFromDBByModel($itemtype,$id) {
+   function getFromDBByModel($itemtype, $id) {
                 global $DB;
 
                 $query = "SELECT * FROM `".$this->getTable()."`
                                         WHERE `itemtype` = '$itemtype'
                                         AND `model_id` = '$id' ";
-                if ($result = $DB->query($query)) {
-                        if ($DB->numrows($result) != 1) {
-                                return false;
-                        }
-                        $this->fields = $DB->fetch_assoc($result);
-                        if (is_array($this->fields) && count($this->fields)) {
-                                return true;
-                        } else {
-                                return false;
-                        }
-                }
+      if ($result = $DB->query($query)) {
+         if ($DB->numrows($result) != 1) {
+                 return false;
+         }
+              $this->fields = $DB->fetch_assoc($result);
+         if (is_array($this->fields) && count($this->fields)) {
+                 return true;
+         } else {
+                 return false;
+         }
+      }
                 return false;
-        }
+   }
 
 
-   function showForm ($ID, $options=array()) {
+   function showForm ($ID, $options = []) {
 
       if (!$this->canView()) {
          return false;
@@ -211,14 +211,15 @@ class PluginRacksItemSpecification extends CommonDBTM {
          $items_id = $options['items_id'];
       }
 
-      if($this->getFromDBByModel($itemtype,$items_id))
+      if ($this->getFromDBByModel($itemtype, $items_id)) {
          $ID = $this->fields["id"];
+      }
 
-                if ($ID > 0) {
+      if ($ID > 0) {
          $this->check($ID, READ);
       } else {
          // Create item
-         $this->check(-1, UPDATE ,$input);
+         $this->check(-1, UPDATE, $input);
       }
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -236,18 +237,19 @@ class PluginRacksItemSpecification extends CommonDBTM {
 
       echo "<td>" . __('Size') . "</td>";
       echo "<td>";
-      if ($this->checkIfSpecUsedByRacks($ID))
+      if ($this->checkIfSpecUsedByRacks($ID)) {
          echo $this->fields["size"];
-      else
+      } else {
          Dropdown::showNumber("size", ['value' => $this->fields["size"],
                                        'min'   => 1,
                                        'max'   => 100,
                                        'step'  => 1]);
+      }
       echo " U</td>";
 
       echo "<td>" . __('Full-depth item', 'racks') . "</td>";
       echo "<td>";
-      Dropdown::showYesNo("length",$this->fields["length"]);
+      Dropdown::showYesNo("length", $this->fields["length"]);
       echo "</td>";
 
       echo "</tr>";
@@ -264,7 +266,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
 
       echo "<td>" . __('Total Current', 'racks') . "</td>";
       echo "<td>";
-      echo "<input type='text' name='amps' value=\"".Html::formatNumber($this->fields["amps"],true)."\" size='10'>  (".__('amps');
+      echo "<input type='text' name='amps' value=\"".Html::formatNumber($this->fields["amps"], true)."\" size='10'>  (".__('amps');
       echo ")</td>";
 
       echo "</tr>";
@@ -273,14 +275,14 @@ class PluginRacksItemSpecification extends CommonDBTM {
       echo "<td>".__('Calorific waste', 'racks'); // Dissipation calorifique
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='dissipation' value=\"".Html::formatNumber($this->fields["dissipation"],true)."\" size='10'> (";
+      echo "<input type='text' name='dissipation' value=\"".Html::formatNumber($this->fields["dissipation"], true)."\" size='10'> (";
       $PluginRacksConfig->getUnit("dissipation");
       echo ")</td>";
 
       echo "<td>".__('Flow Rate', 'racks'); // Débit d'air frais
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='flow_rate' value=\"".Html::formatNumber($this->fields["flow_rate"],true)."\" size='10'> (";
+      echo "<input type='text' name='flow_rate' value=\"".Html::formatNumber($this->fields["flow_rate"], true)."\" size='10'> (";
       $PluginRacksConfig->getUnit("rate");
       echo ")</td>";
 
@@ -290,7 +292,7 @@ class PluginRacksItemSpecification extends CommonDBTM {
       echo "<td>".__('Weight', 'racks'); // poids
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='weight' value=\"".Html::formatNumber($this->fields["weight"],true)."\" size='10'> (";
+      echo "<input type='text' name='weight' value=\"".Html::formatNumber($this->fields["weight"], true)."\" size='10'> (";
       $PluginRacksConfig->getUnit("weight");
       echo ")</td>";
 
@@ -302,17 +304,17 @@ class PluginRacksItemSpecification extends CommonDBTM {
       $this->showFormButtons($options);
    }
 
-   function showList($itemtype,$withtemplate='') {
+   function showList($itemtype, $withtemplate = '') {
       $rand = mt_rand();
       echo "<div align='center'>";
-      
+
       $target = Toolbox::getItemTypeFormURL('PluginRacksItemSpecification');
       echo "<form method='post' 
                   name='massiveaction_form$rand' 
                   id='massiveaction_form$rand'  
                   action=\"$target\">";
-      
-      $this->showModels($itemtype,$rand);
+
+      $this->showModels($itemtype, $rand);
    }
 
    function showModels($itemtype, $rand) {
@@ -381,8 +383,8 @@ class PluginRacksItemSpecification extends CommonDBTM {
       Html::closeForm();
       echo "</div>";
    }
-   
-   function getRights($interface='central') {
+
+   function getRights($interface = 'central') {
 
       $values = parent::getRights();
 

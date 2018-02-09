@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -36,9 +36,9 @@ class PluginRacksRackType extends CommonDropdown {
 
    static $rightname = "plugin_racks";
    var $can_be_translated  = true;
-   
-   static function getTypeName($nb=0) {
-      return _n('Type','Types', $nb);
+
+   static function getTypeName($nb = 0) {
+      return _n('Type', 'Types', $nb);
    }
 
    static function transfer($ID, $entity) {
@@ -47,8 +47,8 @@ class PluginRacksRackType extends CommonDropdown {
       if ($ID > 0) {
          // Not already transfer
          // Search init item
-         foreach ($DB->request('glpi_plugin_racks_racktypes', 
-                               array('id' => $ID)) as $data) {
+         foreach ($DB->request('glpi_plugin_racks_racktypes',
+                               ['id' => $ID]) as $data) {
             $data                  = Toolbox::addslashes_deep($data);
             $input['name']         = $data['name'];
             $input['entities_id']  = $entity;
@@ -57,7 +57,7 @@ class PluginRacksRackType extends CommonDropdown {
             if ($newID < 0) {
                $newID = $temp->import($input);
             }
-           return $newID;
+            return $newID;
          }
       }
       return 0;

@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -29,11 +29,11 @@
 
 include ('../../../inc/includes.php');
 
-Html::header(PluginRacksRack::getTypeName(2), '', 
+Html::header(PluginRacksRack::getTypeName(2), '',
              "assets", "pluginracksmenu", "racks");
 
 if (PluginRacksRack::canView() || Config::canCreate()) {
-   PluginRacksRack::listTemplates('PluginRacksRack', 
+   PluginRacksRack::listTemplates('PluginRacksRack',
                                   PluginRacksRack::getFormURL(true),
                                   $_GET["add"]);
 }

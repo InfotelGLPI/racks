@@ -8,7 +8,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-		
+
  This file is part of Racks.
 
  Racks is free software; you can redistribute it and/or modify
@@ -28,23 +28,23 @@
 
 /* ########################    Fichier CSS   ############################# */
 /* #######################     general       ############################# */
-/* ####################################################################### */ 
+/* ####################################################################### */
 
 
 /* Feuille de style Header GLPI Project - Version 1 nov. 2006 */
 
 .plugin_racks_device_computers_color {
-	background-color: #c5e693;
+    background-color: #c5e693;
 }
 
 .plugin_racks_device_peripherals_color {
-	background-color: #e6ffab;
+    background-color: #e6ffab;
 }
 
 .plugin_racks_device_networking_color {
-	background-color: #cede99;
+    background-color: #cede99;
 }
 
 .plugin_racks_device_others_color {
-	background-color: #e4e4e2;
+    background-color: #e4e4e2;
 }

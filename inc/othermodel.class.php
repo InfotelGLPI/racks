@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -35,8 +35,8 @@ class PluginRacksOtherModel extends CommonDropdown {
 
    static $rightname = "plugin_racks";
    var $can_be_translated  = true;
-   
-   static function getTypeName($nb=0) {
+
+   static function getTypeName($nb = 0) {
       return __('Others equipments', 'racks');
    }
 }

@@ -32,8 +32,8 @@ function plugin_init_racks() {
 
    $PLUGIN_HOOKS['csrf_compliant']['racks']   = true;
    //load changeprofile function
-   $PLUGIN_HOOKS['change_profile']['racks']   = array('PluginRacksProfile',
-                                                                'initProfile');
+   $PLUGIN_HOOKS['change_profile']['racks']   = ['PluginRacksProfile',
+                                                                'initProfile'];
    $PLUGIN_HOOKS['javascript']['racks'][]   = '/plugins/racks/racks.js';
 
    $plugin = new Plugin();
@@ -44,20 +44,20 @@ function plugin_init_racks() {
 
       $PLUGIN_HOOKS['assign_to_ticket']['racks'] = true;
       Plugin::registerClass('PluginRacksRack',
-                            array('document_types'       => true,
+                            ['document_types'       => true,
                                   'location_types'       => true,
                                   'unicity_types'        => true,
                                   'linkgroup_tech_types' => true,
                                   'linkuser_tech_types'  => true,
                                   'infocom_types'        => true,
-                                  'ticket_types'         => true));
+                                  'ticket_types'         => true]);
       Plugin::registerClass('PluginRacksProfile',
-                            array('addtabon' => 'Profile'));
+                            ['addtabon' => 'Profile']);
 
-      $types = array('PluginAppliancesAppliance',
+      $types = ['PluginAppliancesAppliance',
                      'PluginManufacturersimportsConfig',
                      'PluginTreeviewConfig',
-                     'PluginPositionsPosition');
+                     'PluginPositionsPosition'];
       foreach ($types as $itemtype) {
          if (class_exists($itemtype)) {
             $itemtype::registerType('PluginRacksRack');
@@ -76,7 +76,7 @@ function plugin_init_racks() {
 
          if (PluginRacksRack::canView()) {
             //Display menu entry only if user has right to see it !
-            $PLUGIN_HOOKS["menu_toadd"]['racks'] = array('assets'  => 'PluginRacksMenu');
+            $PLUGIN_HOOKS["menu_toadd"]['racks'] = ['assets'  => 'PluginRacksMenu'];
             $PLUGIN_HOOKS['use_massive_action']['racks'] = 1;
          }
 
@@ -89,13 +89,13 @@ function plugin_init_racks() {
          $PLUGIN_HOOKS['post_init']['racks'] = 'plugin_racks_postinit';
 
          $PLUGIN_HOOKS['reports']['racks']   =
-            array('front/report.php' => __("Report - Bays management","racks"));
+            ['front/report.php' => __("Report - Bays management", "racks")];
       }
    }
 }
 
 function plugin_version_racks() {
-   return array ('name'           => _n('Rack enclosure management',
+   return  ['name'           => _n('Rack enclosure management',
                                         'Rack enclosures management',
                                         2, 'racks'),
                   'version'        => '1.8.0',
@@ -103,7 +103,7 @@ function plugin_version_racks() {
                   'license'        => 'GPLv2+',
                   'author'         => 'Philippe Béchu, Walid Nouh, Xavier Caillaud',
                   'homepage'       => 'https://github.com/InfotelGLPI/racks',
-                  'minGlpiVersion' => '9.2');
+                  'minGlpiVersion' => '9.2'];
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect

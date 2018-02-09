@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -48,10 +48,10 @@ class PluginRacksReport extends CommonDBTM {
               FROM `" . $pRack->getTable() . "`
               ORDER BY `" . $pRack->getTable() . "`.`name` ASC";
 
-      $ret = array(
+      $ret = [
          "query"        => $query,
          "query_result" => $DB->query($query)
-      );
+      ];
       return $ret;
    }
 
@@ -76,7 +76,6 @@ class PluginRacksReport extends CommonDBTM {
 
          $restrictRackId = "AND `glpi_plugin_racks_racks_items`.`plugin_racks_racks_id` = `glpi_plugin_racks_racks`.`id`";
       }
-
 
       switch ($face) {
          case PluginRacksRack::FRONT_FACE:
@@ -104,14 +103,14 @@ class PluginRacksReport extends CommonDBTM {
             break;
       }
 
-      $ret = array(
+      $ret = [
          "query"        => $query,
          "query_result" => $DB->query($query)
-      );
+      ];
       return $ret;
    }
 
-   public function showResult($output_type, $limit = 0, $params = array()) {
+   public function showResult($output_type, $limit = 0, $params = []) {
       global $DB;
 
       $arrayRet = $this->execQuery($_REQUEST);
@@ -157,12 +156,13 @@ class PluginRacksReport extends CommonDBTM {
       }
 
       if ($nbtot > 0) {
-         if ($output_type == Search::HTML_OUTPUT)
+         if ($output_type == Search::HTML_OUTPUT) {
             echo "<form method='POST' action='" . $_SERVER["PHP_SELF"] . "?start=$start'>\n";
+         }
 
          echo Search::showHeader($output_type, $nbrows, $nbCols, true);
          echo Search::showNewLine($output_type);
-         $listFields = array();
+         $listFields = [];
          $cptField   = 0;
 
          $showAllFieds = (!isset($_REQUEST['cb_object_name']) || $_REQUEST['cb_object_name'] != "on")
@@ -459,9 +459,9 @@ class PluginRacksReport extends CommonDBTM {
       echo "<td>" . __("Bay name", "racks") . " :</td>";
       echo "<td>";
 
-      $arrayValue = array();
+      $arrayValue = [];
       if (isset($post['plugin_racks_racks_id'])) {
-         $arrayValue = array("value" => $post['plugin_racks_racks_id']);
+         $arrayValue = ["value" => $post['plugin_racks_racks_id']];
       }
       $idSelectRankName = Dropdown::show('PluginRacksRack', $arrayValue);
       echo "<input type='hidden' name='id_select_rank_name' id='id_select_rank_name' val  ue='" . $idSelectRankName . "' />";
@@ -472,11 +472,11 @@ class PluginRacksReport extends CommonDBTM {
 
       echo "<td>";
 
-      $arrayValue = array();
+      $arrayValue = [];
       if (isset($post['select_front_rear'])) {
-         $arrayValue = array("value" => $post['select_front_rear']);
+         $arrayValue = ["value" => $post['select_front_rear']];
       }
-      Dropdown::showFromArray("select_front_rear", array("0" => Dropdown::EMPTY_VALUE, "1" => __("Front", "racks"), "2" => _x('Rack enclosure', 'Back', 'racks')), $arrayValue);
+      Dropdown::showFromArray("select_front_rear", ["0" => Dropdown::EMPTY_VALUE, "1" => __("Front", "racks"), "2" => _x('Rack enclosure', 'Back', 'racks')], $arrayValue);
       echo "</td>";
       echo "</tr>";
       echo "<tr  class='tab_bg_1'>";
@@ -557,7 +557,7 @@ class PluginRacksReport extends CommonDBTM {
     *
     * @return mixed
     */
-   function showTitle($output_type, &$num, $title, $columnname, $sort = false, $params = array()) {
+   function showTitle($output_type, &$num, $title, $columnname, $sort = false, $params = []) {
       if ($output_type != Search::HTML_OUTPUT || $sort == false) {
          echo self::showHeaderItem($output_type, $title, $num, null, 0, null, null, $params);
          return;
@@ -573,7 +573,7 @@ class PluginRacksReport extends CommonDBTM {
       $link  = $_SERVER['PHP_SELF'];
       $first = true;
       foreach ($_REQUEST as $name => $value) {
-         if (!in_array($name, array('sort', 'order', 'PHPSESSID'))) {
+         if (!in_array($name, ['sort', 'order', 'PHPSESSID'])) {
             $link .= ($first ? '?' : '&amp;');
             $link .= $name . '=' . urlencode($value);
             $first = false;
@@ -598,7 +598,7 @@ class PluginRacksReport extends CommonDBTM {
     *
     * @return string to display
     * */
-   static function showHeaderItem($type, $value, &$num, $linkto = "", $issort = 0, $order = "", $options = "", $params = array()) {
+   static function showHeaderItem($type, $value, &$num, $linkto = "", $issort = 0, $order = "", $options = "", $params = []) {
       global $CFG_GLPI;
 
       $out = "";
@@ -663,7 +663,7 @@ class PluginRacksReport extends CommonDBTM {
     *
     * @return string to display
     * */
-   static function showEndLine($type, $params = array()) {
+   static function showEndLine($type, $params = []) {
 
       $out = "";
       switch ($type) {
@@ -701,7 +701,7 @@ class PluginRacksReport extends CommonDBTM {
     *
     * @return string to display
     * */
-   static function showFooter($type, $title = "", $params = array()) {
+   static function showFooter($type, $title = "", $params = []) {
 
       $out = "";
       switch ($type) {
@@ -723,8 +723,8 @@ class PluginRacksReport extends CommonDBTM {
                $font = $_SESSION['glpipdffont'];
                //$subsetting = false;
             }
-            $pdf->setHeaderFont(Array($font, 'B', 8));
-            $pdf->setFooterFont(Array($font, 'B', 8));
+            $pdf->setHeaderFont([$font, 'B', 8]);
+            $pdf->setFooterFont([$font, 'B', 8]);
 
             //set margins
             $pdf->SetMargins(10, 15, 10);
@@ -732,7 +732,7 @@ class PluginRacksReport extends CommonDBTM {
             $pdf->SetFooterMargin(10);
 
             //set auto page breaks
-            $pdf->SetAutoPageBreak(TRUE, 15);
+            $pdf->SetAutoPageBreak(true, 15);
 
             // For standard language
             //$pdf->setFontSubsetting($subsetting);
@@ -787,7 +787,7 @@ class PluginRacksReport extends CommonDBTM {
     *
     * @return string to display
     * */
-   static function showItem($type, $value, &$num, $row, $extraparam = '', $params = array()) {
+   static function showItem($type, $value, &$num, $row, $extraparam = '', $params = []) {
 
       $out = "";
       switch ($type) {
@@ -850,8 +850,8 @@ class PluginRacksReport extends CommonDBTM {
                $out .= "...&nbsp;";
                $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
                $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
-               $out .= Html::showToolTip($value, array('display'   => false,
-                                                       'autoclose' => false));
+               $out .= Html::showToolTip($value, ['display'   => false,
+                                                       'autoclose' => false]);
             } else {
                $value = preg_replace('/' . Search::LBBR . '/', '<br>', $value);
                $value = preg_replace('/' . Search::LBHR . '/', '<hr>', $value);
@@ -943,16 +943,16 @@ class PluginRacksReport extends CommonDBTM {
          echo "<td class='tab_bg_2' width='30%'>";
          echo "<form method='GET' action='" . $target . "' target='_blank'>";
 
-         echo Html::hidden('item_type', array('value' => $item_type_output));
+         echo Html::hidden('item_type', ['value' => $item_type_output]);
 
          if ($item_type_output_param != 0) {
-            echo Html::hidden('item_type_param', array('value' => Toolbox::prepareArrayForInput($item_type_output_param)));
+            echo Html::hidden('item_type_param', ['value' => Toolbox::prepareArrayForInput($item_type_output_param)]);
          }
          $split = explode("&amp;", $parameters);
 
          for ($i = 0; $i < count($split); $i++) {
             $pos    = Toolbox::strpos($split[$i], '=');
-            echo Html::hidden(Toolbox::substr($split[$i], 0, $pos), array('value' => urldecode(Toolbox::substr($split[$i], $pos + 1))));
+            echo Html::hidden(Toolbox::substr($split[$i], 0, $pos), ['value' => urldecode(Toolbox::substr($split[$i], $pos + 1))]);
          }
 
          Dropdown::showOutputFormat();
@@ -1005,7 +1005,7 @@ class PluginRacksReport extends CommonDBTM {
       echo "<tr>";
       echo "<td>" . __('Encoding', 'racks') . "</td>";
       echo "<td>";
-      Dropdown::showFromArray("encoding", array('UTF-8 unicode', 'ANSI'), array('width' => '150px'));
+      Dropdown::showFromArray("encoding", ['UTF-8 unicode', 'ANSI'], ['width' => '150px']);
       echo "</td>";
       echo "</tr>";
 
@@ -1013,7 +1013,7 @@ class PluginRacksReport extends CommonDBTM {
       echo "<tr>";
       echo "<td>" . __('Quotes', 'racks') . "</td>";
       echo "<td>";
-      Dropdown::showYesNo("quotes", 0, -1, array('width' => '100px'));
+      Dropdown::showYesNo("quotes", 0, -1, ['width' => '100px']);
       echo "</td>";
       echo "</tr>";
 
@@ -1021,7 +1021,7 @@ class PluginRacksReport extends CommonDBTM {
       echo "<tr>";
       echo "<td>" . __('End of line', 'racks') . "</td>";
       echo "<td>";
-      Dropdown::showFromArray("end_of_line", array('Windows', 'Unix'), array('width' => '100px'));
+      Dropdown::showFromArray("end_of_line", ['Windows', 'Unix'], ['width' => '100px']);
       echo "</td>";
       echo "</tr>";
       echo "</table>";

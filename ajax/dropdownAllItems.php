@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -40,13 +40,13 @@ if (isset($_POST["modeltable"]) && !empty($_POST["modeltable"])) {
    $itemtype   = substr($_POST['modeltable'], 0, -5);
    $modelfield = getForeignKeyFieldForTable(getTableForItemType($_POST['modeltable']));
    $table      = getTableForItemType($itemtype);
-   $params     = array('searchText' => '__VALUE__',
+   $params     = ['searchText' => '__VALUE__',
                        'modeltable' => $_POST["modeltable"],
                        'modelfield' => $modelfield,
                        'itemtype'   => $itemtype,
                        'rand'       => $rand,
                        'width'      => '500',
-                       'myname'     => $_POST["myname"]);
+                       'myname'     => $_POST["myname"]];
 
    if (isset($_POST['value'])) {
       $params['value'] = $_POST['value'];
@@ -56,8 +56,8 @@ if (isset($_POST["modeltable"]) && !empty($_POST["modeltable"])) {
       $params['entity_restrict'] = $_POST['entity_restrict'];
    }
    $field_id = Html::cleanId($_POST['myname'].$rand);
-   echo Html::jsAjaxDropdown($_POST["myname"], 
-                             $field_id, 
-                             $CFG_GLPI['root_doc']."/plugins/racks/ajax/dropdownValue.php", 
+   echo Html::jsAjaxDropdown($_POST["myname"],
+                             $field_id,
+                             $CFG_GLPI['root_doc']."/plugins/racks/ajax/dropdownValue.php",
                              $params);
 }

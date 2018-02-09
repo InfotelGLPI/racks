@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginRacksRack_Item extends CommonDBTM {
 
    static $rightname = "plugin_racks";
-   
+
    // From CommonDBRelation
    public $itemtype_1 = "PluginRacksRack";
    public $items_id_1 = 'plugin_racks_racks_id';
@@ -61,25 +61,25 @@ class PluginRacksRack_Item extends CommonDBTM {
          if ($item->getType() == 'PluginRacksRack'
              && count(PluginRacksRack::getTypes(false))) {
 
-            $ong = array();
+            $ong = [];
             if ($_SESSION['glpishow_count_on_tabs']) {
-               $ong[1] = self::createTabEntry(__('Front', 'racks'), 
+               $ong[1] = self::createTabEntry(__('Front', 'racks'),
                                               self::countForRack($item,
                                                                  PluginRacksRack::FRONT_FACE));
             } else {
                $ong[1] = __('Front', 'racks');
             }
             if ($_SESSION['glpishow_count_on_tabs']) {
-               $ong[2]=self::createTabEntry(_x('Rack enclosure' , 'Back', 'racks'), 
+               $ong[2]=self::createTabEntry(_x('Rack enclosure', 'Back', 'racks'),
                                             self::countForRack($item,
                                                                PluginRacksRack::BACK_FACE));
             } else {
-               $ong[2] = _x('Rack enclosure' , 'Back', 'racks');
+               $ong[2] = _x('Rack enclosure', 'Back', 'racks');
             }
 
             return $ong;
 
-         } elseif (in_array($item->getType(), PluginRacksRack::getTypes(true))
+         } else if (in_array($item->getType(), PluginRacksRack::getTypes(true))
                     && $this->canView()) {
             if ($_SESSION['glpishow_count_on_tabs']) {
                return self::createTabEntry(PluginRacksRack::getTypeName(2), self::countForItem($item));
@@ -98,12 +98,12 @@ class PluginRacksRack_Item extends CommonDBTM {
       if ($item->getType() == 'PluginRacksRack') {
          switch ($tabnum) {
             case 1 :
-               $self->showItemFromPlugin($item->getField('id'), 
+               $self->showItemFromPlugin($item->getField('id'),
                                          PluginRacksRack::FRONT_FACE);
                return true;
 
             case 2 :
-               $self->showItemFromPlugin($item->getField('id'), 
+               $self->showItemFromPlugin($item->getField('id'),
                                          PluginRacksRack::BACK_FACE);
                return true;
          }
@@ -112,7 +112,7 @@ class PluginRacksRack_Item extends CommonDBTM {
 
          self::showForItem($item);
          $self->showform($CFG_GLPI["root_doc"]."/plugins/racks/front/rack_item.form.php",
-                           $item->getField('id'),get_class($item));
+                           $item->getField('id'), get_class($item));
 
       }
       return true;
@@ -139,8 +139,8 @@ class PluginRacksRack_Item extends CommonDBTM {
     */
    static function cleanForItem(CommonDBTM $item) {
       $temp = new self();
-      $temp->deleteByCriteria(array('itemtype' => $item->getType(),
-                                    'items_id' => $item->getField('id')));
+      $temp->deleteByCriteria(['itemtype' => $item->getType(),
+                                    'items_id' => $item->getField('id')]);
    }
 
    function showForm ($target, $items_id, $itemtype) {
@@ -176,8 +176,8 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td>" . __('Power supply 1', 'racks') . "</td>";
          echo "<td class='center'>";
-         Dropdown::show('PluginRacksConnection', array('name' => "first_powersupply",
-                                                   'value' => $this->fields["first_powersupply"]));
+         Dropdown::show('PluginRacksConnection', ['name' => "first_powersupply",
+                                                   'value' => $this->fields["first_powersupply"]]);
          echo "</td>";
          echo "</tr>";
 
@@ -186,8 +186,8 @@ class PluginRacksRack_Item extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . __('Power supply 2', 'racks') . "</td>";
             echo "<td class='center'>";
-            Dropdown::show('PluginRacksConnection', array('name' => "second_powersupply",
-                                                   'value' => $this->fields["second_powersupply"]));
+            Dropdown::show('PluginRacksConnection', ['name' => "second_powersupply",
+                                                   'value' => $this->fields["second_powersupply"]]);
             echo "</td>";
             echo "</tr>";
          }
@@ -195,7 +195,7 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo "<td>" . __('Total current', 'racks') . " (".__('amps', 'racks').")</td>";
          echo "<td class='center'>";
          echo "<input type='text' name='amps'
-                                 value=\"".Html::formatNumber($this->fields["amps"],true)."\" size='10'>";
+                                 value=\"".Html::formatNumber($this->fields["amps"], true)."\" size='10'>";
          echo "</td>";
          echo "</tr>";
 
@@ -205,7 +205,7 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo ")</td>";
          echo "<td class='center'>";
          echo "<input type='text' name='dissipation'
-                           value=\"".Html::formatNumber($this->fields["dissipation"],true)."\" size='10'>";
+                           value=\"".Html::formatNumber($this->fields["dissipation"], true)."\" size='10'>";
          echo "</td>";
          echo "</tr>";
 
@@ -215,7 +215,7 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo ")</td>";
          echo "<td class='center'>";
          echo "<input type='text' name='flow_rate'
-                           value=\"".Html::formatNumber($this->fields["flow_rate"],true)."\" size='10'>";
+                           value=\"".Html::formatNumber($this->fields["flow_rate"], true)."\" size='10'>";
          echo "</td>";
          echo "</tr>";
 
@@ -225,14 +225,14 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo ")</td>";
          echo "<td class='center'>";
          echo "<input type='text' name='weight'
-                              value=\"".Html::formatNumber($this->fields["weight"],true)."\" size='10'>";
+                              value=\"".Html::formatNumber($this->fields["weight"], true)."\" size='10'>";
          echo "</td>";
          echo "</tr>";
 
          echo "<tr>";
          echo "<td class='tab_bg_2 top' colspan='2'><div align='center'>";
          echo "<input type='hidden' name='id' value='".$id."'>";
-         echo "<input type='submit' name='update' value='"._sx('button','Save')."' class='submit'>";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
          echo "</td>";
          echo "</tr>";
 
@@ -242,9 +242,9 @@ class PluginRacksRack_Item extends CommonDBTM {
          Html::closeForm();
          echo "</div>";
       }
-        }
+   }
 
-   function findItems($DB,$type) {
+   function findItems($DB, $type) {
       global $DB;
       $queryBranch = '';
       // Recherche les items
@@ -258,12 +258,12 @@ class PluginRacksRack_Item extends CommonDBTM {
       return $queryBranch;
    }
 
-   function checkPosition($plugin_racks_racks_id,$rack_size, $face, $ID, 
+   function checkPosition($plugin_racks_racks_id, $rack_size, $face, $ID,
                           $itemtype, $spec, $position) {
       global $DB;
 
       if ($position <= $rack_size && $position > 0) {
-      // Recherche de la taille de l'equipement pour verifier qu'il y a la place pour l'inserer
+         // Recherche de la taille de l'equipement pour verifier qu'il y a la place pour l'inserer
 
          $modelfield = getForeignKeyFieldForTable(getTableForItemType($itemtype));
          $table      = getTableForItemType(substr($itemtype, 0, -5));
@@ -278,20 +278,20 @@ class PluginRacksRack_Item extends CommonDBTM {
                            = '".$itemtype."'";
 
          $result      = $DB->query($query);
-         $server_size = array();
+         $server_size = [];
 
-         while($device = $DB->fetch_array($result)) {
+         while ($device = $DB->fetch_array($result)) {
             $device_size = $device["size"];
-            for ($y = 0; $y < $device_size; $y++)
+            for ($y = 0; $y < $device_size; $y++) {
                $server_size[] = $position-$y;
+            }
          }
-
 
          //tableau des emplacements occupes
          if ($face == PluginRacksRack::FRONT_FACE) {
-           $otherface = PluginRacksRack::BACK_FACE;
+            $otherface = PluginRacksRack::BACK_FACE;
          } else {
-           $otherface = PluginRacksRack::FRONT_FACE;
+            $otherface = PluginRacksRack::FRONT_FACE;
          }
          $table = $this->getTable();
          $query_position = "SELECT `$table`.`position` AS position,
@@ -309,16 +309,17 @@ class PluginRacksRack_Item extends CommonDBTM {
 
          $result_position = $DB->query($query_position);
 
-         $position_table=array();
-         $length_table=array();
-         while($data_position=$DB->fetch_array($result_position)) {
+         $position_table=[];
+         $length_table=[];
+         while ($data_position=$DB->fetch_array($result_position)) {
 
-            for ($i=0;$i<$data_position['size'];$i++)
-               if (($data_position['length']==1 
-                  && $data_position['faces_id']==$otherface) 
+            for ($i=0;$i<$data_position['size'];$i++) {
+               if (($data_position['length']==1
+                  && $data_position['faces_id']==$otherface)
                      || $data_position['faces_id']==$face) {
                   $position_table[] = $data_position['position']-$i;
                }
+            }
                $length_table[$data_position['position']] = $data_position['length'];
          }
 
@@ -327,27 +328,29 @@ class PluginRacksRack_Item extends CommonDBTM {
          $PluginRacksItemSpecification = new PluginRacksItemSpecification;
          $PluginRacksItemSpecification->GetfromDB($spec);
          $length=$PluginRacksItemSpecification->fields["length"];
-         
-         
-         if(isset($length_table[$position]) 
-            && $length_table[$position] == 0 
+
+         if (isset($length_table[$position])
+            && $length_table[$position] == 0
                && $length == 1) {
             $space_left = -1;
          }
 
          foreach ($position_table as $key => $val) {
             foreach ($server_size as $cle => $value) {
-               if ($val == $value)
+               if ($val == $value) {
                   $space_left = -1;
+               }
             }
          }
 
-         if ($device_size > $position)
+         if ($device_size > $position) {
             $space_left = -1;
+         }
 
          //reste a gerer les inclusions en 1 avec size > 1
-         if ($device_size > 1 && ($position == 1 || $position == 01))
+         if ($device_size > 1 && ($position == 1 || $position == 01)) {
             $space_left = -1;
+         }
       } else {
          $space_left = -1;
       }
@@ -390,8 +393,8 @@ class PluginRacksRack_Item extends CommonDBTM {
             if ($rack->fields['locations_id'] > 0) {
                if (preg_match("/(.*)Model/", $itemtype, $results)) {
                   $item = new $results[1];
-                  $item->update(array('id'           => $ID,
-                                      'locations_id' => $rack->fields['locations_id']));
+                  $item->update(['id'           => $ID,
+                                      'locations_id' => $rack->fields['locations_id']]);
                }
             }
          }
@@ -439,11 +442,11 @@ class PluginRacksRack_Item extends CommonDBTM {
       }
       echo "</select>";
 
-      $params = array('modeltable'      => '__VALUE__',
+      $params = ['modeltable'      => '__VALUE__',
                       'value'           => $value,
                       'myname'          => $myname,
                       'entity_restrict' => $entity_restrict,
-      );
+      ];
 
       Ajax::UpdateItemOnSelectEvent("itemtype$rand",
                                     "show_$myname$rand",
@@ -476,7 +479,7 @@ class PluginRacksRack_Item extends CommonDBTM {
     * @param $used already used elements key (do not display)
     *
     */
-   function dropdownArrayValues($name, $elements, $used = array()) {
+   function dropdownArrayValues($name, $elements, $used = []) {
       $rand = mt_rand();
       echo "<select name='$name' id='dropdown_" . $name . $rand . "'>";
 
@@ -532,20 +535,23 @@ class PluginRacksRack_Item extends CommonDBTM {
                 OR (`" . $this->getTable() . "`.`faces_id` = '" . $otherface . "')) ";
       $result_position = $DB->query($query_position);
 
-      $position_table = array();
+      $position_table = [];
 
       while ($data_position = $DB->fetch_array($result_position)) {
 
-         for ($i = 0; $i < $data_position['size']; $i++)
-            if (($data_position['length'] == 1 && $data_position['faces_id'] == $otherface) || $data_position['faces_id'] == $face)
+         for ($i = 0; $i < $data_position['size']; $i++) {
+            if (($data_position['length'] == 1 && $data_position['faces_id'] == $otherface) || $data_position['faces_id'] == $face) {
                $position_table[] = $data_position['position'] - $i;
+            }
+         }
       }
 
       echo "<td class='tab_bg_1 center'>";
 
-      $racks = array();
-      for ($i = 0; $i <= $PluginRacksRack->fields['rack_size']; $i++)
+      $racks = [];
+      for ($i = 0; $i <= $PluginRacksRack->fields['rack_size']; $i++) {
          $racks[$i] = $i;
+      }
 
       unset($racks[0]);
 
@@ -566,7 +572,9 @@ class PluginRacksRack_Item extends CommonDBTM {
    function showItemFromPlugin($instID, $face) {
       global $DB, $CFG_GLPI;
 
-      if (!$this->canView()) return false;
+      if (!$this->canView()) {
+         return false;
+      }
 
       Html::requireJs('racks');
       // Init javascript
@@ -586,7 +594,7 @@ class PluginRacksRack_Item extends CommonDBTM {
 
          //LIST
          Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-         $massiveactionparams = array('item' => __CLASS__, 'container' => 'mass'.__CLASS__.$rand);
+         $massiveactionparams = ['item' => __CLASS__, 'container' => 'mass'.__CLASS__.$rand];
          Html::showMassiveActions($massiveactionparams);
 
          echo "<div class='center'><table class='tab_cadre_fixe'>";
@@ -757,7 +765,7 @@ class PluginRacksRack_Item extends CommonDBTM {
                      echo "<td class='center'>U";
                      if ($canedit) {
                         echo "<input type='text' size='3' name='position" . $data["id"] . "' value='$j'>&nbsp;";
-                        $params = array('plugin_racks_racks_id'              => $PluginRacksRack->getID(),
+                        $params = ['plugin_racks_racks_id'              => $PluginRacksRack->getID(),
                                         'id'                                 => $data["id"],
                                         'rack_size'                          => $PluginRacksRack->fields['rack_size'],
                                         'type'                               => $data["itemtype"],
@@ -766,7 +774,7 @@ class PluginRacksRack_Item extends CommonDBTM {
                                         'update_server'                      => 1,
                                         'faces_id'                           => $face,
                                         'position'                           => $j,
-                                        'name'                               => 'name' . $data["id"]);
+                                        'name'                               => 'name' . $data["id"]];
                         echo "&nbsp;<img class='pointer' name='updateDevice[" . $data["id"] . "]'
                         value=\"" . _sx('button', 'Save') . "\" src='" . $CFG_GLPI["root_doc"] . "/pics/actualiser.png'
                            onclick='racks_synchronize(".json_encode($params).");'>";
@@ -775,10 +783,11 @@ class PluginRacksRack_Item extends CommonDBTM {
                      }
                      echo "</td>";
                      $link = Toolbox::getItemTypeFormURL(substr($data["itemtype"], 0, -5));
-                     if ($data["itemtype"] != 'PluginRacksOtherModel')
+                     if ($data["itemtype"] != 'PluginRacksOtherModel') {
                         $name = "<a href=\"" . $link . "?id=" . $data["items_id"] . "\">" . $device["name"] . "</a>";
-                     else
+                     } else {
                         $name = $device["name"];
+                     }
 
                      if ($data["itemtype"] != 'PluginRacksOtherModel') {
                         echo "<td class='center' " . (isset($data['is_deleted']) && $data['is_deleted'] ? "class='tab_bg_2_2'" : "") . " >" . $name . "</td>";
@@ -807,53 +816,61 @@ class PluginRacksRack_Item extends CommonDBTM {
 
                      echo "<td class='center'>" . $nbcordons . "</td>";
 
-                     if ($data["amps"] == '0.0000')
+                     if ($data["amps"] == '0.0000') {
                         $amps = $device_spec["amps"];
-                     else
+                     } else {
                         $amps = $data["amps"];
+                     }
 
                      $cordons_amps_tot += $amps * $nbcordons;
                      echo "<td class='center'>" . Html::formatNumber($amps, true) . "</td>";
-                     if ($data["dissipation"] == '0.0000')
+                     if ($data["dissipation"] == '0.0000') {
                         $dissipation = $device_spec["dissipation"];
-                     else
+                     } else {
                         $dissipation = $data["dissipation"];
+                     }
 
                      echo "<td class='center'>" . Html::formatNumber($dissipation, true) . "</td>";
-                     if ($data["flow_rate"] == '0.0000')
+                     if ($data["flow_rate"] == '0.0000') {
                         $flow_rate = $device_spec["flow_rate"];
-                     else
+                     } else {
                         $flow_rate = $data["flow_rate"];
+                     }
 
                      echo "<td class='center'>" . Html::formatNumber($flow_rate, true) . "</td>";
-                     if ($data["weight"] == '0.0000')
+                     if ($data["weight"] == '0.0000') {
                         $weight = $device_spec["weight"];
-                     else
+                     } else {
                         $weight = $data["weight"];
+                     }
 
                      echo "<td class='center'>" . Html::formatNumber($weight, true) . "</td>";
 
                      echo "</tr>";
 
-                     if ($data["amps"] == '0.0000')
+                     if ($data["amps"] == '0.0000') {
                         $amps_tot += $device_spec["amps"];
-                     else
+                     } else {
                         $amps_tot += $data["amps"];
+                     }
 
-                     if ($data["flow_rate"] == '0.0000')
+                     if ($data["flow_rate"] == '0.0000') {
                         $flow_rate_tot += $device_spec["flow_rate"];
-                     else
+                     } else {
                         $flow_rate_tot += $data["flow_rate"];
+                     }
 
-                     if ($data["dissipation"] == '0.0000')
+                     if ($data["dissipation"] == '0.0000') {
                         $dissip_tot += $device_spec["dissipation"];
-                     else
+                     } else {
                         $dissip_tot += $data["dissipation"];
+                     }
 
-                     if ($data["weight"] == '0.0000')
+                     if ($data["weight"] == '0.0000') {
                         $weight_tot += $device_spec["weight"];
-                     else
+                     } else {
                         $weight_tot += $data["weight"];
+                     }
 
                   } else {
                      $name = $j - $t;
@@ -871,9 +888,11 @@ class PluginRacksRack_Item extends CommonDBTM {
                   }
                }
 
-               if ($device_size > 1)
-                  for ($d = 1; $d < $device_size; $d++)
+               if ($device_size > 1) {
+                  for ($d = 1; $d < $device_size; $d++) {
                      $i--;
+                  }
+               }
 
             } else { // Si pas d'equipement a la position courante
 
@@ -888,22 +907,27 @@ class PluginRacksRack_Item extends CommonDBTM {
          echo "<td width='10'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</td>";
          echo "<td class='center'><b>" . __('Total') . "</b></td>";
          echo "<td colspan='3' class='center'><b>";
-         if ($computer_tot != 0)
+         if ($computer_tot != 0) {
             echo __('Total Servers', 'racks') . " : " . $computer_tot . " (" . $computer_size_tot . __('U', 'racks') . ")<br>";
-         if ($networking_tot != 0)
+         }
+         if ($networking_tot != 0) {
             echo __('Total Network equipements', 'racks') . " : " . $networking_tot . " (" . $networking_size_tot . __('U', 'racks') . ")<br>";
-         if ($peripheral_tot != 0)
+         }
+         if ($peripheral_tot != 0) {
             echo __('Total Peripherals', 'racks') . " : " . $peripheral_tot . " (" . $peripheral_size_tot . __('U', 'racks') . ")<br>";
-         if ($others_tot != 0)
+         }
+         if ($others_tot != 0) {
             echo __('Total Others', 'racks') . " : " . $others_tot . " (" . $others_size_tot . __('U', 'racks') . ")<br>";
+         }
 
          //number of U availables
          $available = $PluginRacksRack->fields['rack_size'] - $computer_size_tot - $networking_size_tot - $peripheral_size_tot - $others_size_tot;
 
-         if ($available > 0)
+         if ($available > 0) {
             echo "<font color='green'>" . $available . " " . __('U availables', 'racks') . "</font>";
-         else
+         } else {
             echo "<font color='red'>" . $available . " " . __('U availables', 'racks') . "</font>";
+         }
          echo "</b></td>";
 
          echo "<td colspan='3' class='center'><b>" . __('Total power Cords', 'racks') . " : " . $nbcordons_tot . "</b><br>";
@@ -934,7 +958,6 @@ class PluginRacksRack_Item extends CommonDBTM {
             echo "<input type='hidden' name='rack_size' value='" . $PluginRacksRack->fields['rack_size'] . "'>";
             echo "</table></div>";
          }
-
 
          ////////////////////////////////////////////////////
          // Recherche des racks a gauche et a droite
@@ -1130,9 +1153,9 @@ class PluginRacksRack_Item extends CommonDBTM {
       $number = $DB->numrows($result);
       $i      = 0;
 
-      $racks = array();
+      $racks = [];
       $rack  = new PluginRacksRack();
-      $used  = array();
+      $used  = [];
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetch_assoc($result)) {
             $racks[$data['assocID']] = $data;
@@ -1143,7 +1166,7 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "<div class='spaced'>";
       if ($canedit && $number && ($withtemplate < 2)) {
          Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-         $massiveactionparams = array('num_displayed' => $number);
+         $massiveactionparams = ['num_displayed' => $number];
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
@@ -1162,7 +1185,7 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "<th>" . __('Place', 'racks') . "</th>";
       echo "<th>" . __('Manufacturer') . "</th>";
       echo "</tr>";
-      $used = array();
+      $used = [];
 
       if ($number) {
 
@@ -1171,7 +1194,6 @@ class PluginRacksRack_Item extends CommonDBTM {
             //        %2$s is the name of the item (used for headings of a list)
                                         sprintf(__('%1$s = %2$s'),
                                                 $item->getTypeName(1), $item->getName()));
-
 
          foreach ($racks as $data) {
             $rackID = $data["id"];
@@ -1211,7 +1233,6 @@ class PluginRacksRack_Item extends CommonDBTM {
          }
       }
 
-
       echo "</table>";
       if ($canedit && $number && ($withtemplate < 2)) {
          $massiveactionparams['ontop'] = false;
@@ -1225,8 +1246,9 @@ class PluginRacksRack_Item extends CommonDBTM {
       global $DB, $CFG_GLPI;
 
       $item = new $itemtype();
-      if ($item->getFromDB($ID))
+      if ($item->getFromDB($ID)) {
          $entity = $item->fields["entities_id"];
+      }
 
       $itemtype = $itemtype . "Model";
 
@@ -1248,14 +1270,17 @@ class PluginRacksRack_Item extends CommonDBTM {
       echo "<th>" . __('Location') . "</th>";
       echo "<th>" . __('Place', 'racks') . "</th>";
       echo "<th>" . __('Manufacturer') . "</th>";
-      if ($this->canCreate())
+      if ($this->canCreate()) {
          echo "<th>&nbsp;</th>";
+      }
       echo "</tr>";
 
       while ($data = $DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1" . ($data["is_deleted"] == '1' ? "_2" : "") . "'>";
          echo "<td class='center'><a href='" . $CFG_GLPI["root_doc"] . "/plugins/racks/front/rack.form.php?id=" . $data["id"] . "'>" . $data["name"];
-         if ($_SESSION["glpiis_ids_visible"]) echo " (" . $data["id"] . ")";
+         if ($_SESSION["glpiis_ids_visible"]) {
+            echo " (" . $data["id"] . ")";
+         }
          echo "</a></td>";
          if ($data["faces_id"] == PluginRacksRack::FRONT_FACE) {
             $faces_id = __('Front', 'racks');
@@ -1274,13 +1299,14 @@ class PluginRacksRack_Item extends CommonDBTM {
             Html::showSimpleForm($CFG_GLPI['root_doc'] . '/plugins/racks/front/rack.form.php',
                                  'deleteitem',
                                  _x('button', 'Delete permanently'),
-                                 array('id' => $data['items_id']));
+                                 ['id' => $data['items_id']]);
             echo "</td>";
          }
          echo "</tr>";
       }
-      if (!empty($withtemplate))
+      if (!empty($withtemplate)) {
          echo "<input type='hidden' name='is_template' value='1'>";
+      }
 
       echo "</table></div>";
    }

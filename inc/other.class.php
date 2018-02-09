@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -35,7 +35,7 @@ class PluginRacksOther extends CommonDBTM {
 
    static $rightname = "plugin_racks";
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Others equipments', 'racks');
    }
 
@@ -50,7 +50,7 @@ class PluginRacksOther extends CommonDBTM {
       $values["name"] = $name;
       $this->update($values);
    }
-   
+
    function deleteOthers($ID) {
       $values["id"]   = $ID;
       $this->delete($values);

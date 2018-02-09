@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ class PluginRacksRoomLocation extends CommonTreeDropdown {
 
    static $rightname = "plugin_racks";
    var $can_be_translated  = true;
-   
+
    static function getTypeName($nb = 0) {
       return _n('Place', 'Places', $nb, 'racks');
    }
@@ -44,24 +44,24 @@ class PluginRacksRoomLocation extends CommonTreeDropdown {
    static function getUsedNumber() {
       global $DB;
 
-      $used  = array();
+      $used  = [];
       $query = "SELECT `plugin_racks_roomlocations_id`
                 FROM `glpi_plugin_racks_racks`
                 WHERE `plugin_racks_roomlocations_id` IS NOT NULL";
 
-      foreach ($DB->request($query) as $data ) {
+      foreach ($DB->request($query) as $data) {
          $used[] = $data["plugin_racks_roomlocations_id"];
       }
       return $used;
    }
 
-   function dropdownRoomLocations($name,$value,$entity) {
+   function dropdownRoomLocations($name, $value, $entity) {
       $used = self::getUsedNumber();
-      Dropdown::show('PluginRacksRoomLocation', 
-                     array('name'   => "plugin_racks_roomlocations_id",
+      Dropdown::show('PluginRacksRoomLocation',
+                     ['name'   => "plugin_racks_roomlocations_id",
                            'value'  => $value,
                            'entity' => $entity,
-                           'used'   => $used));
+                           'used'   => $used]);
 
    }
 }

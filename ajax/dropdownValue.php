@@ -127,11 +127,11 @@ if (in_array(get_class($item), PluginRacksRack::getTypes())) {
    $result = $DB->query($query);
 }
 
-$return = array('results' => array(array('id' => null, 'text' => '-----')));
+$return = ['results' => [['id' => null, 'text' => '-----']]];
 $results = &$return['results'];
 if ($count = $DB->numrows($result)) {
    $prev = -1;
-   $tmp_results = array();
+   $tmp_results = [];
    while ($data=$DB->fetch_array($result)) {
       $entities_id = 0;
       if (isset($data["entities_id"])) {
@@ -146,12 +146,12 @@ if ($count = $DB->numrows($result)) {
       }
 
       $tmp_results[$entities_id]['text']= Dropdown::getDropdownName("glpi_entities", $entities_id);
-      $tmp_results[$entities_id]['children'][] = array('id'    => $_REQUEST["modeltable"].";".
+      $tmp_results[$entities_id]['children'][] = ['id'    => $_REQUEST["modeltable"].";".
                                                    $data['id'].";".
                                                    $data['spec'],
                                         'level' => 1,
                                         'text'  => Toolbox::substr($name, 0,
-                                                          50));
+                                                          50)];
    }
 
    foreach ($tmp_results as $tmp_result) {

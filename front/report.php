@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -58,12 +58,12 @@ if (isset($_REQUEST["display_type"])) {
 $pReport = new PluginRacksReport();
 
 if ($output_type == Search::HTML_OUTPUT) {
-   Html::header(__("Report - Bays management","racks"), $_SERVER['PHP_SELF'], "utils", "report");
+   Html::header(__("Report - Bays management", "racks"), $_SERVER['PHP_SELF'], "utils", "report");
    Report::title();
    $pReport->showForm($_REQUEST);
 }
 
-if (isset($_REQUEST['result_search_reports'])){
+if (isset($_REQUEST['result_search_reports'])) {
    $pReport->showResult($output_type, $limit, $_REQUEST);
 }
 

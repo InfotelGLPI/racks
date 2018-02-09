@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -32,7 +32,8 @@ include ('../../../inc/includes.php');
 $PluginRacksRack_Item = new PluginRacksRack_Item;
 
 if (isset ($_POST["update"])) {
-   if ($PluginRacksRack_Item->canCreate())
+   if ($PluginRacksRack_Item->canCreate()) {
       $PluginRacksRack_Item->update($_POST);
+   }
    Html::back();
 }

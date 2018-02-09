@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of racks.
 
  racks is free software; you can redistribute it and/or modify
@@ -32,22 +32,22 @@ class PluginRacksMenu extends CommonGLPI {
    static $rightname = 'plugin_racks';
 
    static function getMenuName($nb = 1) {
-      return _n('Rack enclosure', 'Rack enclosures', 
+      return _n('Rack enclosure', 'Rack enclosures',
                  $nb, 'racks');
    }
 
    static function getMenuContent() {
       global $CFG_GLPI;
-      
-      $menu                     = array();
+
+      $menu                     = [];
       //Menu entry in tools
       $menu['title']            = self::getMenuName(2);
       $menu['page']             = PluginRacksRack::getSearchURL(false);
       $menu['links']['search']  = PluginRacksRack::getSearchURL(false);
-      
+
       $menu['options']['racks']['links']['search'] = PluginRacksRack::getSearchURL(false);
       $menu['options']['racks']['links']['config'] = PluginRacksConfig::getFormURL(false);
-      
+
       $menu['options']['config']['title'] = __('Setup');
       $menu['options']['config']['page']  = PluginRacksConfig::getFormURL(false);
 
@@ -58,7 +58,7 @@ class PluginRacksMenu extends CommonGLPI {
       if (PluginRacksRack::canCreate()) {
          $menu['options']['racks']['links']['add'] = '/plugins/racks/front/setup.templates.php?add=1';
       }
-      
+
       if (PluginRacksRackModel::canView()) {
          $menu['options']['racks']['links']['template'] = '/plugins/racks/front/setup.templates.php?add=0';
          $menu['options']['racks']['links']["<img  src='".
@@ -71,10 +71,10 @@ class PluginRacksMenu extends CommonGLPI {
 
    static function removeRightsFromSession() {
       if (isset($_SESSION['glpimenu']['assets']['types']['PluginRacksMenu'])) {
-         unset($_SESSION['glpimenu']['assets']['types']['PluginRacksMenu']); 
+         unset($_SESSION['glpimenu']['assets']['types']['PluginRacksMenu']);
       }
       if (isset($_SESSION['glpimenu']['assets']['content']['pluginracksmenu'])) {
-         unset($_SESSION['glpimenu']['assets']['content']['pluginracksmenu']); 
+         unset($_SESSION['glpimenu']['assets']['content']['pluginracksmenu']);
       }
    }
 }
