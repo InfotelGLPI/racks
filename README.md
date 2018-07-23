@@ -1,6 +1,16 @@
 # racks
 Plugin racks pour GLPI
 
+*******************
+
+Plugin integré dans GLPI 9.3
+
+*******************
+
+Plugin integrated into GLPI 9.3
+
+*******************
+
 Ce plugin est sur Transifex - Aidez-nous à le traduire :
 https://www.transifex.com/tsmr/GLPI_racks/
 
